@@ -26,12 +26,11 @@ export default defineConfig({
     sourcemap: true,
     outDir: '../../assets',
     rollupOptions: {
-      input: {
-        styles: 'src/main.scss',
-      },
+      input: 'src/main.js',
       output: {
-        manualChunks: false,
-        assetFileNames: 'bundle.min.css',
+        entryFileNames: '[name].js',
+        chunkFileNames: '[name].chunk.js',
+        assetFileNames: '[name].[ext]',
       },
     },
   },

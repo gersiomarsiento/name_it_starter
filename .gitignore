@@ -6,6 +6,7 @@
 ehthumbs.db
 Thumbs.db
 *.log
+*.*.map
 external/node_modules/
 external/package-lock.json
 external/pnpm-lock.yaml

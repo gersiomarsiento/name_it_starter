@@ -1,3 +1,5 @@
+import './main.scss';
+
 import Alpine from 'alpinejs';
 import Swiper from 'swiper/bundle';
 
