@@ -1,0 +1,135 @@
+.primary-button {
+  @apply tw-text-white tw-bg-black;
+}
+
+.cart__checkout-button {
+  color: inherit;
+}
+
+.btn {
+  @apply tw-text-button tw-rounded-[100px] tw-py-[12px] tw-px-[22px] tw-h-[32px] tw-w-fit tw-outline-none tw-flex tw-justify-center tw-items-center;
+}
+.btn-smaller-mobile {
+  @apply tw-text-[1.4rem] tw-font-[400] md:tw-text-[1.6rem] tw-rounded-[100px] tw-py-[4.2px] tw-px-[7.7px] tw-h-[30px] md:tw-py-[12px] md:tw-px-[22px] md:tw-h-[32px] tw-w-fit tw-outline-none tw-flex tw-justify-center tw-items-center;
+}
+.btn-light {
+  @apply tw-bg-transparent tw-text-white tw-border-white tw-border;
+}
+.btn-light:hover,
+.btn-light.btn-filled:hover {
+  @apply tw-bg-green-bright tw-transition tw-duration-500 tw-border-green-bright tw-border;
+}
+.btn-light.btn-filled:hover {
+  @apply tw-text-white;
+}
+.btn-dark {
+  @apply tw-bg-transparent tw-text-black tw-border-black tw-border;
+}
+
+.btn {
+  @apply tw-text-button tw-rounded-[100px] tw-py-[12px] tw-px-[22px] tw-h-[32px] tw-w-fit tw-outline-none tw-flex tw-justify-center tw-items-center;
+}
+.btn-light {
+  @apply tw-bg-transparent tw-text-white tw-border-white tw-border;
+}
+.btn-light:hover,
+.btn-light.btn-filled:hover {
+  @apply tw-bg-green-bright tw-transition tw-duration-500 tw-outline-none tw-border-green-bright tw-border;
+}
+.btn-light.btn-filled:hover {
+  @apply tw-text-white;
+}
+.btn-dark {
+  @apply tw-bg-transparent tw-text-black tw-border-black tw-border;
+}
+
+.btn-dark.btn-filled {
+  @apply tw-bg-black tw-text-white tw-outline-none;
+}
+
+.btn-light.btn-filled {
+  @apply tw-bg-white tw-text-black tw-outline-none;
+}
+.btn-dark:hover,
+.btn-dark.btn-filled:hover {
+  @apply tw-bg-green-bright tw-text-white tw-transition tw-duration-500 tw-outline-none tw-border-green-bright;
+}
+.quick-add-button {
+  @apply tw-min-w-12 tw-min-h-12 tw-border tw-border-black tw-rounded-full tw-bg-[#F9F8F7] tw-transition-colors tw-ml-auto tw-flex tw-flex-col tw-items-center tw-justify-center;
+
+  svg path {
+    @apply tw-stroke-black tw-transition-colors;
+  }
+
+  p {
+    @apply tw-hidden;
+  }
+
+  @media (min-width: 768px) {
+    @apply tw-rounded-[100px] tw-py-5 tw-w-full tw-gap-5 tw-flex-row tw-ml-0;
+
+    p {
+      @apply tw-text-black tw-transition-colors tw-text-[16px] tw-leading-[.9] tw-block;
+    }
+  }
+
+  &:hover {
+    @apply tw-bg-black tw-text-white;
+
+    svg path {
+      @apply tw-stroke-white;
+    }
+
+    p {
+      @apply tw-text-white;
+    }
+  }
+}
+
+.variant_dropdown {
+  @apply tw-text-b4 md:tw-text-b3 tw-py-5 md:tw-py-6 tw-px-5 tw-rounded-[3px] tw-border tw-border-black tw-w-full tw-capitalize;
+  line-height: 1!important;
+  &::-ms-expand {
+    display: none;
+  }
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  text-indent: 0px;
+  box-shadow: none;
+  svg path {
+    @apply tw-stroke-black;
+  }
+  .disabled & {
+    @apply tw-bg-[#F5F5F5] tw-text-[#707070] tw-border-[#F5F5F5] tw-cursor-not-allowed tw-pointer-events-none;
+    svg path {
+      @apply tw-stroke-[#B3B3B3];
+    }
+  }
+}
+
+.shopify-challenge__button {
+  margin-top: 10px !important;
+}
+.upsell-btn:hover svg path {
+  fill: #fff;
+}
+.upsell-btn svg path {
+  @apply tw-transition tw-duration-500;
+}
+
+@media (min-width: 768px) {
+  .hover-white-content:hover {
+    * {
+      @apply tw-text-white;
+    }
+    .oke-sr-count {
+      border-color: white !important;
+    }
+    .btn-dark {
+      @apply tw-bg-transparent tw-text-white tw-border-white tw-border;
+      &:hover {
+        @apply tw-bg-green-bright tw-transition tw-duration-500 tw-outline-none tw-border-green-bright tw-border;
+      }
+    }
+  }
+}

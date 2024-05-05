@@ -1,0 +1,46 @@
+@media (prefers-reduced-motion: no-preference) {
+  .animated-row {
+    opacity: 0;
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+  }
+
+  .animated-row.visible {
+    opacity: 1;
+  }
+
+  .first-transform-animation-container {
+    overflow: hidden;
+  }
+
+  .first-transform-animation {
+    transition: transform var(--initial-delay) cubic-bezier(0.37, 0.31, 0, 1) calc(var(--initial-delay) + var(--delay));
+    transform: translate3d(0, 100%, 0);
+
+    .animated & {
+      transform: translateZ(0);
+    }
+  }
+
+  .second-transform-animation {
+    transition: opacity 1.2s cubic-bezier(0.4, 0, 0, 1) 0.3s, transform 1.2s cubic-bezier(0.4, 0, 0, 1) 0.3s;
+    opacity: 0;
+    transform: translateY(5%) translateZ(0);
+    @media (min-width: 768px) {
+      transform: translateY(20%) translateZ(0);
+    }
+    &.animated,
+    .animated & {
+      transform: translateY(0) translateZ(0);
+      opacity: 1;
+    }
+  }
+
+  [full-banner-animation] {
+    transition: max-width 0.25s ease-out;
+    max-width: 80%;
+    @apply tw-mx-auto;
+    @media (min-width: 768px) {
+      max-width: 90%;
+    }
+  }
+}

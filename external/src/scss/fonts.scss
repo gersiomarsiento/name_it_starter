@@ -1,0 +1,69 @@
+*, h1, h2, h3, h4, h5, h6 {
+  font-family: 'Aeonik', sans-serif;
+}
+.h1, .h2, .h3, .h4, .h5 {
+  @apply tw-text-black;
+}
+h1, .h1 {
+  @apply tw-font-250 tw-leading-[100%] tw-capitalize tw-text-[5.2rem] lg:tw-text-[7rem];
+}
+h2, .h2 {
+  @apply tw-font-250 tw-leading-[100%] tw-capitalize tw-text-[4rem] lg:tw-text-[5.6rem];
+}
+h3, .h3 {
+  @apply tw-font-normal tw-leading-[110%] lg:tw-leading-[120%] tw-capitalize tw-text-[2.6rem] lg:tw-text-[3.6rem];
+}
+h4, .h4 {
+  @apply tw-font-bold tw-leading-[150%] tw-text-[2.2rem] lg:tw-text-[3.6rem];
+}
+h5, .h5 {
+  @apply tw-font-normal tw-leading-[150%] tw-text-[2.4rem] lg:tw-text-[3.2rem];
+}
+
+.subtitle1 {
+  @apply tw-font-medium tw-leading-[100%] tw-text-[2.4rem] lg:tw-text-[2.6rem] lg:tw-leading-[3.1rem];
+}
+.subtitle2 {
+  @apply tw-font-normal tw-leading-[2.6rem] lg:tw-leading-[130%] tw-text-[2.2rem];
+}
+.subtitle3 {
+  @apply tw-font-normal tw-leading-[1.9rem] lg:tw-leading-[198%] tw-text-[1.6rem] lg:tw-text-[1.8rem];
+}
+.subtitle4 {
+  @apply tw-font-normal tw-leading-[1.9rem] lg:tw-leading-[2rem] tw-text-[1.6rem] tw-tracking-[2%];
+}
+.subtitle5 {
+  @apply tw-font-normal tw-text-[1.4rem] tw-leading-[1.54rem] lg:tw-leading-[1.82rem] tw-tracking-[2%];
+}
+.subtitle6 {
+  @apply tw-font-normal tw-text-[1.2rem] tw-leading-[1.44rem];
+}
+
+.body1, p {
+  @apply tw-font-250 tw-text-[2.2rem] tw-leading-[2.75rem] lg:tw-text-[2.6rem] lg:tw-leading-[3.9rem];
+}
+.body2 {
+  @apply tw-font-250 tw-text-[1.6rem] tw-leading-[2.4rem] lg:tw-text-[1.8rem] lg:tw-leading-[2.52rem];
+}
+.body3 {
+  @apply tw-font-250 tw-text-[1.4rem] tw-leading-[1.75rem] lg:tw-text-[1.6rem] lg:tw-leading-[2.24rem];
+}
+.body4 {
+  @apply tw-font-normal tw-text-[1.4rem] tw-leading-[1.68rem];
+}
+.body5 {
+  @apply tw-font-250 tw-text-[1.3rem] tw-leading-[1.95rem] lg:tw-leading-[1.625rem];
+}
+
+.nav1 {
+  @apply tw-text-white tw-text-[2.8rem] tw-font-normal tw-leading-[100%];
+}
+.nav2 {
+  @apply tw-text-white tw-text-[1.8rem] tw-font-normal tw-leading-[2.7rem];
+}
+.nav3 {
+  @apply tw-text-white tw-text-[1.4rem] lg:tw-text-[1.6rem] tw-font-250 tw-leading-[100%] tw-tracking-[2%];
+}
+.nav4 {
+  @apply tw-text-white tw-text-[1.8rem] tw-font-250 tw-leading-[100%] tw-tracking-[2%];
+}

@@ -1,0 +1,14 @@
+{
+  "recommendations": [
+    "shopify.theme-check-vscode",
+    "esbenp.prettier-vscode",
+    "vivaxy.vscode-conventional-commits",
+    "naumovs.color-highlight",
+    "usernamehw.errorlens",
+    "dbaeumer.vscode-eslint",
+    "wix.vscode-import-cost",
+    "ways-agency.shopify-liquid-snippets",
+    "bradlc.vscode-tailwindcss",
+    "pcbowers.alpine-intellisense"
+  ]
+}

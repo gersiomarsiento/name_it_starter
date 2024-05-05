@@ -1,0 +1,10 @@
+root: ./
+MatchingTranslations:
+  enabled: false
+TemplateLength:
+  enabled: false
+SchemaJsonFormat:
+  enabled: true
+  severity: style
+  start_level: 0
+  indent: '  '

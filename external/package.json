@@ -1,0 +1,27 @@
+{
+  "scripts": {
+    "development:esbuild": "npx esbuild ./src/main.js --bundle --minify --outfile=../assets/bundle.min.js --sourcemap --watch",
+    "dev": "run-p start-vite development:esbuild",
+    "shopify:dev": "shopify theme dev -s lunolife.myshopify.com --path ../",
+    "shopify:pull": "shopify theme pull --development --nodelete --path ../",
+    "start-vite": "vite build --watch"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.16",
+    "cssnano": "^6.0.3",
+    "esbuild": "^0.19.3",
+    "npm-run-all": "^4.1.5",
+    "postcss": "^8.4.35",
+    "postcss-cli": "^11.0.0",
+    "postcss-import": "^16.0.1",
+    "postcss-preset-env": "^9.3.0",
+    "sass": "^1.69.4",
+    "tailwindcss": "^3.4.1",
+    "vite": "^5.1.4"
+  },
+  "dependencies": {
+    "swiper": "^11.0.0",
+    "alpinejs": "^3.4.2",
+    "@alpinejs/focus": "^3.13.10"
+  }
+}
