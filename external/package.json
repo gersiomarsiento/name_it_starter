@@ -1,10 +1,10 @@
 {
   "scripts": {
     "development:esbuild": "npx esbuild ./src/main.js --bundle --minify --outfile=../assets/bundle.min.js --sourcemap --watch",
+    "start-vite": "vite build --watch",
     "dev": "run-p start-vite development:esbuild",
-    "shopify:dev": "shopify theme dev -s lunolife.myshopify.com --path ../",
-    "shopify:pull": "shopify theme pull --development --nodelete --path ../",
-    "start-vite": "vite build --watch"
+    "shopify:dev": "shopify theme dev -s dev-miguel-test-store.myshopify.com --path ../",
+    "shopify:pull": "shopify theme pull --development --nodelete --path ../"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.16",

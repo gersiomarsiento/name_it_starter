@@ -2,6 +2,10 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
+@import 'swiper/css';
+@import 'swiper/css/pagination';
+@import 'swiper/css/navigation';
+
 [x-cloak] {
   display: none !important;
 }
