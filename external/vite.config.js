@@ -26,7 +26,7 @@ export default defineConfig({
     sourcemap: true,
     outDir: '../../assets',
     rollupOptions: {
-      input: 'src/main.js',
+      input: ['src/main.js', 'src/main.scss'],
       output: {
         entryFileNames: '[name].js',
         chunkFileNames: '[name].chunk.js',
