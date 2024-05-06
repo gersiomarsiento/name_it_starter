@@ -1,0 +1,54 @@
+html {
+  scroll-behavior: smooth;
+}
+
+.c-container {
+  @apply xs-down:px-2 px-4 md:px-8 xl:px-24 mx-auto max-w-desk w-full;
+
+  &.px-0 {
+    padding-left: 0;
+    padding-right: 0;
+    @apply desktop:px-24;
+  }
+
+  &.pr-0 {
+    padding-right: 0;
+    @apply desktop:pr-24;
+  }
+
+  &.pl-0 {
+    padding-left: 0;
+    @apply desktop:pl-24;
+  }
+
+  &.wide {
+    @apply md:px-6;
+  }
+}
+
+b,
+strong {
+  font-weight: 700;
+}
+
+.richtext {
+  p {
+    @apply whitespace-pre-wrap mb-[1rem];
+
+    &:empty {
+      @apply h-0;
+    }
+
+    &:last-child {
+      @apply mb-0;
+    }
+  }
+
+  ul {
+    @apply list-disc pl-5;
+  }
+
+  a {
+    @apply underline;
+  }
+}

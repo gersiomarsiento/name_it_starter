@@ -1,0 +1,24 @@
+@layer utilities {
+  .inset-center {
+    --tw-translate-x: -50%;
+    --tw-translate-y: -50%;
+    position: absolute !important;
+    top: 50%;
+    left: 50%;
+    transform: translate(var(--tw-translate-x), var(--tw-translate-y));
+  }
+
+  .inset-center-y {
+    --tw-translate-y: -50%;
+    position: absolute !important;
+    top: 50%;
+    transform: translateY(var(--tw-translate-y));
+  }
+
+  .inset-center-x {
+    --tw-translate-x: -50%;
+    position: absolute !important;
+    left: 50%;
+    transform: translateX(var(--tw-translate-x));
+  }
+}

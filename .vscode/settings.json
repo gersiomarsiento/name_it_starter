@@ -43,6 +43,9 @@
     "**/tmp": true,
     "**/assets/bundle.*css": true,
     "**/assets/bundle.*js": true,
+    "**/assets/main.js": true,
+    "**/assets/main.js.map": true,
+    "**/assets/main.css": true,
     "**/*.svg": true
   },
   "conventionalCommits.scopes": [
