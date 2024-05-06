@@ -25,6 +25,7 @@ export default defineConfig({
     minify: true,
     sourcemap: true,
     outDir: '../../assets',
+    emptyOutDir: false,
     rollupOptions: {
       input: ['src/main.js', 'src/main.scss'],
       output: {
