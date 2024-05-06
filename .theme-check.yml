@@ -1,8 +1,7 @@
 root: ./
 MatchingTranslations:
-  enabled: false
-TemplateLength:
-  enabled: false
+  enabled: true
+  severity: error
 SchemaJsonFormat:
   enabled: true
   severity: style
