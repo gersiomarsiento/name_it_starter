@@ -2,7 +2,6 @@
   display: flex;
   flex-direction: column;
   flex: auto 1 0;
-  padding: 1rem;
   margin: 0 auto;
 }
 
@@ -10,20 +9,14 @@
   display: inline-flex;
   flex-wrap: wrap;
   flex: initial;
-  padding: 1rem 0;
 }
 
 .localization-form:only-child .button,
 .localization-form:only-child .localization-form__select {
-  margin: 1rem 1rem 0.5rem;
   flex-grow: 1;
 }
 
 @media screen and (min-width: 750px) {
-  .localization-form {
-    padding: 1rem 2rem 1rem 0;
-  }
-
   .localization-form:first-of-type {
     padding-left: 0;
   }
@@ -32,11 +25,6 @@
     justify-content: start;
     width: auto;
     margin: 0 1rem 0 0;
-  }
-
-  .localization-form:only-child .button,
-  .localization-form:only-child .localization-form__select {
-    margin: 1rem 0;
   }
 }
 
@@ -64,7 +52,6 @@
 .localization-form__select {
   border-radius: var(--inputs-radius-outset);
   position: relative;
-  margin-bottom: 1.5rem;
   padding-left: 1rem;
   text-align: left;
   min-height: calc(4rem + var(--inputs-border-width) * 2);
