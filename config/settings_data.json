@@ -1,10 +1,10 @@
 {
   "current": {
     "logo_width": 140,
-    "type_header_font": "archivo_n7",
-    "heading_scale": 110,
-    "type_body_font": "questrial_n4",
-    "body_scale": 105,
+    "type_header_font": "montserrat_n7",
+    "heading_scale": 100,
+    "type_body_font": "montserrat_n3",
+    "body_scale": 100,
     "page_width": 1200,
     "spacing_sections": 0,
     "spacing_grid_horizontal": 28,
@@ -113,9 +113,9 @@
     "predictive_search_show_price": false,
     "currency_code_enabled": false,
     "cart_type": "drawer",
-    "show_vendor": false,
-    "show_cart_note": false,
-    "cart_drawer_collection": "",
+    "show_vendor": true,
+    "show_cart_note": true,
+    "cart_drawer_collection": "automated-collection",
     "cart_color_scheme": "scheme-1",
     "sections": {
       "main-password-header": {
@@ -128,6 +128,12 @@
         "type": "main-password-footer",
         "settings": {
           "color_scheme": "scheme-3"
+        }
+      },
+      "cart-drawer": {
+        "type": "cart-drawer",
+        "settings": {
+          "heading": "My Cart"
         }
       }
     },
