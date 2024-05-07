@@ -18,7 +18,7 @@
       {%- endif -%}
     </div>
 
-    <div class="hidden lg:flex gap-4 flex-1">
+    <div class="hidden lg:flex flex-row justify-end gap-4 flex-1">
       {%- if section.settings.enable_country_selector and localization.available_countries.size > 1 -%}
         {%- render 'country-selector', localPosition: 'AnnouncementCountry' -%}
       {% endif %}
