@@ -1,0 +1,82 @@
+{%- assign class = class | default: blank -%}
+{%- assign triggerClass = triggerClass | default: blank -%}
+{%- assign localPosition = localPosition | default: blank -%}
+{%- assign formID = localPosition | append: 'Form' -%}
+
+<div
+  class="relative {{ class }}"
+  x-data="
+    {
+      locale_code: '{{ localization.language.iso_code }}',
+      open: false,
+      toggle() {
+        this.open = !this.open;
+      },
+      close() {
+        if (!this.open) return;
+        this.open = false;
+      },
+      onChange(localeCode) {
+        this.locale_code = localeCode;
+        setTimeout(() => this.$refs.LocalizationForm.submit(), 100);
+      },
+    }
+  "
+>
+  {%- form 'localization', id: formID, class: 'localization-language-form', x-ref: 'LocalizationForm' -%}
+    <div>
+      <button
+        type="button"
+        x-ref="button"
+        class="w-max rounded-[20px] shadow-md flex flex-row gap-2 items-center px-4 py-3 cursor-pointer {{ triggerClass }}"
+        @click="toggle()"
+        :aria-expanded="open"
+        aria-controls="dropdown-{{ formID }}"
+      >
+        <span>{{ localization.language.endonym_name | capitalize }}</span>
+        <svg
+          :class="{ 'rotate-180': open }"
+          class="transition-all"
+          width="15"
+          height="8"
+          viewBox="0 0 15 8"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path d="M14.5 1.44114L12.835 4.62155e-07L7.5 4.61656L2.16499 6.2382e-08L0.5 1.44114L7.5 7.5L14.5 1.44114Z" fill="currentColor"/>
+        </svg>
+      </button>
+
+      <div
+        x-show="open"
+        x-trap="open"
+        x-transition.origin.top.left
+        x-anchor.bottom-start.offset.10="$refs.button"
+        x-on:click.outside="close()"
+        style="display: none; color: rgba(var(--color-foreground)); background-color: rgb(var(--color-background));"
+        class="min-w-max w-full rounded-md shadow-md z-[10] overflow-hidden"
+        :aria-hidden="!open"
+        id="dropdown-{{ formID }}"
+        @keydown.escape.window="close()"
+      >
+        <ul class="max-h-[400px] overflow-y-auto overflow-x-hidden" role="list">
+          {%- for language in localization.available_languages -%}
+            <li>
+              <button
+                class="body-4 cursor-pointer flex items-center gap-2 w-full px-4 py-2.5 hover:bg-black {% if language.iso_code == localization.language.iso_code %}font-semibold{% else %}font-light{% endif %}"
+                {% if language.iso_code == localization.language.iso_code %}
+                  aria-current="true"
+                {% endif %}
+                @click.prevent="onChange('{{ language.iso_code }}')"
+              >
+                <div class="text-left">
+                  {{- language.endonym_name | capitalize -}}
+                </div>
+              </button>
+            </li>
+          {%- endfor -%}
+        </ul>
+      </div>
+      <input type="hidden" name="locale_code" x-model="locale_code">
+    </div>
+  {%- endform -%}
+</div>

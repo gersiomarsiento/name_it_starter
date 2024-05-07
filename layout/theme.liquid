@@ -230,11 +230,6 @@
       {% comment %}theme-check-enable AssetPreload{% endcomment %}
     {%- endunless -%}
 
-    {%- if localization.available_countries.size > 1 or localization.available_languages.size > 1 -%}
-      {{ 'component-localization-form.css' | asset_url | stylesheet_tag: preload: true }}
-      <script src="{{ 'localization-form.js' | asset_url }}" defer="defer"></script>
-    {%- endif -%}
-
     {%- if settings.predictive_search_enabled -%}
       <link
         rel="stylesheet"
@@ -249,6 +244,8 @@
         document.documentElement.classList.add('shopify-design-mode');
       }
     </script>
+
+    {%- render 'global-listeners' -%}
   </head>
 
   <body class="gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}">

@@ -1,0 +1,89 @@
+{%- assign class = class | default: blank -%}
+{%- assign triggerClass = triggerClass | default: blank -%}
+{%- assign localPosition = localPosition | default: blank -%}
+{%- assign formID = localPosition | append: 'Form' -%}
+
+<div
+  class="relative {{ class }}"
+  x-data="
+    {
+      country_code: '{{ localization.country.iso_code }}',
+      open: false,
+      toggle() {
+        this.open = !this.open;
+      },
+      close() {
+        if (!this.open) return;
+        this.open = false;
+      },
+      onChange(countryCode) {
+        this.country_code = countryCode;
+        setTimeout(() => this.$refs.LocalizationForm.submit(), 100);
+      },
+    }
+  "
+>
+  {%- form 'localization', id: formID, class: 'localization-country-form', x-ref: 'LocalizationForm' -%}
+    <div>
+      <button
+        type="button"
+        x-ref="button"
+        class="w-max rounded-[20px] shadow-md flex flex-row gap-2 items-center px-4 py-3 cursor-pointer {{ triggerClass }}"
+        @click="toggle()"
+        :aria-expanded="open"
+        aria-controls="dropdown-{{ formID }}"
+      >
+        {{- localization.country | image_url: width: 24 | image_tag: class: 'h-3.5' -}}
+        <span>{{ localization.country.name }}</span>
+        <svg
+          :class="{ 'rotate-180': open }"
+          class="transition-all"
+          width="15"
+          height="8"
+          viewBox="0 0 15 8"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path d="M14.5 1.44114L12.835 4.62155e-07L7.5 4.61656L2.16499 6.2382e-08L0.5 1.44114L7.5 7.5L14.5 1.44114Z" fill="currentColor"/>
+        </svg>
+      </button>
+
+      <div
+        x-show="open"
+        x-trap="open"
+        x-transition.origin.top.left
+        x-anchor.bottom-start.offset.10="$refs.button"
+        x-on:click.outside="close()"
+        style="display: none; color: rgba(var(--color-foreground)); background-color: rgb(var(--color-background));"
+        class="min-w-[250px] w-full rounded-md shadow-md z-[10] overflow-hidden"
+        :aria-hidden="!open"
+        id="dropdown-{{ formID }}"
+        @keydown.escape.window="close()"
+      >
+        <ul class="max-h-[400px] overflow-y-auto overflow-x-hidden" role="list">
+          {%- for country in localization.available_countries -%}
+            <li>
+              <button
+                class="body-4 cursor-pointer flex items-center gap-2 w-full px-4 py-2.5 hover:bg-black {% if country.iso_code == localization.country.iso_code %}font-semibold{% else %}font-light{% endif %}"
+                {% if country.iso_code == localization.country.iso_code %}
+                  aria-current="true"
+                {% endif %}
+                @click.prevent="onChange('{{ country.iso_code }}')"
+              >
+                {{- country | image_url: width: 24 | image_tag -}}
+                <div class="text-left">
+                  <span>{{- country.name -}}</span>
+                  <span>|</span>
+                  <span>
+                    {{- country.currency.iso_code }}
+                    {{- country.currency.symbol -}}
+                  </span>
+                </div>
+              </button>
+            </li>
+          {%- endfor -%}
+        </ul>
+      </div>
+      <input type="hidden" name="country_code" x-model="country_code">
+    </div>
+  {%- endform -%}
+</div>

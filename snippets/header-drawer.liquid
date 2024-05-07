@@ -145,35 +145,19 @@
                 -%}
               </a>
             {%- endif -%}
+
             {%- if localization.available_countries or localization.available_languages -%}
-              <div class="menu-drawer__localization header-localization">
+              <div class="flex flex-row gap-4">
                 {%- if localization.available_countries and localization.available_countries.size > 1 -%}
-                  <localization-form>
-                    {%- form 'localization', id: 'HeaderCountryMobileForm', class: 'localization-form' -%}
-                      <div>
-                        <h2 class="visually-hidden" id="HeaderCountryMobileLabel">
-                          {{ 'localization.country_label' | t }}
-                        </h2>
-                        {%- render 'country-localization', localPosition: 'HeaderCountryMobile' -%}
-                      </div>
-                    {%- endform -%}
-                  </localization-form>
+                  {%- render 'country-selector', localPosition: 'AnnouncementCountry' -%}
                 {% endif %}
 
                 {%- if localization.available_languages and localization.available_languages.size > 1 -%}
-                  <localization-form>
-                    {%- form 'localization', id: 'HeaderLanguageMobileForm', class: 'localization-form' -%}
-                      <div>
-                        <h2 class="visually-hidden" id="HeaderLanguageMobileLabel">
-                          {{ 'localization.language_label' | t }}
-                        </h2>
-                        {%- render 'language-localization', localPosition: 'HeaderLanguageMobile' -%}
-                      </div>
-                    {%- endform -%}
-                  </localization-form>
+                  {%- render 'language-selector', localPosition: 'AnnouncementLanguageForm' -%}
                 {%- endif -%}
               </div>
             {%- endif -%}
+
             <ul class="list list-social list-unstyled" role="list">
               {%- if settings.social_twitter_link != blank -%}
                 <li class="list-social__item">

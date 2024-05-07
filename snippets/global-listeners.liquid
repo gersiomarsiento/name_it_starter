@@ -1,0 +1,13 @@
+<script>
+  window.accessibilityNav = false;
+  window.addEventListener(
+    'keydown',
+    (e) => {
+      if (e.key === 'Tab' || e.keyCode === 9) {
+        window.accessibilityNav = true;
+        document.documentElement.classList.add('focus-is-visible');
+      }
+    },
+    { once: true }
+  );
+</script>
