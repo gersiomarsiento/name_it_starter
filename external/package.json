@@ -17,8 +17,13 @@
     "vite": "^5.2.11"
   },
   "dependencies": {
-    "swiper": "^11.1.1",
+    "@alpinejs/anchor": "^3.13.10",
+    "@alpinejs/collapse": "^3.13.10",
+    "@alpinejs/focus": "^3.13.10",
+    "@alpinejs/persist": "^3.13.10",
+    "@shopify/theme-currency": "^4.1.1",
     "alpinejs": "^3.13.10",
-    "@alpinejs/focus": "^3.13.10"
+    "form-serialize": "^0.7.2",
+    "swiper": "^11.1.1"
   }
 }

@@ -6,8 +6,8 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        body: ["'Inter', sans-serif"],
-        headings: ["'Inter', sans-serif"],
+        body: ['var(--font-body-family)'],
+        headings: ['var(--font-heading-family)'],
       },
       maxWidth: {
         desk: '1440px',
