@@ -20,14 +20,11 @@
     left: calc(50% - 0.5em);
     width: 1em;
     height: 1em;
-    border: 2px solid #fff;
+    border: 2px solid;
+    border-color: var(--spinner-color, #fff);
     border-right-color: transparent !important;
     border-radius: 50%;
     -webkit-animation: spin 0.75s linear infinite;
     animation: spin 0.75s linear infinite;
-  }
-
-  &.black-spinner {
-    border-color: #000;
   }
 }

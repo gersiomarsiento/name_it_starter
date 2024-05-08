@@ -209,16 +209,16 @@ Alpine.store('cart', {
 
     const type = button.dataset.type;
     const line = button.dataset.line;
-    let quantity = Number(
-      button.closest(defaults.lineItem).querySelector(defaults.lineItemQuantity)?.dataset?.value || 0
-    );
+    const quantityInput = button.closest(defaults.lineItem).querySelector(defaults.lineItemQuantity);
+    const step = Number(quantityInput.step || 1);
+    let quantity = Number(quantityInput.value || 0);
 
     switch (type) {
       case 'plus':
-        quantity++;
+        quantity += step;
         break;
       case 'minus':
-        quantity--;
+        quantity -= step;
         break;
       case 'remove':
         quantity = 0;

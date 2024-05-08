@@ -1,0 +1,86 @@
+{%- liquid
+  assign has_qty_rules = false
+  if item.variant.quantity_rule.increment > 1 or item.variant.quantity_rule.min > 1 or item.variant.quantity_rule.max != null
+    assign has_qty_rules = true
+  endif
+
+  assign has_vol_pricing = false
+  if item.variant.quantity_price_breaks.size > 0
+    assign has_vol_pricing = true
+  endif
+-%}
+
+{%- if has_vol_pricing or has_qty_rules -%}
+  <button
+    type="button"
+    class="quantity-popover__info-button quantity-popover__info-button--icon-with-label button button--tertiary"
+    aria-expanded="false"
+  >
+    {% render 'icon-info' %}
+    <span>
+      {%- if has_vol_pricing -%}
+        {{ 'products.product.volume_pricing.note' | t }}
+      {%- elsif has_qty_rules -%}
+        {{ 'products.product.quantity.note' | t }}
+      {%- endif -%}
+    </span>
+  </button>
+
+  <div
+    class="cart-items__info global-settings-popup quantity-popover__info"
+    tabindex="-1"
+    hidden
+  >
+    {%- if has_qty_rules == false -%}
+      <span class="volume-pricing-label caption">
+        {{- 'products.product.volume_pricing.title' | t -}}
+      </span>
+    {%- endif -%}
+
+    <div class="quantity__rules caption">
+      {%- if item.variant.quantity_rule.increment > 1 -%}
+        <span class="divider">
+          {{- 'products.product.quantity.multiples_of' | t: quantity: item.variant.quantity_rule.increment -}}
+        </span>
+      {%- endif -%}
+      {%- if item.variant.quantity_rule.min > 1 -%}
+        <span class="divider">
+          {{- 'products.product.quantity.min_of' | t: quantity: item.variant.quantity_rule.min -}}
+        </span>
+      {%- endif -%}
+      {%- if item.variant.quantity_rule.max != null -%}
+        <span class="divider">
+          {{- 'products.product.quantity.max_of' | t: quantity: item.variant.quantity_rule.max -}}
+        </span>
+      {%- endif -%}
+    </div>
+
+    <button
+      class="button-close button button--tertiary"
+      type="button"
+      aria-label="{{ 'accessibility.close' | t }}"
+    >
+      {%- render 'icon-close' -%}
+    </button>
+
+    {%- if item.variant.quantity_price_breaks.size > 0 -%}
+      <volume-pricing class="parent-display">
+        <ul class="list-unstyled">
+          <li>
+            <span>{{ item.variant.quantity_rule.min }}+</span>
+            <span>{{ item.variant.price | money }}/ea</span>
+          </li>
+          {%- for price_break in item.variant.quantity_price_breaks -%}
+            <li>
+              <span>
+                {{- price_break.minimum_quantity -}}
+                <span aria-hidden="true">+</span></span
+              >
+              <span>{{ price_break.price | money }}/ea</span>
+            </li>
+          {%- endfor -%}
+        </ul>
+      </volume-pricing>
+    {%- endif -%}
+  </div>
+{%- endif -%}

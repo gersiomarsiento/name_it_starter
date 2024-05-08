@@ -21,4 +21,13 @@
     left: 50%;
     transform: translateX(var(--tw-translate-x));
   }
+
+  .outer-spin-none {
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      -moz-appearance: textfield !important;
+      -webkit-appearance: none;
+      margin: 0;
+    }
+  }
 }
