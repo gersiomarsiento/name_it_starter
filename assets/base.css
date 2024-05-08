@@ -750,28 +750,6 @@ summary::-webkit-details-marker {
   letter-spacing: 0.08rem;
 }
 
-/* component-grid */
-.grid {
-  display: flex;
-  flex-wrap: wrap;
-  margin-bottom: 2rem;
-  padding: 0;
-  list-style: none;
-  column-gap: var(--grid-mobile-horizontal-spacing);
-  row-gap: var(--grid-mobile-vertical-spacing);
-}
-
-@media screen and (min-width: 750px) {
-  .grid {
-    column-gap: var(--grid-desktop-horizontal-spacing);
-    row-gap: var(--grid-desktop-vertical-spacing);
-  }
-}
-
-.grid:last-child {
-  margin-bottom: 0;
-}
-
 .grid__item {
   width: calc(25% - var(--grid-mobile-horizontal-spacing) * 3 / 4);
   max-width: calc(50% - var(--grid-mobile-horizontal-spacing) / 2);
@@ -784,11 +762,6 @@ summary::-webkit-details-marker {
     width: calc(25% - var(--grid-desktop-horizontal-spacing) * 3 / 4);
     max-width: calc(50% - var(--grid-desktop-horizontal-spacing) / 2);
   }
-}
-
-.grid--gapless.grid {
-  column-gap: 0;
-  row-gap: 0;
 }
 
 @media screen and (max-width: 749px) {
@@ -2903,20 +2876,12 @@ details-disclosure > details {
 
 /* check for flexbox gap in older Safari versions */
 @supports not (inset: 10px) {
-  .grid {
-    margin-left: calc(-1 * var(--grid-mobile-horizontal-spacing));
-  }
-
   .grid__item {
     padding-left: var(--grid-mobile-horizontal-spacing);
     padding-bottom: var(--grid-mobile-vertical-spacing);
   }
 
   @media screen and (min-width: 750px) {
-    .grid {
-      margin-left: calc(-1 * var(--grid-desktop-horizontal-spacing));
-    }
-
     .grid__item {
       padding-left: var(--grid-desktop-horizontal-spacing);
       padding-bottom: var(--grid-desktop-vertical-spacing);

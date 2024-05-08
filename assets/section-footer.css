@@ -12,10 +12,6 @@
 }
 
 @media screen and (max-width: 749px) {
-  .footer .grid {
-    display: block;
-  }
-
   .footer-block.grid__item {
     padding: 0;
     margin: 4rem 0;
@@ -30,13 +26,6 @@
     padding-bottom: 3rem;
     padding-left: calc(4rem / var(--font-body-scale));
     padding-right: calc(4rem / var(--font-body-scale));
-  }
-}
-
-@media screen and (min-width: 750px) {
-  .footer__content-top .grid {
-    row-gap: 6rem;
-    margin-bottom: 0;
   }
 }
 
@@ -492,17 +481,7 @@
 
 /* check for flexbox gap in older Safari versions */
 @supports not (inset: 10px) {
-  @media screen and (max-width: 749px) {
-    .footer .grid {
-      margin-left: 0;
-    }
-  }
-
   @media screen and (min-width: 750px) {
-    .footer__content-top .grid {
-      margin-left: -3rem;
-    }
-
     .footer__content-top .grid__item {
       padding-left: 3rem;
     }
