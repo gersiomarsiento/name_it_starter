@@ -1,0 +1,10 @@
+<script>
+  var Shopify = Shopify || {};
+
+  Shopify.currency = Shopify.currency || {};
+  Shopify.currency.money_format = {{ shop.money_format | json }};
+  Shopify.currency.default_money_format = {{ shop.money_format | json }};
+  Shopify.currency.money_with_currency_format = {{ shop.money_with_currency_format | json }};
+
+  Shopify.cart = {{ cart | json }};
+</script>

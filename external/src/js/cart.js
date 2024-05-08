@@ -3,14 +3,15 @@ import serialize from 'form-serialize';
 
 const defaults = {
   addToCartButton: '.js-go-cart-add-to-cart',
-  cartDrawer: '#lf-cart-drawer',
-  cartDrawerItems: '#lf-cart-drawer-items',
-  cartDrawerFooter: '#lf-cart-drawer-footer',
-  cartDrawerOverlay: '.lf-cart-drawer-overlay',
+  cartDrawer: '#cart-drawer',
+  cartDrawerItems: '#cart-drawer-items',
+  cartDrawerFooter: '#cart-drawer-footer',
+  cartDrawerOverlay: '.cart-drawer-overlay',
   cartDrawerTrigger: '.js-cart-drawer-trigger',
   cartDrawerClose: '.js-cart-drawer-close',
-  cartCount: '.lf-cart-count',
-  lineItem: '.lf-cart-line-item',
+  cartDrawerCartJson: '#ajax-cart-drawer-json',
+  cartCount: '.cart-count',
+  lineItem: '.cart-line-item',
   lineItemUpdate: '.js-cart-line-item-update',
   lineItemQuantity: '.js-cart-line-item-input-quantity',
   moneyFormat: Shopify.currency.default_money_format,
@@ -270,7 +271,7 @@ Alpine.store('cart', {
 
   async updateCartJson(response) {
     const responseHtml = new DOMParser().parseFromString(response.sections['cart-drawer'], 'text/html');
-    this.cart = JSON.parse(responseHtml.getElementById('lf-ajax-cart-drawer-json').textContent);
+    this.cart = JSON.parse(responseHtml.querySelector(defaults.cartDrawerCartJson).textContent);
   },
 
   initClickListeners() {

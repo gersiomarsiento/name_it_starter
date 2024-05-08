@@ -6,7 +6,7 @@
 >
   {%- for item in cart.items -%}
     {%- assign dataLine = forloop.index -%}
-    <div class="lf-cart-line-item grid grid-cols-10 gap-5 py-6 transition-all duration-500 {% unless forloop.last %} border-b border-b-gray-300 {% endunless %}">
+    <div class="cart-line-item grid grid-cols-10 gap-5 py-6 transition-all duration-500 {% unless forloop.last %} border-b border-b-gray-300 {% endunless %}">
       <div class="col-span-3">
         {% if item.image %}
           <a href="{{ item.url }}" class="cart-item__link" tabindex="-1" aria-hidden="true">

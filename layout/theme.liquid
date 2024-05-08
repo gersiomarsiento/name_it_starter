@@ -36,6 +36,7 @@
     {%- endif -%}
 
     {{ content_for_header }}
+    {%- render 'extend-shopify-header' -%}
 
     {% style %}
       {%- assign fontWeights = '300,400,500,600,700' | split: ',' -%}

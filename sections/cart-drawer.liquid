@@ -1,10 +1,10 @@
-<script id="lf-ajax-cart-drawer-json" type="application/json">
+<script id="ajax-cart-drawer-json" type="application/json">
   {{ cart | json }}
 </script>
 
 <section
-  id="lf-cart-drawer"
-  class="lf-cart-drawer overflow-hidden"
+  id="cart-drawer"
+  class="cart-drawer overflow-hidden"
   role="dialog"
   aria-label="Cart Drawer"
   aria-modal="true"
@@ -13,7 +13,7 @@
     {%- render 'cart-drawer-header' -%}
 
     <div
-      id="lf-cart-drawer-items"
+      id="cart-drawer-items"
       class="w-full px-5 flex-1 overflow-y-auto py-5"
     >
       {%- render 'cart-drawer-items' -%}
@@ -23,7 +23,7 @@
   </div>
 </section>
 
-<div class="lf-cart-drawer-overlay"></div>
+<div class="cart-drawer-overlay"></div>
 
 {% schema %}
 {
