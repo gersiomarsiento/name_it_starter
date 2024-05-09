@@ -14,9 +14,23 @@
     },
     "header": {
       "type": "header",
+      "blocks": {
+        "mega_menu_Kzk6Pp": {
+          "type": "mega-menu",
+          "settings": {
+            "megamenu_index": 3,
+            "menu": "main-menu",
+            "image": "shopify:\/\/shop_images\/theme_cover_image.jpg",
+            "description": "<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa iste porro, inventore perferendis nam impedit facere ea adipisci autem iusto ratione doloremque repellat, asperiores, cum eligendi itaque necessitatibus mollitia commodi.<\/p>"
+          }
+        }
+      },
+      "block_order": [
+        "mega_menu_Kzk6Pp"
+      ],
       "settings": {
         "menu": "main-menu",
-        "menu_type_desktop": "mega",
+        "menu_type_desktop": "dropdown",
         "sticky_header_type": "on-scroll-up",
         "color_scheme": "scheme-3",
         "menu_color_scheme": "scheme-3",

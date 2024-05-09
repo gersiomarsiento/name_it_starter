@@ -14,14 +14,6 @@
     margin-left: -1.2rem;
   }
 
-  {%- if section.settings.menu_type_desktop != "drawer" -%}
-    @media screen and (min-width: 990px) {
-      header-drawer {
-        display: none;
-      }
-    }
-  {%- endif -%}
-
   .menu-drawer-container {
     display: flex;
   }
@@ -86,21 +78,28 @@
   data-sticky-type="{{ section.settings.sticky_header_type }}"
   class="header-wrapper color-{{ section.settings.color_scheme }} gradient"
 >
-  <header class="c-container header {% if section.settings.menu_type_desktop == 'drawer' %} drawer-menu{% endif %}{% if section.settings.menu != blank %} header--has-menu{% endif %}">
-    {%- liquid
-      if section.settings.menu != blank
-        render 'header-drawer'
-      endif
-    -%}
+  <header class="c-container header">
+    {% comment %}
+      {%- liquid
+        if section.settings.menu != blank
+          render 'header-drawer'
+        endif
+      -%}
+    {% endcomment %}
 
-    <a href="{{ routes.root_url }}" class="header__heading-link link link--text focus-inset">
+    <a href="{{ routes.root_url }}" class="">
       {%- if settings.logo != blank -%}
         <div class="header__heading-logo-wrapper">
+          {%- capture logoStyle -%}
+            max-width: {{ settings.logo_width }}px;
+          {%- endcapture -%}
+
           {%- render 'image-element',
             image: settings.logo,
             fixed_width: 500,
             preload: true,
-            class: 'header__heading-logo motion-reduce'
+            class: 'header__heading-logo motion-reduce',
+            style: logoStyle
           -%}
         </div>
       {%- else -%}
@@ -108,15 +107,19 @@
       {%- endif -%}
     </a>
 
-    {%- liquid
-      if section.settings.menu != blank
-        if section.settings.menu_type_desktop == 'dropdown'
-          render 'header-dropdown-menu'
-        elsif section.settings.menu_type_desktop != 'drawer'
-          render 'header-mega-menu'
+    {% comment %}
+      {%- liquid
+        if section.settings.menu != blank
+          if section.settings.menu_type_desktop == 'dropdown'
+            render 'header-dropdown-menu'
+          elsif section.settings.menu_type_desktop != 'drawer'
+            render 'header-mega-menu'
+          endif
         endif
-      endif
-    %}
+      %}
+    {% endcomment %}
+
+    {%- render 'header-menu' -%}
 
     <div class="header__icons">
       <div class="hidden lg:flex gap-4">
@@ -298,26 +301,6 @@
     },
     {
       "type": "select",
-      "id": "menu_type_desktop",
-      "options": [
-        {
-          "value": "dropdown",
-          "label": "Dropdown"
-        },
-        {
-          "value": "mega",
-          "label": "Mega Menu"
-        },
-        {
-          "value": "drawer",
-          "label": "Drawer"
-        }
-      ],
-      "default": "dropdown",
-      "label": "Desktop menu type"
-    },
-    {
-      "type": "select",
       "id": "sticky_header_type",
       "options": [
         {
@@ -373,6 +356,41 @@
       "id": "enable_language_selector",
       "default": true,
       "label": "Enable language selector"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "mega-menu",
+      "name": "Mega Menu",
+      "settings": [
+        {
+          "type": "range",
+          "id": "index",
+          "min": 1,
+          "max": 10,
+          "step": 1,
+          "label": "Mega menu index",
+          "info": "The index determines the order of the mega menu.",
+          "default": 1
+        },
+        {
+          "type": "link_list",
+          "id": "menu",
+          "default": "main-menu",
+          "label": "Megamenu main menu"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Megamenu image"
+        },
+        {
+          "type": "richtext",
+          "id": "description",
+          "label": "Megamenu description",
+          "default": "<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa iste porro, inventore perferendis nam impedit facere ea adipisci autem iusto ratione doloremque repellat, asperiores, cum eligendi itaque necessitatibus mollitia commodi.</p>"
+        }
+      ]
     }
   ]
 }

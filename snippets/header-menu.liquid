@@ -1,0 +1,70 @@
+<nav class="">
+  <ul class="flex flex-row items-center gap-8" role="list">
+    {%- for link in section.settings.menu.links -%}
+      {%- assign mainLinkIndex = forloop.index -%}
+      {%- assign megaMenuBlock = blank -%}
+      {%- assign megaMenublocks = section.blocks | where: 'type', 'mega-menu' -%}
+      {%- for block in megaMenublocks -%}
+        {%- if block.settings.index == mainLinkIndex -%}
+          {%- assign megaMenuBlock = block -%}
+          {%- break -%}
+        {%- endif -%}
+      {%- endfor -%}
+
+      <li>
+        {%- if link.links != blank or megaMenuBlock != blank -%}
+          <div
+            x-data="
+              {
+                open: false,
+                toggle() {
+                  this.open = !this.open;
+                },
+                close() {
+                  if (!this.open) return;
+                  this.open = false;
+                }
+              }
+            "
+            x-on:click.outside="close()"
+          >
+            <button
+              class="flex flex-row items-center gap-2"
+              x-on:click="toggle()"
+              x-ref="navLinkMenu"
+              :aria-expanded="open"
+            >
+              <span class="{% if link.child_active %} font-semibold{% endif %}">
+                {{- link.title | escape -}}
+              </span>
+
+              <span
+                class="transition-transform"
+                :class="{ 'rotate-180': open }"
+                aria-hidden="true"
+              >
+                {%- render 'icon-caret' -%}
+              </span>
+            </button>
+
+            {%- if megaMenuBlock != blank -%}
+              {%- render 'megamenu', block: megaMenuBlock -%}
+            {%- else -%}
+              {%- render 'header-nav-dropdown', link: link -%}
+            {%- endif -%}
+          </div>
+        {%- else -%}
+          <a
+            href="{{ link.url }}"
+            class="{% if link.current %} font-semibold{% endif %}"
+            {% if link.current %}
+              aria-current="page"
+            {% endif %}
+          >
+            {{- link.title | escape -}}
+          </a>
+        {%- endif -%}
+      </li>
+    {%- endfor -%}
+  </ul>
+</nav>
