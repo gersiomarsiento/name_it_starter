@@ -247,6 +247,7 @@
     </script>
 
     {%- render 'global-listeners' -%}
+    {%- render 'store-schemes' -%}
   </head>
 
   <body class="gradient {% if cart.item_count == 0 %} cart-is-empty {% endif %} {% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}">
