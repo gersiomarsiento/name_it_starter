@@ -78,18 +78,14 @@
   data-sticky-type="{{ section.settings.sticky_header_type }}"
   class="header-wrapper color-{{ section.settings.color_scheme }} gradient"
 >
-  <header class="c-container header">
-    {% comment %}
-      {%- liquid
-        if section.settings.menu != blank
-          render 'header-drawer'
-        endif
-      -%}
-    {% endcomment %}
+  <header class="c-container grid grid-cols-[1fr_2fr_1fr] lg:grid-cols-[1fr_auto_1fr]">
+    {%- if section.settings.menu != blank -%}
+      {%- render 'header-drawer' -%}
+    {%- endif -%}
 
-    <a href="{{ routes.root_url }}" class="">
-      {%- if settings.logo != blank -%}
-        <div class="header__heading-logo-wrapper">
+    <div class="flex lg-down:justify-center">
+      <a href="{{ routes.root_url }}" class="flex">
+        {%- if settings.logo != blank -%}
           {%- capture logoStyle -%}
             max-width: {{ settings.logo_width }}px;
           {%- endcapture -%}
@@ -101,28 +97,16 @@
             class: 'header__heading-logo motion-reduce',
             style: logoStyle
           -%}
-        </div>
-      {%- else -%}
-        <span class="h2">{{ shop.name }}</span>
-      {%- endif -%}
-    </a>
-
-    {% comment %}
-      {%- liquid
-        if section.settings.menu != blank
-          if section.settings.menu_type_desktop == 'dropdown'
-            render 'header-dropdown-menu'
-          elsif section.settings.menu_type_desktop != 'drawer'
-            render 'header-mega-menu'
-          endif
-        endif
-      %}
-    {% endcomment %}
+        {%- else -%}
+          <span class="h2">{{ shop.name }}</span>
+        {%- endif -%}
+      </a>
+    </div>
 
     {%- render 'header-menu' -%}
 
-    <div class="header__icons">
-      <div class="hidden lg:flex gap-4">
+    <div class="flex flex-row justify-end items-center gap-5">
+      <div class="hidden lg:flex flex-row items-center gap-4">
         {%- if section.settings.enable_country_selector and localization.available_countries.size > 1 -%}
           {%- render 'country-selector', localPosition: 'AnnouncementCountry' -%}
         {% endif %}
@@ -137,39 +121,32 @@
       {%- if shop.customer_accounts_enabled -%}
         <a
           href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}"
-          class="header__icon header__icon--account link focus-inset"
+          class="flex group"
         >
-          <account-icon>
-            {% render 'icon-account' %}
-          </account-icon>
-          <span class="visually-hidden">
-            {%- liquid
-              if customer
-                echo 'customer.account_fallback' | t
-              else
-                echo 'customer.log_in' | t
-              endif
-            -%}
+          {%- render 'icon-account', class: 'h-8 transition-transform group-hover:scale-105' -%}
+          <span class="sr-only">
+            {%- if customer -%}
+              {{- 'customer.account_fallback' | t -}}
+            {%- else -%}
+              {{- 'customer.log_in' | t -}}
+            {%- endif -%}
           </span>
         </a>
       {%- endif -%}
 
-      {%- for block in section.blocks -%}
-        {%- case block.type -%}
-          {%- when '@app' -%}
-            {% render block %}
-        {%- endcase -%}
-      {%- endfor -%}
-
       <a
         href="{{ routes.cart_url }}"
-        class="header__icon header__icon--cart link focus-inset js-cart-drawer-trigger"
-        id="cart-icon-bubble"
+        class="flex js-cart-drawer-trigger relative group"
       >
-        {%- render 'icon-cart' -%}
+        {%- render 'icon-cart', class: 'h-8 transition-transform group-hover:scale-105' -%}
         <span class="sr-only">{{ 'templates.cart.cart' | t }}</span>
-        <div class="cart-count-bubble">
-          <span aria-hidden="true" class="cart-count">{{ cart.item_count }}</span>
+        <div
+          class="absolute -bottom-2 -right-2 rounded-full w-6 h-6 bg-white body-4 flex justify-center items-center show-md"
+          style="color: rgba(var(--color-foreground));"
+        >
+          <span aria-hidden="true" class="cart-count text-black" style="color: rgb(var(--color-background));">
+            {{- cart.item_count -}}
+          </span>
         </div>
       </a>
     </div>
@@ -364,6 +341,12 @@
       "name": "Mega Menu",
       "settings": [
         {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Mega menu"
+        },
+        {
           "type": "range",
           "id": "index",
           "min": 1,
@@ -383,6 +366,11 @@
           "type": "image_picker",
           "id": "image",
           "label": "Megamenu image"
+        },
+        {
+          "type": "url",
+          "id": "cta_link",
+          "label": "CTA Link"
         },
         {
           "type": "richtext",

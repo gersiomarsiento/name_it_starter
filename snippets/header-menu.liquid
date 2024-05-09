@@ -1,4 +1,4 @@
-<nav class="">
+<nav class="hidden lg:flex">
   <ul class="flex flex-row items-center gap-8" role="list">
     {%- for link in section.settings.menu.links -%}
       {%- assign mainLinkIndex = forloop.index -%}
@@ -27,6 +27,7 @@
               }
             "
             x-on:click.outside="close()"
+            @keydown.escape.window="close()"
           >
             <button
               class="flex flex-row items-center gap-2"
@@ -48,9 +49,9 @@
             </button>
 
             {%- if megaMenuBlock != blank -%}
-              {%- render 'megamenu', block: megaMenuBlock -%}
+              {%- render 'header-mega-menu', block: megaMenuBlock -%}
             {%- else -%}
-              {%- render 'header-nav-dropdown', link: link -%}
+              {%- render 'header-dropdown-menu', link: link -%}
             {%- endif -%}
           </div>
         {%- else -%}
