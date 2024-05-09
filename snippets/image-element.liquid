@@ -1,0 +1,70 @@
+{%- assign preload = preload | default: false, allow_false: true -%}
+{%- assign priority = priority | default: false, allow_false: true -%}
+{%- assign max_width = max_width | default: 1920 -%}
+{%- assign fixed_width = fixed_width | default: blank -%}
+{%- assign fixed_height = fixed_height | default: null -%}
+{%- assign crop = crop | default: null -%}
+{%- assign class = class | default: blank -%}
+{%- assign alt = alt | default: image.alt -%}
+{%- assign defaultWidhts = '500,650,800,1000,1200,1500,1920' -%}
+{%- assign widths = widths | default: defaultWidhts -%}
+{%- assign sizes = sizes | default: null -%}
+{%- assign style = style | default: null -%}
+
+{%- liquid
+  assign imageWidth = image.width
+  assign imgUrlWidth = imageWidth
+
+  if fixed_width == blank
+    if max_width > imageWidth
+      assign max_width = imageWidth
+    endif
+
+    assign splitWidths = widths | split: ','
+    for w in splitWidths
+      assign wInt = w | strip | plus: 0
+      if wInt > max_width
+        break
+      endif
+      assign imgUrlWidth = wInt
+    endfor
+  else
+    assign widths = null
+    assign imgUrlWidth = fixed_width
+
+    if fixed_width > imageWidth
+      assign imgUrlWidth = imageWidth
+    endif
+  endif
+
+  if alt == blank
+    assign fileName = image | split: '/' | last
+    assign fileExtension = fileName | split: '.' | last | prepend: '.'
+    assign alt = fileName | remove: fileExtension | replace: '-', ' ' | replace: '_', ' '
+  endif
+
+  assign loading = 'lazy'
+  assign fetchpriority = null
+  if priority or preload
+    assign loading = 'eager'
+    assign fetchpriority = 'high'
+  endif
+
+  if crop != null
+    assign imgUrlWidth = fixed_width
+  endif
+-%}
+
+{{-
+  image
+  | image_url: width: imgUrlWidth, height: fixed_height, crop: crop
+  | image_tag:
+    preload: preload,
+    loading: loading,
+    widths: widths,
+    sizes: sizes,
+    fetchpriority: fetchpriority,
+    class: class,
+    alt: alt,
+    style: style
+-}}
