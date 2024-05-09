@@ -1,6 +1,25 @@
 <script>
   var Shopify = Shopify || {};
 
+  Shopify.routes = Shopify.routes || {};
+  Shopify.routes.account_addresses_url = '{{ routes.account_addresses_url }}';
+  Shopify.routes.account_login_url = '{{ routes.account_login_url }}';
+  Shopify.routes.account_logout_url = '{{ routes.account_logout_url }}';
+  Shopify.routes.account_recover_url = '{{ routes.account_recover_url }}';
+  Shopify.routes.account_register_url = '{{ routes.account_register_url }}';
+  Shopify.routes.account_url = '{{ routes.account_url }}';
+  Shopify.routes.all_products_collection_url = '{{ routes.all_products_collection_url }}';
+  Shopify.routes.cart_add_url = '{{ routes.cart_add_url }}';
+  Shopify.routes.cart_change_url = '{{ routes.cart_change_url }}';
+  Shopify.routes.cart_clear_url = '{{ routes.cart_clear_url }}';
+  Shopify.routes.cart_update_url = '{{ routes.cart_update_url }}';
+  Shopify.routes.cart_url = '{{ routes.cart_url }}';
+  Shopify.routes.collections_url = '{{ routes.collections_url }}';
+  Shopify.routes.predictive_search_url = '{{ routes.predictive_search_url }}';
+  Shopify.routes.product_recommendations_url = '{{ routes.product_recommendations_url }}';
+  Shopify.routes.root_url = '{{ routes.root_url }}';
+  Shopify.routes.search_url = '{{ routes.search_url }}';
+
   Shopify.currency = Shopify.currency || {};
   Shopify.currency.money_format = {{ shop.money_format | json }};
   Shopify.currency.default_money_format = {{ shop.money_format | json }};

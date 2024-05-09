@@ -1,0 +1,53 @@
+<div
+  x-data="
+    {
+      open: false,
+      note: '{{ cart.note }}',
+      toggle() {
+        this.open = !this.open;
+      },
+      async onUpdatedNote() {
+        await fetch(window.Shopify.routes.root + 'cart/update.js', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+          },
+          body: JSON.stringify({
+            note: this.note,
+          }),
+        });
+      }
+    }
+  "
+>
+  <div
+    class="flex flex-row justify-between items-center gap-4 cursor-pointer"
+    x-on:click="toggle()"
+  >
+    <div class="body-3">{{ 'sections.cart.note' | t }}</div>
+    <span
+      class="transition-transform"
+      :class="{ 'rotate-180': open }"
+    >
+      {%- render 'icon-caret', class: 'w-4' -%}
+    </span>
+  </div>
+
+  <div
+    class="w-full"
+    x-show="open"
+    x-collapse
+    style="display: none;"
+  >
+    <label class="sr-only" for="CartDrawer-Note">{{ 'sections.cart.note' | t }}</label>
+    <textarea
+      class="form__input min-h-24 mt-2"
+      name="note"
+      id="CartDrawer-Note"
+      placeholder="{{ 'sections.cart.note' | t }}"
+      x-on:input.debounce="onUpdatedNote"
+      x-model="note"
+    >{{ cart.note }}</textarea>
+  </div>
+</div>

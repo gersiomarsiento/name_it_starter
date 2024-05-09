@@ -1,7 +1,10 @@
 <div class="shadow-sm">
-  <div class="w-full flex flex-row items-center gap-5 justify-between px-5 py-4">
+  <div class="w-full flex flex-row items-center gap-5 justify-between px-4 md:px-5 py-4">
     {%- if section.settings.heading != blank -%}
-      <h2 class="h4">{{ section.settings.heading }}</h2>
+      <h2 class="h4">
+        <span>{{ section.settings.heading }}</span>
+        (<span class="cart-count">{{ cart.item_count }}</span>)
+      </h2>
     {%- endif -%}
 
     <button
