@@ -4,11 +4,11 @@
 
 <div class="flex flex-col w-full h-full rounded-[15px] border border-gray-300 border-opacity-50 relative overflow-hidden">
   <div class="flex flex-col">
-    {%- if product.featured_media -%}
-      <a
-        class="w-full pb-[100%] relative group"
-        href="{{ product.url }}"
-      >
+    <a
+      class="w-full pb-[100%] relative group overflow-hidden"
+      href="{{ product.url }}"
+    >
+      {%- if product.featured_media -%}
         {%- render 'image-element',
           image: product.featured_image,
           max_width: 800,
@@ -20,12 +20,12 @@
           {%- render 'image-element',
             image: product.media[1],
             max_width: 800,
-            class: 'absolute inset-0 w-full h-full object-center object-cover opacity-0 group-hover:opacity-100',
+            class: 'absolute inset-0 w-full h-full object-center object-cover opacity-0 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300',
             priority: priority
           -%}
         {%- endif -%}
-      </a>
-    {%- endif -%}
+      {%- endif -%}
+    </a>
 
     {%- assign showBadges = false -%}
     {%- if product.available == false or product.compare_at_price > product.price -%}

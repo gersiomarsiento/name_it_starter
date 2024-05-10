@@ -2,7 +2,6 @@
   display: grid;
   grid-template-columns: repeat(2, auto);
   grid-template-rows: repeat(2, auto);
-  padding-top: 1rem;
 }
 
 .active-facets-mobile {
@@ -1120,7 +1119,6 @@ input.mobile-facets__checkbox {
   .facets__form-vertical {
     display: flex;
     flex-direction: column;
-    width: 26rem;
   }
 
   .facets__disclosure-vertical {
@@ -1142,14 +1140,6 @@ input.mobile-facets__checkbox {
   .facets__header-vertical {
     padding: 1.5rem 2rem 1.5rem 0;
     font-size: 0.9rem;
-  }
-
-  .facets__display-vertical {
-    padding-bottom: 1.5rem;
-  }
-
-  .facets-vertical .facets-wrapper {
-    padding-right: 3rem;
   }
 
   .facets-vertical .facets-wrapper--no-filters {
