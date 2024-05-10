@@ -1,0 +1,18 @@
+{%- liquid
+  assign price = product.price | default: 1999
+  assign money_price = price | money
+
+  if product.price_varies
+    assign money_price = 'products.product.price.from_price_html' | t: price: money_price
+  endif
+-%}
+
+<div class="body-3">
+  {%- if product.compare_at_price %}
+    <s class="text-gray-500"> {{ product.compare_at_price | money }}--</s>
+  {%- endif -%}
+
+  <span>
+    {{- money_price -}}
+  </span>
+</div>

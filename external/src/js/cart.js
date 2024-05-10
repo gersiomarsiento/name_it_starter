@@ -2,7 +2,7 @@ import Alpine from 'alpinejs';
 import serialize from 'form-serialize';
 
 const defaults = {
-  addToCartButton: '.js-go-cart-add-to-cart',
+  addToCartButton: '.js-add-to-cart',
   cartDrawer: '#cart-drawer',
   cartDrawerItems: '#cart-drawer-items',
   cartDrawerFooter: '#cart-drawer-footer',

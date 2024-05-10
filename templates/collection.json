@@ -11,21 +11,16 @@
     "product-grid": {
       "type": "main-collection-product-grid",
       "settings": {
-        "products_per_page": 24,
-        "columns_desktop": 4,
         "color_scheme": "scheme-1",
-        "image_ratio": "portrait",
-        "image_shape": "default",
+        "products_per_page": 18,
+        "columns_desktop": 3,
+        "columns_mobile": "2",
         "show_secondary_image": true,
-        "show_vendor": false,
-        "show_rating": false,
+        "show_vendor": true,
         "quick_add": "standard",
         "enable_filtering": true,
-        "filter_type": "horizontal",
-        "enable_sorting": true,
-        "columns_mobile": "2",
-        "padding_top": 0,
-        "padding_bottom": 60
+        "filter_type": "vertical",
+        "enable_sorting": true
       }
     }
   },
