@@ -1,0 +1,51 @@
+<div class="flex flex-col gap-y-5 p-5">
+  {%- if block.settings.image != blank -%}
+    <a
+      href="{{ block.settings.cta_link }}"
+      class="block rounded-[15px] overflow-hidden"
+    >
+      {%- render 'image-element', image: block.settings.image, class: 'w-full h-auto', max_width: 800 -%}
+    </a>
+  {%- endif -%}
+
+  {%- if block.settings.description != blank -%}
+    <div class="richtext body-3">
+      {{- block.settings.description -}}
+    </div>
+  {%- endif -%}
+
+  {%- assign linklist = block.settings.menu -%}
+  {%- if linklist != blank -%}
+    <div class="flex flex-col" data-type="menu">
+      {%- for link in linklist.links -%}
+        <nav
+          class="flex flex-col gap-y-5 py-5 border-t border-t-gray-200 border-opacity-20"
+          role="navigation"
+          aria-label="{{ block.settings.title }} {{ link.title }}"
+        >
+          <h4 class="h5">
+            {{- link.title -}}
+          </h4>
+
+          {%- if link.links.size > 0 -%}
+            <ul class="flex flex-col gap-y-3">
+              {%- for childlink in link.links -%}
+                <li>
+                  <a
+                    href="{{ childlink.url }}"
+                    class="flex body-3 hover:underline"
+                    {% if childlink.current %}
+                      aria-current="page"
+                    {% endif %}
+                  >
+                    {{- childlink.title -}}
+                  </a>
+                </li>
+              {%- endfor -%}
+            </ul>
+          {%- endif -%}
+        </nav>
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+</div>
