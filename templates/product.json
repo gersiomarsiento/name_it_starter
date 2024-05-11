@@ -3,6 +3,12 @@
     "main": {
       "type": "main-product",
       "blocks": {
+        "sku_QRke7Q": {
+          "type": "sku",
+          "settings": {
+            "text_style": "body"
+          }
+        },
         "vendor": {
           "type": "text",
           "settings": {
@@ -12,15 +18,18 @@
         },
         "title": {
           "type": "title",
-          "settings": {}
+          "settings": {
+          }
         },
         "rating": {
           "type": "rating",
-          "settings": {}
+          "settings": {
+          }
         },
         "price": {
           "type": "price",
-          "settings": {}
+          "settings": {
+          }
         },
         "variant_picker": {
           "type": "variant_picker",
@@ -31,7 +40,8 @@
         },
         "quantity_selector": {
           "type": "quantity_selector",
-          "settings": {}
+          "settings": {
+          }
         },
         "buy_buttons": {
           "type": "buy_buttons",
@@ -42,16 +52,33 @@
         },
         "description": {
           "type": "description",
-          "settings": {}
-        },
-        "share": {
-          "type": "share",
           "settings": {
-            "share_label": "Share"
+          }
+        },
+        "collapsible_tab_7XHXDr": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Collapsible row",
+            "content": "<p>Row Collapsible<\/p>",
+            "page": ""
+          }
+        },
+        "icon_with_text_tbW7eY": {
+          "type": "icon-with-text",
+          "settings": {
+            "layout": "horizontal",
+            "icon_1": "heart",
+            "image_1": "shopify:\/\/shop_images\/MiguelGamarraLogo.jpg",
+            "heading_1": "Heading",
+            "icon_2": "return",
+            "heading_2": "Heading",
+            "icon_3": "truck",
+            "heading_3": "Heading"
           }
         }
       },
       "block_order": [
+        "sku_QRke7Q",
         "vendor",
         "title",
         "rating",
@@ -60,11 +87,12 @@
         "quantity_selector",
         "buy_buttons",
         "description",
-        "share"
+        "collapsible_tab_7XHXDr",
+        "icon_with_text_tbW7eY"
       ],
       "settings": {
-        "enable_sticky_info": true,
         "color_scheme": "scheme-1",
+        "enable_sticky_info": true,
         "media_size": "small",
         "constrain_to_viewport": true,
         "media_fit": "contain",
@@ -72,10 +100,8 @@
         "media_position": "left",
         "image_zoom": "lightbox",
         "mobile_thumbnails": "hide",
-        "hide_variants": true,
-        "enable_video_looping": false,
-        "padding_top": 60,
-        "padding_bottom": 60
+        "hide_variants": false,
+        "enable_video_looping": true
       }
     },
     "related-products": {
