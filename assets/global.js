@@ -968,7 +968,6 @@ class VariantSelects extends HTMLElement {
     this.updateMasterId();
     this.updateSelectedSwatchValue(event);
     this.toggleAddButton(true, '', false);
-    this.updatePickupAvailability();
     this.removeErrorMessage();
     this.updateVariantStatuses();
 
@@ -1080,18 +1079,6 @@ class VariantSelects extends HTMLElement {
           : window.variantStrings.unavailable_with_option.replace('[value]', value);
       }
     });
-  }
-
-  updatePickupAvailability() {
-    const pickUpAvailability = document.querySelector('pickup-availability');
-    if (!pickUpAvailability) return;
-
-    if (this.currentVariant && this.currentVariant.available) {
-      pickUpAvailability.fetchAvailability(this.currentVariant.id);
-    } else {
-      pickUpAvailability.removeAttribute('available');
-      pickUpAvailability.innerHTML = '';
-    }
   }
 
   removeErrorMessage() {

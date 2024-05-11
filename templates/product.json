@@ -3,12 +3,6 @@
     "main": {
       "type": "main-product",
       "blocks": {
-        "sku_QRke7Q": {
-          "type": "sku",
-          "settings": {
-            "text_style": "body"
-          }
-        },
         "vendor": {
           "type": "text",
           "settings": {
@@ -19,6 +13,12 @@
         "title": {
           "type": "title",
           "settings": {
+          }
+        },
+        "sku_QRke7Q": {
+          "type": "sku",
+          "settings": {
+            "text_style": "body"
           }
         },
         "rating": {
@@ -67,20 +67,17 @@
           "type": "icon-with-text",
           "settings": {
             "layout": "horizontal",
-            "icon_1": "heart",
             "image_1": "shopify:\/\/shop_images\/MiguelGamarraLogo.jpg",
             "heading_1": "Heading",
-            "icon_2": "return",
             "heading_2": "Heading",
-            "icon_3": "truck",
             "heading_3": "Heading"
           }
         }
       },
       "block_order": [
-        "sku_QRke7Q",
         "vendor",
         "title",
+        "sku_QRke7Q",
         "rating",
         "price",
         "variant_picker",
@@ -93,7 +90,6 @@
       "settings": {
         "color_scheme": "scheme-1",
         "enable_sticky_info": true,
-        "media_size": "small",
         "constrain_to_viewport": true,
         "media_fit": "contain",
         "gallery_layout": "thumbnail_slider",
