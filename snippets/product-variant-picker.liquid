@@ -23,7 +23,6 @@
     {%- for option in product.options_with_values -%}
       {%- liquid
         assign picker_type = block.settings.picker_type
-        assign picker_type = 'swatch'
         assign swatch_count = option.values | map: 'swatch' | compact | size
 
         if swatch_count > 0 and block.settings.swatch_shape != 'none'
