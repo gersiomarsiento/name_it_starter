@@ -93,12 +93,16 @@
         {% if option.selected_value == value %}
           checked
         {% endif %}
-        class="sr-only peer"
+        class="sr-only peer {% if option_disabled %} disabled {% endif %}"
       >
 
       <label
         for="{{ input_id }}"
-        class="peer-checked:bg-primary peer-checked:text-white border border-black rounded-full px-6 py-3 lg:px-8 lg:py-4 leading-[1] text-center relative cursor-pointer {% if option_disabled %} text-disabled line-through {% endif %}"
+        class="
+          border border-black rounded-full px-5 py-3 leading-[1] text-center relative cursor-pointer
+          peer-checked:bg-primary peer-checked:text-white
+          peer-[.disabled]:text-disabled peer-[.disabled]:line-through
+        "
       >
         {{- value -}}
       </label>
