@@ -1040,9 +1040,7 @@ class VariantSelects extends HTMLElement {
   }
 
   updateVariantInput() {
-    const productForms = document.querySelectorAll(
-      `#product-form-${this.dataset.section}, #product-form-installment-${this.dataset.section}`
-    );
+    const productForms = document.querySelectorAll(`#product-form-${this.dataset.section}`);
     productForms.forEach((productForm) => {
       const input = productForm.querySelector('input[name="id"]');
       input.value = this.currentVariant.id;
@@ -1326,23 +1324,3 @@ class ProductRecommendations extends HTMLElement {
 }
 
 customElements.define('product-recommendations', ProductRecommendations);
-
-class AccountIcon extends HTMLElement {
-  constructor() {
-    super();
-
-    this.icon = this.querySelector('.icon');
-  }
-
-  connectedCallback() {
-    document.addEventListener('storefront:signincompleted', this.handleStorefrontSignInCompleted.bind(this));
-  }
-
-  handleStorefrontSignInCompleted(event) {
-    if (event?.detail?.avatar) {
-      this.icon?.replaceWith(event.detail.avatar.cloneNode());
-    }
-  }
-}
-
-customElements.define('account-icon', AccountIcon);

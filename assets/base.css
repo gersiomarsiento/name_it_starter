@@ -286,7 +286,6 @@ blockquote {
 .customer .field input,
 .customer select,
 .field__input,
-.form__label,
 .select__select {
   font-size: 1rem;
   line-height: calc(1 + 0.5 / var(--font-body-scale));
@@ -1639,11 +1638,6 @@ input[type='checkbox'] {
 }
 
 /* Form global */
-
-.form__label {
-  display: block;
-  margin-bottom: 0.6rem;
-}
 
 .form__message {
   align-items: center;

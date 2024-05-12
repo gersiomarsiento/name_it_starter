@@ -3,11 +3,7 @@
 {{ 'component-price.css' | asset_url | stylesheet_tag }}
 {{ 'component-slider.css' | asset_url | stylesheet_tag }}
 {{ 'component-deferred-media.css' | asset_url | stylesheet_tag }}
-{% unless product.has_only_default_variant %}
-  {{ 'component-product-variant-picker.css' | asset_url | stylesheet_tag }}
-  {{ 'component-swatch-input.css' | asset_url | stylesheet_tag }}
-  {{ 'component-swatch.css' | asset_url | stylesheet_tag }}
-{% endunless %}
+
 {%- if product.quantity_price_breaks_configured? -%}
   {{ 'component-volume-pricing.css' | asset_url | stylesheet_tag }}
 {%- endif -%}
@@ -40,7 +36,7 @@
           id="ProductInfo-{{ section.id }}"
           data-section="{{ section.id }}"
           data-url="{{ product.url }}"
-          class="product__info-container{% if section.settings.enable_sticky_info %} product__column-sticky{% endif %}"
+          class="product__info-container space-y-3 {% if section.settings.enable_sticky_info %} md:sticky md:top-12 {% endif %}"
         >
           {%- assign product_form_id = 'product-form-' | append: section.id -%}
 
@@ -52,22 +48,20 @@
                 {%- render 'product-block-text', product: product, block: block -%}
               {%- when 'title' -%}
                 {%- render 'product-block-title', product: product, block: block -%}
-              {%- when 'price' -%}
-                {%- render 'product-block-price', product: product, block: block -%}
-              {%- when 'description' -%}
-                {%- render 'product-block-description', product: product, block: block -%}
               {%- when 'sku' -%}
                 {%- render 'product-block-sku', product: product, block: block -%}
-              {%- when 'collapsible_tab' -%}
-                {%- render 'product-block-collapsible-tab', product: product, block: block -%}
+              {%- when 'price' -%}
+                {%- render 'product-block-price', product: product, block: block -%}
+              {%- when 'rating' -%}
+                {%- render 'product-block-rating', product: product -%}
+              {%- when 'variant_picker' -%}
+                {% render 'product-variant-picker', product: product, block: block, product_form_id: product_form_id %}
               {%- when 'quantity_selector' -%}
                 {%- render 'product-block-quantity-selector',
                   product: product,
                   block: block,
                   product_form_id: product_form_id
                 -%}
-              {%- when 'variant_picker' -%}
-                {% render 'product-variant-picker', product: product, block: block, product_form_id: product_form_id %}
               {%- when 'buy_buttons' -%}
                 {%- render 'buy-buttons',
                   block: block,
@@ -75,8 +69,10 @@
                   product_form_id: product_form_id,
                   section_id: section.id
                 -%}
-              {%- when 'rating' -%}
-                {%- render 'product-block-rating', product: product -%}
+              {%- when 'collapsible_tab' -%}
+                {%- render 'product-block-collapsible-tab', product: product, block: block -%}
+              {%- when 'description' -%}
+                {%- render 'product-block-description', product: product, block: block -%}
               {%- when 'icon-with-text' -%}
                 {% render 'icon-with-text', block: block %}
             {%- endcase -%}

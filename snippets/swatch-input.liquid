@@ -8,41 +8,44 @@
   - swatch: {SwatchDrop} the swatch drop
   - product_form_id: {String} id of the form associted with the input
   - checked: {Boolean} default checked status
-  - disabled: {Boolean} default disabled status (optional)
-  - visually_disabled: {Boolean} style the swatch as disabled, but leave the input enabled (optional)
+  - option_disabled: {Boolean} style the swatch as disabled, but leave the input enabled (optional)
   - shape: {String} swatch shape. Accepts 'square', defaults to circle (optional)
-  - help_text: {String} additional content to render inside the label (optional)
-
-  Usage:
-   {% render 'swatch-input',
-      id: input_id,
-      name: input_name,
-      value: input_value,
-      swatch: swatch,
-      product_form_id: product_form_id,
-      checked: checked
-    %}
 {% endcomment %}
 
-<input
-  type="{{ type | default: 'radio' }}"
-  id="{{ id }}"
-  name="{{ name }}"
-  value="{{ value }}"
-  form="{{ product_form_id }}"
-  class="swatch-input__input{% if visually_disabled %} visually-disabled{% endif %}"
-  {% if checked %}
-    checked
-  {% endif %}
-  {% if disabled %}
-    disabled
-  {% endif %}
->
-<label
-  for="{{ id }}"
-  title="{{ value }}"
-  class="swatch-input__label{% if shape == 'square' %} swatch-input__label--square{% endif %}"
->
-  {% render 'swatch', swatch: swatch, shape: shape %}
-  {{ help_text }}
-</label>
+<div class="flex rounded-full has-[:checked]:outline has-[:checked]:outline-2 has-[:checked]:outline-offset-2">
+  <input
+    type="{{ type | default: 'radio' }}"
+    id="{{ id }}"
+    name="{{ name }}"
+    value="{{ value }}"
+    form="{{ product_form_id }}"
+    class="peer sr-only {% if option_disabled %} disabled {% endif %}"
+    {% if checked %}
+      checked
+    {% endif %}
+  >
+
+  {%- liquid
+    assign swatch_value = null
+    if swatch.image
+      assign image_url = swatch.image | image_url: width: 50
+      assign swatch_value = 'url(' | append: image_url | append: ')'
+      assign swatch_focal_point = swatch.image.presentation.focal_point
+    elsif swatch.color
+      assign swatch_value = 'rgb(' | append: swatch.color.rgb | append: ')'
+    endif
+  -%}
+
+  <label
+    for="{{ id }}"
+    title="{{ value }}"
+    class="
+      w-12 lg:w-16 h-12 lg:h-16 rounded-full border border-black block bg-gray-200 cursor-pointer
+      peer-[.disabled]:border-dashed peer-[.disabled]:opacity-50
+    "
+    {% if swatch_value %}
+      style="background: {{ swatch_value }}; {% if swatch_focal_point %} background-position: {{ swatch_focal_point }};{% endif %}"
+    {% endif %}
+  >
+  </label>
+</div>

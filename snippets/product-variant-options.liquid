@@ -62,24 +62,15 @@
     {{ section.id }}-{{ option.position }}-{{ forloop.index0 -}}
   {%- endcapture -%}
 
-  {%- capture label_unavailable -%}
-    <span class="visually-hidden label-unavailable">
-      {{- 'products.product.variant_sold_out_or_unavailable' | t -}}
-    </span>
-  {%- endcapture -%}
-
   {%- if picker_type == 'swatch' -%}
-    {% liquid
+    {%- liquid
       assign checked = false
       if option.selected_value == value
         assign checked = true
       endif
-    %}
-    {%- capture help_text -%}
-      <span class="visually-hidden">{{ value | escape }}</span>
-      {{ label_unavailable }}
-    {%- endcapture -%}
-    {%
+    -%}
+
+    {%-
       render 'swatch-input',
       id: input_id,
       name: option.name,
@@ -87,46 +78,30 @@
       swatch: value.swatch,
       product_form_id: product_form_id,
       checked: checked,
-      visually_disabled: option_disabled,
-      shape: block.settings.swatch_shape,
-      help_text: help_text
-    %}
+      option_disabled: option_disabled,
+      shape: block.settings.swatch_shape
+    -%}
+
   {%- elsif picker_type == 'button' -%}
-    <input
-      type="radio"
-      id="{{ input_id }}"
-      name="{{ option.name }}"
-      value="{{ value | escape }}"
-      form="{{ product_form_id }}"
-      {% if option.selected_value == value %}
-        checked
-      {% endif %}
-      {% if option_disabled %}
-        class="disabled"
-      {% endif %}
-    >
-    <label for="{{ input_id }}">
-      {{ value -}}
-      {{ label_unavailable }}
-    </label>
-  {%- elsif picker_type == 'dropdown' or picker_type == 'swatch_dropdown' -%}
-    <option
-      value="{{ value | escape }}"
-      {% if option.selected_value == value %}
-        selected="selected"
-      {% endif %}
-      {% if swatch_value and picker_type == 'swatch_dropdown' %}
-        data-option-swatch-value="{{ swatch_value }}"
-        {% if swatch_focal_point %}
-          data-option-swatch-focal-point="{{ swatch_focal_point }}"
+    <div class="flex">
+      <input
+        type="radio"
+        id="{{ input_id }}"
+        name="{{ option.name }}"
+        value="{{ value | escape }}"
+        form="{{ product_form_id }}"
+        {% if option.selected_value == value %}
+          checked
         {% endif %}
-      {% endif %}
-    >
-      {% if option_disabled -%}
-        {{- 'products.product.value_unavailable' | t: option_value: value -}}
-      {%- else -%}
+        class="sr-only peer"
+      >
+
+      <label
+        for="{{ input_id }}"
+        class="peer-checked:bg-primary peer-checked:text-white border border-black rounded-full px-6 py-3 lg:px-8 lg:py-4 leading-[1] text-center relative cursor-pointer {% if option_disabled %} text-disabled line-through {% endif %}"
+      >
         {{- value -}}
-      {%- endif %}
-    </option>
+      </label>
+    </div>
   {%- endif -%}
 {%- endfor -%}

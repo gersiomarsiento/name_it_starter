@@ -1,28 +1,24 @@
-<div class="">
-  <div id="price-{{ section.id }}" role="status" {{ block.shopify_attributes }}>
+<div class="flex flex-col gap-y-1">
+  <div
+    id="price-{{ section.id }}"
+    role="status"
+    {{ block.shopify_attributes }}
+  >
     {%- render 'price', product: product, use_variant: true, show_badges: true, price_class: 'price--large' -%}
   </div>
 
   {%- if product.quantity_price_breaks_configured? -%}
-    <div class="volume-pricing-note" id="Volume-Note-{{ section.id }}">
-      <span>{{ 'products.product.volume_pricing.note' | t }}</span>
+    <div
+      id="Volume-Note-{{ section.id }}"
+      class="body-4"
+    >
+      {{- 'products.product.volume_pricing.note' | t -}}
     </div>
   {%- endif -%}
 
-  <div class="product__tax caption rte">
-    {%- if cart.taxes_included -%}
-      {{ 'products.product.include_taxes' | t }}
-    {%- endif -%}
-    {%- if shop.shipping_policy.body != blank -%}
-      {{ 'products.product.shipping_policy_html' | t: link: shop.shipping_policy.url }}
-    {%- endif -%}
-  </div>
-
-  <div {{ block.shopify_attributes }}>
-    {%- assign product_form_installment_id = 'product-form-installment-' | append: section.id -%}
-    {%- form 'product', product, id: product_form_installment_id, class: 'installment caption-large' -%}
-      <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
-      {{ form | payment_terms }}
-    {%- endform -%}
-  </div>
+  {%- if cart.taxes_included -%}
+    <div class="richtext body-4">
+      {{- 'products.product.include_taxes' | t -}}
+    </div>
+  {%- endif -%}
 </div>

@@ -1,5 +1,5 @@
 <p
-  class="product__text inline-richtext{% if block.settings.text_style == 'uppercase' %} caption-with-letter-spacing{% elsif block.settings.text_style == 'subtitle' %} subtitle{% endif %}"
+  class="body-4 {% if block.settings.text_style == 'uppercase' %} uppercase{% endif %}"
   {{ block.shopify_attributes }}
 >
   {{- block.settings.text -}}
