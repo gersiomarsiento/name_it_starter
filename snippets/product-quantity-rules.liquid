@@ -1,0 +1,27 @@
+{% comment %}
+  Only For B2B Customers
+  This will be shown only for B2B customers and when the product has configured quantity and volume pricing rules.
+  https://help.shopify.com/es/manual/b2b/catalogs/quantity-pricing
+{% endcomment %}
+
+<div class="quantity__rules body-5" id="Quantity-Rules-{{ section.id }}">
+  {%- if selected_variant.quantity_rule.increment > 1 -%}
+    <span>
+      {{- 'products.product.quantity.multiples_of' | t: quantity: selected_variant.quantity_rule.increment -}}
+      :
+    </span>
+  {%- endif -%}
+
+  {%- if selected_variant.quantity_rule.min > 1 -%}
+    <span>
+      {{- 'products.product.quantity.minimum_of' | t: quantity: selected_variant.quantity_rule.min -}}
+    </span>
+  {%- endif -%}
+
+  {%- if selected_variant.quantity_rule.max != null -%}
+    <span> - </span>
+    <span>
+      {{- 'products.product.quantity.maximum_of' | t: quantity: selected_variant.quantity_rule.max -}}
+    </span>
+  {%- endif -%}
+</div>

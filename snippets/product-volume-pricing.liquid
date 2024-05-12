@@ -1,0 +1,37 @@
+{% comment %}
+  Only For B2B Customers
+  This will be shown only for B2B customers and when the product has configured quantity and volume pricing rules.
+  https://help.shopify.com/es/manual/b2b/catalogs/quantity-pricing
+{% endcomment %}
+
+{%- if product.quantity_price_breaks_configured? -%}
+  <volume-pricing class="flex flex-col gap-y-1" id="Volume-{{ section.id }}">
+    {%- if selected_variant.quantity_price_breaks.size > 0 -%}
+      <div class="h6">{{ 'products.product.volume_pricing.title' | t }}:</div>
+
+      <ul class="body-4">
+        <li class="flex flex-row justify-between gap-4 px-3 py-2 bg-gray-200">
+          <span>{{ selected_variant.quantity_rule.min }}+</span>
+
+          {%- assign price = selected_variant.price | money_with_currency -%}
+          <span data-text="{{ 'products.product.volume_pricing.price_at_each' | t: price: variant_price }}">
+            {{- 'sections.quick_order_list.each' | t: money: price -}}
+          </span>
+        </li>
+
+        {%- for price_break in selected_variant.quantity_price_breaks -%}
+          {%- assign price_break_price = price_break.price | money_with_currency -%}
+          <li class="flex flex-row justify-between gap-4 px-3 py-2 {% cycle 'bg-gray-100', 'bg-gray-200' %}">
+            <span>
+              {{- price_break.minimum_quantity -}}
+              +
+            </span>
+            <span data-text="{{ 'products.product.volume_pricing.price_at_each' | t: price: price_break_price }}">
+              {{- 'sections.quick_order_list.each' | t: money: price_break_price -}}
+            </span>
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+  </volume-pricing>
+{%- endif -%}

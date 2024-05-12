@@ -186,19 +186,7 @@
   transform: translate(-50%);
 }
 
-.card__information-volume-pricing-note--button + .global-settings-popup.quantity-popover__info .quantity__rules {
-  text-align: left;
-}
-
 @media screen and (min-width: 990px) {
-  .grid--6-col-desktop .card__content quick-add-bulk .quantity {
-    width: auto;
-  }
-
-  .grid--6-col-desktop .card__content quick-add-bulk .quantity__button {
-    width: calc(3rem / var(--font-body-scale));
-  }
-
   .grid--6-col-desktop .card__information-volume-pricing-note--button + .global-settings-popup.quantity-popover__info {
     left: 50%;
     transform: translate(-50%);
@@ -214,10 +202,6 @@
 }
 
 @media screen and (max-width: 749px) {
-  .grid--2-col-tablet-down .card__content quick-add-bulk .quantity__button {
-    width: calc(3.5rem / var(--font-body-scale));
-  }
-
   .grid--2-col-tablet-down
     .card--card
     .card__information-volume-pricing-note--button
@@ -243,10 +227,6 @@
     + .global-settings-popup.quantity-popover__info {
     width: calc(100% + var(--border-width) + 4rem);
   }
-
-  .grid--2-col-tablet-down .card__content quick-add-bulk .quantity {
-    width: auto;
-  }
 }
 
 .card-information quantity-popover volume-pricing {
@@ -254,10 +234,6 @@
 }
 
 @media screen and (max-width: 989px) {
-  .card-information quantity-popover .quantity__rules ~ volume-pricing {
-    margin-top: 0;
-  }
-
   .card-information quantity-popover volume-pricing {
     margin-top: 4.2rem;
   }

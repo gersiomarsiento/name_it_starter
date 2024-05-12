@@ -205,7 +205,6 @@ a.product__text {
   max-width: 100%;
 }
 
-.product--no-media .product-form__quantity,
 .product--no-media .share-button,
 .product--no-media .product__view-details,
 .product--no-media .product-form {
@@ -224,21 +223,8 @@ a.product__text {
   width: 100%;
 }
 
-.product--no-media .product-form__quantity {
-  flex-direction: column;
-  max-width: 100%;
-}
-
-.product-form__quantity .form__label {
-  margin-bottom: 0.6rem;
-}
-
 .price-per-item__label.form__label {
   margin-bottom: 0rem;
-}
-
-.product-form__quantity-top .form__label {
-  margin-bottom: 1.2rem;
 }
 
 .product-form__buttons {
