@@ -28,7 +28,7 @@
   }
 }
 
-.primary-button {
+.button-primary {
   @apply base-button bg-black text-white border-black;
 
   svg {
@@ -45,7 +45,7 @@
   }
 }
 
-.secondary-button {
+.button-secondary {
   @apply base-button bg-white border-black text-black;
 
   svg {
