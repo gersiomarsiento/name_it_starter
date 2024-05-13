@@ -83,7 +83,8 @@ class CartUtils {
     const sections = response.sections;
 
     if (sections['cart-drawer']) {
-      const drawerResponse = new DOMParser().parseFromString(sections['cart-drawer'], 'text/html');
+      const sectionCartDrawerText = sections['cart-drawer'].replace('loading="lazy"', 'loading="eager"');
+      const drawerResponse = new DOMParser().parseFromString(sectionCartDrawerText, 'text/html');
       const drawerItems = document.querySelector(defaults.cartDrawerItems);
       drawerItems.innerHTML = drawerResponse.querySelector(defaults.cartDrawerItems).innerHTML;
 
@@ -124,9 +125,9 @@ Alpine.store('cart', {
     })
       .then((response) => {
         if (response.status == 422) {
-          console.error('Variant is out of stock');
+          alert('Variant is out of stock');
         } else if (response.status != 200) {
-          console.error('An error has occurred! Please try again.');
+          alert('An error has occurred! Please try again.');
         }
 
         if (response.status != 200) {
@@ -154,9 +155,9 @@ Alpine.store('cart', {
     })
       .then((response) => {
         if (response.status == 422) {
-          console.error('Variant is out of stock');
+          alert('Variant is out of stock');
         } else if (response.status != 200) {
-          console.error('An error has occurred! Please try again.');
+          alert('An error has occurred! Please try again.');
         }
 
         if (response.status != 200) {
@@ -178,13 +179,7 @@ Alpine.store('cart', {
 
     let form = addToCartButton.closest('form');
     let formSerialize = serialize(form, { hash: true });
-
-    const items = [
-      {
-        id: formSerialize.id,
-        quantity: formSerialize.quantity,
-      },
-    ];
+    const items = [formSerialize];
 
     let formData = {
       items,

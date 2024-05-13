@@ -10,6 +10,7 @@ import focus from '@alpinejs/focus';
 import collapse from '@alpinejs/collapse';
 import anchor from '@alpinejs/anchor';
 
+import './js/product';
 import './js/cart';
 
 Alpine.plugin(focus);

@@ -1047,16 +1047,6 @@ a.product__text {
   margin-bottom: var(--icon-size);
 }
 
-/* Product-thumbnail snippet */
-
-.product-media-container {
-  --aspect-ratio: var(--preview-ratio);
-  --ratio-percent: calc(1 / var(--aspect-ratio) * 100%);
-  position: relative;
-  width: 100%;
-  max-width: calc(100% - calc(var(--media-border-width) * 2));
-}
-
 .product-media-container.constrain-height {
   /* arbitrary offset value based on average theme spacing and header height */
   --viewport-offset: 400px;
