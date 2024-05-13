@@ -3,9 +3,9 @@
     "banner": {
       "type": "main-collection-banner",
       "settings": {
+        "color_scheme": "scheme-4",
         "show_collection_description": true,
-        "show_collection_image": true,
-        "color_scheme": "scheme-1"
+        "show_collection_image": true
       }
     },
     "product-grid": {
