@@ -4,8 +4,7 @@
   width: 1.8rem;
 }
 
-.loading__spinner {
-  width: 1.8rem;
+.loading__spinnert:not(.hidden) {
   display: inline-block;
 }
 

@@ -1088,6 +1088,18 @@ class VariantSelects extends HTMLElement {
   }
 
   updateMedia(html) {
+    if (this.currentVariant.featured_media) {
+      const mediaSlide = document.querySelector(
+        `[data-media-id=${this.dataset.section}-${this.currentVariant.featured_media.id}`
+      );
+
+      if (mediaSlide) {
+        const slidePosition = mediaSlide.dataset.position;
+        window.productGalleryGoToSlide(slidePosition);
+      }
+    }
+
+    return;
     const mediaGallerySource = document.querySelector(`[id^="MediaGallery-${this.dataset.section}"] ul`);
     const mediaGalleryDestination = html.querySelector(`[id^="MediaGallery-${this.dataset.section}"] ul`);
 

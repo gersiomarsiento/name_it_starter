@@ -1,8 +1,6 @@
 {{ 'section-main-product.css' | asset_url | stylesheet_tag }}
 {{ 'component-accordion.css' | asset_url | stylesheet_tag }}
 {{ 'component-price.css' | asset_url | stylesheet_tag }}
-{{ 'component-slider.css' | asset_url | stylesheet_tag }}
-{{ 'component-deferred-media.css' | asset_url | stylesheet_tag }}
 
 <script src="{{ 'product-info.js' | asset_url }}" defer="defer"></script>
 {%- if product.quantity_price_breaks_configured? -%}
@@ -14,15 +12,14 @@
   class="py-10 gradient color-{{ section.settings.color_scheme }}"
   data-section="{{ section.id }}"
 >
-  {% assign variant_images = product.images | where: 'attached_to_variant?', true | map: 'src' %}
   <div class="c-container">
     <div class="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-10 product">
       <div class="w-full">
         <a class="skip-to-content-link button visually-hidden quick-add-hidden" href="#ProductInfo-{{ section.id }}">
-          {{ 'accessibility.skip_to_product_info' | t }}
+          {{- 'accessibility.skip_to_product_info' | t -}}
         </a>
 
-        {%- render 'product-media-gallery', variant_images: variant_images -%}
+        {%- render 'product-media-gallery' -%}
       </div>
 
       <div class="w-full">

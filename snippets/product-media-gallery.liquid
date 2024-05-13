@@ -6,7 +6,7 @@
   x-data="product_gallery"
 >
   <div
-    class="w-full overflow-hidden rounded-[10px] shadow-sm"
+    class="w-full overflow-hidden rounded-[10px] shadow-sm relative"
     x-ref="swiperContainer"
   >
     {%- assign media_position = 0 -%}
@@ -30,6 +30,25 @@
         {%- render 'product-media', media: media, position: media_position -%}
       {%- endfor -%}
     </ul>
+
+    {%- if media_position > 1 -%}
+      <button
+        class="inset-center-y z-[1] left-3 h-7 w-7 bg-white rounded-full flex flex-col justify-center items-center shadow-md"
+        x-ref="prev_arrow"
+        aria-label="Previous slide"
+        aria-disabled="true"
+      >
+        {%- render 'icon-caret', class: 'w-4 rotate-90' -%}
+      </button>
+
+      <button
+        class="inset-center-y z-[1] right-3 h-7 w-7 bg-white rounded-full flex flex-col justify-center items-center shadow-md"
+        x-ref="next_arrow"
+        aria-label="Next slide"
+      >
+        {%- render 'icon-caret', class: 'w-4 -rotate-90' -%}
+      </button>
+    {%- endif -%}
   </div>
 
   <div class="w-full flex justify-center mt-3">
