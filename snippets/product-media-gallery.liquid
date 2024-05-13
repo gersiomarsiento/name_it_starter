@@ -44,10 +44,12 @@
   data-desktop-layout="{{ section.settings.gallery_layout }}"
 >
   <div id="GalleryStatus-{{ section.id }}" class="visually-hidden" role="status"></div>
+
   <slider-component id="GalleryViewer-{{ section.id }}" class="slider-mobile-gutter">
     <a class="skip-to-content-link button visually-hidden quick-add-hidden" href="#ProductInfo-{{ section.id }}">
       {{ 'accessibility.skip_to_product_info' | t }}
     </a>
+
     <ul
       id="Slider-Gallery-{{ section.id }}"
       class="product__media-list contains-media grid grid--peek list-unstyled slider slider--mobile"
@@ -77,6 +79,7 @@
           %}
         </li>
       {%- endif -%}
+
       {%- for media in product.media -%}
         {% if media_position >= limit
           or media_position >= 1
@@ -142,20 +145,7 @@
       </button>
     </div>
   </slider-component>
-  {%- if first_3d_model -%}
-    <button
-      class="button button--full-width product__xr-button"
-      type="button"
-      aria-label="{{ 'products.product.xr_button_label' | t }}"
-      data-shopify-xr
-      data-shopify-model3d-id="{{ first_3d_model.id }}"
-      data-shopify-title="{{ product.title | escape }}"
-      data-shopify-xr-hidden
-    >
-      {% render 'icon-3d-model' %}
-      {{ 'products.product.xr_button' | t }}
-    </button>
-  {%- endif -%}
+
   {%- liquid
     assign is_not_limited_to_single_item = false
     if limit == null or limit > 1

@@ -164,14 +164,6 @@ a.product__text {
   max-width: 100%;
 }
 
-.product--no-media .share-button,
-.product--no-media .product__view-details {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-}
-
 .price-per-item__label.form__label {
   margin-bottom: 0rem;
 }
@@ -963,26 +955,6 @@ a.product__text {
   content: '';
   display: block;
   padding-bottom: 100%;
-}
-
-.product:not(.featured-product) .product__view-details {
-  display: none;
-}
-
-.product__view-details {
-  display: block;
-  text-decoration: none;
-}
-
-.product__view-details:hover {
-  text-decoration: underline;
-  text-underline-offset: 0.3rem;
-}
-
-.product__view-details .icon {
-  width: 1.2rem;
-  margin-left: 1.2rem;
-  flex-shrink: 0;
 }
 
 /* Inventory status */
