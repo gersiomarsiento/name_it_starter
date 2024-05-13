@@ -1,0 +1,12 @@
+<ul class="flex flex-col gap-y-4" {{ block.shopify_attributes }}>
+  {%- for link in block.settings.menu.links -%}
+    <li>
+      <a
+        href="{{ link.url }}"
+        class="hover:underline"
+      >
+        {{- link.title -}}
+      </a>
+    </li>
+  {%- endfor -%}
+</ul>

@@ -1,0 +1,15 @@
+<div class="flex flex-col gap-y-5" {{ block.shopify_attributes }}>
+  {%- if block.settings.image != blank -%}
+    <div style="max-width: min(100%, {{ block.settings.image_width }}px);">
+      {%- render 'image-element', image: block.settings.image, max_width: 800 -%}
+    </div>
+  {%- endif -%}
+
+  {%- if block.settings.description != blank -%}
+    <div class="richtext">{{ block.settings.description }}</div>
+  {%- endif -%}
+
+  {%- if block.settings.show_social -%}
+    {%- render 'social-icons' -%}
+  {%- endif -%}
+</div>

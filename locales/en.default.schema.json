@@ -154,26 +154,6 @@
         }
       }
     },
-    "brand_information": {
-      "name": "Brand information",
-      "settings": {
-        "paragraph": {
-          "content": "Add a brand description to your store's footer."
-        },
-        "brand_headline": {
-          "label": "Headline"
-        },
-        "brand_description": {
-          "label": "Description"
-        },
-        "brand_image": {
-          "label": "Image"
-        },
-        "brand_image_width": {
-          "label": "Image width"
-        }
-      }
-    },
     "typography": {
       "name": "Typography",
       "settings": {
