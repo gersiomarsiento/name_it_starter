@@ -528,7 +528,6 @@
 
 .facets__price {
   display: flex;
-  padding: 2rem;
 }
 
 .facets__price .field + .field-currency {

@@ -133,7 +133,7 @@
                       class="facets__summary caption-large focus-offset"
                       aria-label="{{ filter.label | escape }} ({{ 'products.facets.filters_selected.one' | t: count: filter.active_values.size }})"
                     >
-                      <div>
+                      <div class="flex flex-row gap-3 justify-between pt-5">
                         <span class="facets__summary-label">
                           {{- filter.label | escape }}
                           {%- if filter_type == 'vertical' -%}
@@ -321,7 +321,7 @@
                     {% endif %}
                   >
                     <summary class="facets__summary caption-large focus-offset">
-                      <div>
+                      <div class="flex flex-row gap-3 justify-between pt-5">
                         <span>{{ filter.label | escape }}</span>
                         {% render 'icon-caret' %}
                       </div>
