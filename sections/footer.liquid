@@ -1,4 +1,4 @@
-<footer class="border-t border-t-gray-400 color-{{ section.settings.color_scheme }} gradient">
+<footer class="border-t border-t-gray-400 border-opacity-20 color-{{ section.settings.color_scheme }} gradient">
   <div class="c-container flex flex-col gap-y-12 py-12">
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-12">
       {%- for block in section.blocks -%}
@@ -25,8 +25,12 @@
     </div>
 
     {%- if section.settings.newsletter_enable -%}
-      <div class="footer-block--newsletter">
-        {%- render 'footer-newsletter' -%}
+      <div class="w-full flex flex-col gap-y-5 max-w-[500px] mx-auto">
+        {%- if section.settings.newsletter_heading != blank -%}
+          <h2 class="h4 text-center">{{ section.settings.newsletter_heading }}</h2>
+        {%- endif -%}
+
+        {%- render 'newsletter-form', localPosition: 'FooterNewsletter' -%}
       </div>
     {%- endif -%}
   </div>
@@ -36,7 +40,7 @@
     {%- assign enableLocalization = true -%}
   {%- endif -%}
 
-  <div class="w-full border-t border-t-gray-400 py-8">
+  <div class="w-full border-t border-t-gray-400 border-opacity-20 py-8">
     <div class="c-container flex flex-col gap-8">
       {%- if enableLocalization or section.settings.payment_enable -%}
         <div class="flex flex-col md:flex-row md:items-center {% if enableLocalization %} md:justify-between {% else %} md:justify-center {% endif %} gap-8">

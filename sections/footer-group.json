@@ -8,14 +8,13 @@
         "heading": {
           "type": "heading",
           "settings": {
-            "heading": "Subscribe to our emails",
-            "heading_size": "h1"
+            "heading": "Subscribe to our emails"
           }
         },
         "paragraph": {
           "type": "paragraph",
           "settings": {
-            "text": "<p>Be the first to know about new collections and exclusive offers.<\/p>"
+            "text": "<p>Be the first to know about new collections and exclusive offers<\/p>"
           }
         },
         "email-form": {
@@ -30,10 +29,7 @@
         "email-form"
       ],
       "settings": {
-        "color_scheme": "scheme-3",
-        "full_width": true,
-        "padding_top": 28,
-        "padding_bottom": 0
+        "color_scheme": "scheme-3"
       }
     },
     "footer": {
