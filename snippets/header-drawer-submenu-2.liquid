@@ -11,6 +11,7 @@
       }
     }
   "
+  @nav-drawer-closed.window="onCloseSubmenu2()"
 >
   <button
     type="button"
@@ -23,14 +24,16 @@
   </button>
 
   <div
-    class="transition-all absolute h-full w-full top-0 bottom-0 left-0 z-[1] translate-x-full gradient color-{{ section.settings.menu_color_scheme }}"
+    class="fixed w-full max-w-[420px] h-[calc(100%-80px)] top-[80px] z-[5] gradient color-{{ section.settings.menu_color_scheme }}"
+    style="display:none;"
     x-trap="openSubMenu2"
-    :class="
-      {
-        'translate-x-0': openSubMenu2,
-        'translate-x-full': !openSubMenu2
-      }
-    "
+    x-show="openSubMenu2"
+    x-transition:enter="transition-all ease-out duration-200"
+    x-transition:enter-start="-left-full"
+    x-transition:enter-end="left-0"
+    x-transition:leave="transition-all ease-in duration-200"
+    x-transition:leave-start="left-0"
+    x-transition:leave-end="-left-full"
   >
     <div class="relative h-full grid grid-rows-[auto_1fr]">
       <button
