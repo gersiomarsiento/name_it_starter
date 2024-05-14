@@ -32,12 +32,12 @@
 
     <button
       type="submit"
-      class="px-4 h-full"
+      class="px-4 h-full group"
       name="commit"
       id="Subscribe"
       aria-label="{{ 'newsletter.button_label' | t }}"
     >
-      {% render 'icon-arrow' %}
+      {%- render 'icon-arrow', class: 'w-6 group-hover:scale-[1.3] transition-all' -%}
     </button>
   </div>
 

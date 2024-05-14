@@ -487,17 +487,6 @@
         "name": "Announcement bar"
       }
     },
-    "apps": {
-      "name": "Apps",
-      "settings": {
-        "include_margins": {
-          "label": "Make section margins the same as theme"
-        }
-      },
-      "presets": {
-        "name": "Apps"
-      }
-    },
     "collage": {
       "name": "Collage",
       "settings": {
@@ -645,18 +634,6 @@
       "name": "Contact Form",
       "presets": {
         "name": "Contact form"
-      }
-    },
-    "custom-liquid": {
-      "name": "Custom Liquid",
-      "settings": {
-        "custom_liquid": {
-          "label": "Liquid code",
-          "info": "Add app snippets or other code to create advanced customizations. [Learn more](https://shopify.dev/docs/api/liquid)"
-        }
-      },
-      "presets": {
-        "name": "Custom Liquid"
       }
     },
     "featured-blog": {
