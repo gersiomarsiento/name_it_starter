@@ -16,7 +16,11 @@
       id="cart-drawer-items"
       class="w-full px-4 md:px-5 flex-1 overflow-y-auto"
     >
-      {%- render 'cart-drawer-items' -%}
+      {%- if cart.empty? -%}
+        {%- render 'cart-drawer-empty' -%}
+      {%- else -%}
+        {%- render 'cart-drawer-items' -%}
+      {%- endif -%}
     </div>
 
     {%- render 'cart-drawer-footer' -%}
