@@ -1003,8 +1003,6 @@ deferred-media {
 .button,
 .shopify-challenge__button,
 .customer button,
-button.shopify-payment-button__button--unbranded,
-.shopify-payment-button [role='button'],
 .cart__dynamic-checkout-buttons [role='button'],
 .cart__dynamic-checkout-buttons iframe {
   --shadow-horizontal-offset: var(--buttons-shadow-horizontal-offset);
@@ -1020,14 +1018,9 @@ button.shopify-payment-button__button--unbranded,
 
 .button,
 .shopify-challenge__button,
-.customer button,
-button.shopify-payment-button__button--unbranded {
+.customer button {
   min-width: calc(12rem + var(--buttons-border-width) * 2);
   min-height: calc(4.5rem + var(--buttons-border-width) * 2);
-}
-
-.shopify-payment-button__button--branded {
-  z-index: auto;
 }
 
 .cart__dynamic-checkout-buttons iframe {
@@ -1057,8 +1050,6 @@ button.shopify-payment-button__button--unbranded {
 .button:before,
 .shopify-challenge__button:before,
 .customer button:before,
-.shopify-payment-button__button--unbranded:before,
-.shopify-payment-button [role='button']:before,
 .cart__dynamic-checkout-buttons [role='button']:before {
   content: '';
   position: absolute;
@@ -1074,8 +1065,7 @@ button.shopify-payment-button__button--unbranded {
 
 .button:after,
 .shopify-challenge__button:after,
-.customer button:after,
-.shopify-payment-button__button--unbranded:after {
+.customer button:after {
   content: '';
   position: absolute;
   top: var(--buttons-border-width);
@@ -1092,8 +1082,7 @@ button.shopify-payment-button__button--unbranded {
 
 .button:not([disabled]):hover::after,
 .shopify-challenge__button:hover::after,
-.customer button:hover::after,
-.shopify-payment-button__button--unbranded:hover::after {
+.customer button:hover::after {
   --border-offset: 1.3px;
   box-shadow: 0 0 0 calc(var(--buttons-border-width) + var(--border-offset))
       rgba(var(--color-button-text), var(--border-opacity)),
@@ -1106,19 +1095,13 @@ button.shopify-payment-button__button--unbranded {
 
 .button:focus-visible,
 .button:focus,
-.button.focused,
-.shopify-payment-button__button--unbranded:focus-visible,
-.shopify-payment-button [role='button']:focus-visible,
-.shopify-payment-button__button--unbranded:focus,
-.shopify-payment-button [role='button']:focus {
+.button.focused {
   outline: 0;
   box-shadow: 0 0 0 0.3rem rgb(var(--color-background)), 0 0 0 0.5rem rgba(var(--color-foreground), 0.5),
     0 0 0.5rem 0.4rem rgba(var(--color-foreground), 0.3);
 }
 
-.button:focus:not(:focus-visible):not(.focused),
-.shopify-payment-button__button--unbranded:focus:not(:focus-visible):not(.focused),
-.shopify-payment-button [role='button']:focus:not(:focus-visible):not(.focused) {
+.button:focus:not(:focus-visible):not(.focused) {
   box-shadow: inherit;
 }
 
@@ -2740,11 +2723,7 @@ details-disclosure > details {
 
   .button:focus-visible,
   .button:focus,
-  .button.focused,
-  .shopify-payment-button__button--unbranded:focus-visible,
-  .shopify-payment-button [role='button']:focus-visible,
-  .shopify-payment-button__button--unbranded:focus,
-  .shopify-payment-button [role='button']:focus {
+  .button.focused {
     outline: solid transparent 1px;
   }
 
@@ -2970,7 +2949,6 @@ details-disclosure > details {
   .animate--hover-3d-lift .button:not(.button--tertiary),
   .animate--hover-3d-lift .shopify-challenge__button,
   .animate--hover-3d-lift .customer button,
-  .animate--hover-3d-lift .shopify-payment-button__button,
   .animate--hover-3d-lift .deferred-media .deferred-media__poster-button {
     transition: transform var(--duration-long) ease, box-shadow var(--duration-long) ease;
     transform-origin: center;
@@ -2981,7 +2959,6 @@ details-disclosure > details {
   .animate--hover-3d-lift .button:not(.button--tertiary):not([disabled]):hover,
   .animate--hover-3d-lift .shopify-challenge__button:not([disabled]):hover,
   .animate--hover-3d-lift .customer button:not([disabled]):hover,
-  .animate--hover-3d-lift .shopify-payment-button__button:hover,
   .animate--hover-3d-lift .deferred-media:hover .deferred-media__poster-button {
     transition: transform var(--duration-extended) ease, box-shadow var(--duration-long) ease; /* Slow the card transition speed while hover is active. */
     transform: rotate(1deg);
@@ -3085,8 +3062,7 @@ details-disclosure > details {
 
   .animate--hover-vertical-lift .button:not(.button--tertiary),
   .animate--hover-vertical-lift .shopify-challenge__button,
-  .animate--hover-vertical-lift .customer button,
-  .animate--hover-vertical-lift .shopify-payment-button__button {
+  .animate--hover-vertical-lift .customer button {
     transition: transform var(--duration-default) var(--ease-out-slow);
   }
 
@@ -3107,21 +3083,18 @@ details-disclosure > details {
 
   .animate--hover-vertical-lift .button:not(.button--tertiary):not([disabled]):hover,
   .animate--hover-vertical-lift .shopify-challenge__button:not([disabled]):hover,
-  .animate--hover-vertical-lift .customer button:not([disabled]):hover,
-  .animate--hover-vertical-lift .shopify-payment-button__button:hover {
+  .animate--hover-vertical-lift .customer button:not([disabled]):hover {
     transform: translateY(-0.25rem);
   }
 
   .animate--hover-vertical-lift .button:not(.button--tertiary):not([disabled]):active,
   .animate--hover-vertical-lift .shopify-challenge__button:not([disabled]):active,
-  .animate--hover-vertical-lift .customer button:not([disabled]):active,
-  .animate--hover-vertical-lift .shopify-payment-button__button:active {
+  .animate--hover-vertical-lift .customer button:not([disabled]):active {
     transform: translateY(0);
   }
 
   .animate--hover-vertical-lift .button:not([disabled]):hover:after,
-  .animate--hover-vertical-lift .customer button:not([disabled]):hover:after,
-  .animate--hover-vertical-lift .shopify-payment-button__button:not([disabled]):hover:after {
+  .animate--hover-vertical-lift .customer button:not([disabled]):hover:after {
     --border-offset: 0.3px; /* Default is 1.3px as defined above in this file. This removes 1px to prevent the border from growing on buttons when this effect is on.  */
     box-shadow: 0 0 0 calc(var(--buttons-border-width) + var(--border-offset))
         rgba(var(--color-button-text), var(--border-opacity)),

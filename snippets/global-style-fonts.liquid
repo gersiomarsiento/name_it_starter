@@ -1,0 +1,22 @@
+{%- assign styleTag = styleTag | default: true, allow_false: true -%}
+{% if styleTag %}
+  <style>  
+{% endif %}
+
+  {%- assign fontWeights = '300,400,500,600,700' | split: ',' -%}
+  {%- for weight in fontWeights -%}
+    {{ settings.type_body_font | font_modify: 'weight', weight | font_face: font_display: 'swap' }}
+
+    {%- if settings.type_header_font.family != settings.type_body_font.family -%}
+      {{ settings.type_header_font | font_modify: 'weight', weight | font_face: font_display: 'swap' }}
+    {%- endif -%}
+  {%- endfor -%}
+
+  :root {
+    --font-body-family: {{ settings.type_body_font.family }}, {{ settings.type_body_font.fallback_families }};
+    --font-heading-family: {{ settings.type_header_font.family }}, {{ settings.type_header_font.fallback_families }};
+  }
+
+{%- if styleTag -%}
+  </style>  
+{%- endif -%}
