@@ -5,16 +5,15 @@
       drawerIsOpen: false,
       toggleDrawer() {
         this.drawerIsOpen = !this.drawerIsOpen;
-        document.body.classList.toggle('overflow-hidden', this.drawerIsOpen);
       },
       closeDrawer() {
         if (!this.drawerIsOpen) return;
         this.drawerIsOpen = false;
-        document.body.classList.remove('overflow-hidden');
       },
       init() {
         this.$watch('drawerIsOpen', () => {
           if (!this.drawerIsOpen) this.$dispatch('nav-drawer-closed');
+          document.body.classList.toggle('overflow-hidden', this.drawerIsOpen);
         });
       }
     }

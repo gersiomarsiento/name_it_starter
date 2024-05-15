@@ -492,15 +492,7 @@ h3 .icon-arrow,
   width: calc(var(--font-heading-scale) * 1.5rem);
 }
 
-/* arrow animation */
-.animate-arrow .icon-arrow path {
-  transform: translateX(-0.25rem);
-  transition: transform var(--duration-short) ease;
-}
 
-.animate-arrow:hover .icon-arrow path {
-  transform: translateX(-0.05rem);
-}
 
 /* base-details-summary */
 summary {
