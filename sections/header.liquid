@@ -1,10 +1,3 @@
-<link rel="stylesheet" href="{{ 'component-search.css' | asset_url }}" media="print" onload="this.media='all'">
-{%- if settings.predictive_search_enabled -%}
-  <link rel="stylesheet" href="{{ 'component-price.css' | asset_url }}" media="print" onload="this.media='all'">
-{%- endif -%}
-<script src="{{ 'details-modal.js' | asset_url }}" defer="defer"></script>
-<script src="{{ 'search-form.js' | asset_url }}" defer="defer"></script>
-
 <sticky-header
   data-sticky-type="{{ section.settings.sticky_header_type }}"
   class="header-wrapper color-{{ section.settings.color_scheme }} gradient"
@@ -18,10 +11,13 @@
         const header = document.querySelector('.section-header');
         const announcement = document.querySelector('.section-announcement');
         const headerHeight = header.offsetHeight;
+        const windowHeight = window.innerHeight;
 
-        document.documentElement.style.setProperty('--header-height', `${headerHeight}px`);
-        document.documentElement.style.setProperty('--viewport-height', `${window.innerHeight}px`);
-        document.documentElement.style.setProperty('--header-bottom-position', `${headerHeight + announcement.offsetHeight}px`);
+        const doctStyle = document.documentElement.style;
+        doctStyle.setProperty('--header-height', `${headerHeight}px`);
+        doctStyle.setProperty('--header-bottom-position', `${headerHeight + announcement.offsetHeight}px`);
+        doctStyle.setProperty('--viewport-height', `${windowHeight}px`);
+        doctStyle.setProperty('--viewport-available-height', `${windowHeight - headerHeight - announcement.offsetHeight}px`);
       }
     }
   "
@@ -52,17 +48,19 @@
     {%- render 'header-menu' -%}
 
     <div class="flex flex-row justify-end items-center gap-5">
-      <div class="hidden lg:flex flex-row items-center gap-4">
-        {%- if section.settings.enable_country_selector and localization.available_countries.size > 1 -%}
-          {%- render 'country-selector', localPosition: 'AnnouncementCountry' -%}
-        {% endif %}
+      {%- if section.settings.enable_country_selector or section.settings.enable_language_selector -%}
+        <div class="hidden lg:flex flex-row items-center gap-4">
+          {%- if section.settings.enable_country_selector and localization.available_countries.size > 1 -%}
+            {%- render 'country-selector', localPosition: 'AnnouncementCountry' -%}
+          {% endif %}
 
-        {%- if section.settings.enable_language_selector and localization.available_languages.size > 1 -%}
-          {%- render 'language-selector', localPosition: 'AnnouncementLanguageForm' -%}
-        {%- endif -%}
-      </div>
+          {%- if section.settings.enable_language_selector and localization.available_languages.size > 1 -%}
+            {%- render 'language-selector', localPosition: 'AnnouncementLanguageForm' -%}
+          {%- endif -%}
+        </div>
+      {%- endif -%}
 
-      {% render 'header-search', input_id: 'Search-In-Modal' %}
+      {% render 'header-search' %}
 
       {%- if shop.customer_accounts_enabled -%}
         <a
@@ -120,7 +118,6 @@
 
       this.currentScrollTop = 0;
       this.preventReveal = false;
-      this.predictiveSearch = this.querySelector('predictive-search');
 
       this.onScrollHandler = this.onScroll.bind(this);
       this.hideHeaderOnScrollUp = () => (this.preventReveal = true);
@@ -152,8 +149,6 @@
     onScroll() {
       const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
-      if (this.predictiveSearch && this.predictiveSearch.isOpen) return;
-
       if (scrollTop > this.currentScrollTop && scrollTop > this.headerBounds.bottom) {
         this.header.classList.add('scrolled-past-header');
         if (this.preventHide) return;
@@ -183,7 +178,6 @@
       if (this.headerIsAlwaysSticky) return;
       this.header.classList.add('shopify-section-header-hidden', 'shopify-section-header-sticky');
       this.closeMenuDisclosure();
-      this.closeSearchModal();
     }
 
     reveal() {
@@ -200,11 +194,6 @@
     closeMenuDisclosure() {
       this.disclosures = this.disclosures || this.header.querySelectorAll('header-menu');
       this.disclosures.forEach((disclosure) => disclosure.close());
-    }
-
-    closeSearchModal() {
-      this.searchModal = this.searchModal || this.header.querySelector('details-modal');
-      this.searchModal.close(false);
     }
   }
 

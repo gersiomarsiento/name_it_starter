@@ -273,9 +273,6 @@
         "header": {
           "content": "Search suggestions"
         },
-        "predictive_search_enabled": {
-          "label": "Enable search suggestions"
-        },
         "predictive_search_show_vendor": {
           "label": "Show product vendor",
           "info": "Visible when search suggestions enabled."

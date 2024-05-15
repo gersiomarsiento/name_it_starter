@@ -1340,12 +1340,6 @@
       },
       {
         "type": "checkbox",
-        "id": "predictive_search_enabled",
-        "default": true,
-        "label": "t:settings_schema.search_input.settings.predictive_search_enabled.label"
-      },
-      {
-        "type": "checkbox",
         "id": "predictive_search_show_vendor",
         "default": false,
         "label": "t:settings_schema.search_input.settings.predictive_search_show_vendor.label",
