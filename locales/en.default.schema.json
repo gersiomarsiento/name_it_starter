@@ -1731,9 +1731,6 @@
     "main-page": {
       "name": "Page"
     },
-    "main-password-footer": {
-      "name": "Password footer"
-    },
     "main-password-header": {
       "name": "Password header",
       "settings": {
