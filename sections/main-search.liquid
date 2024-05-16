@@ -58,7 +58,6 @@
                 {% render 'facets',
                   results: search,
                   enable_sorting: section.settings.enable_sorting,
-                  filter_type: 'vertical',
                   paginate: paginate
                 %}
               </aside>
@@ -209,7 +208,7 @@
 
 {% schema %}
 {
-  "name": "t:sections.main-search.name",
+  "name": "Search Page",
   "tag": "section",
   "class": "section",
   "settings": [
@@ -220,73 +219,72 @@
       "max": 6,
       "step": 1,
       "default": 4,
-      "label": "t:sections.main-search.settings.columns_desktop.label"
+      "label": "Number of columns on desktop"
     },
     {
       "type": "select",
       "id": "columns_mobile",
       "default": "2",
-      "label": "t:sections.main-search.settings.columns_mobile.label",
+      "label": "Number of columns on mobile",
       "options": [
         {
           "value": "1",
-          "label": "t:sections.main-search.settings.columns_mobile.options__1.label"
+          "label": "1 column"
         },
         {
           "value": "2",
-          "label": "t:sections.main-search.settings.columns_mobile.options__2.label"
+          "label": "2 columns"
         }
       ]
     },
     {
       "type": "header",
-      "content": "t:sections.main-search.settings.header__1.content"
+      "content": "Product card"
     },
     {
       "type": "checkbox",
       "id": "show_secondary_image",
       "default": true,
-      "label": "t:sections.main-search.settings.show_secondary_image.label"
+      "label": "Show secondary image"
     },
     {
       "type": "checkbox",
       "id": "show_vendor",
       "default": true,
-      "label": "t:sections.main-search.settings.show_vendor.label"
+      "label": "Show vendor"
     },
     {
       "type": "header",
-      "content": "t:sections.main-collection-product-grid.settings.header__1.content"
+      "content": "Filtering and sorting"
     },
     {
       "type": "checkbox",
       "id": "enable_filtering",
       "default": true,
-      "label": "t:sections.main-collection-product-grid.settings.enable_filtering.label",
-      "info": "t:sections.main-collection-product-grid.settings.enable_filtering.info"
+      "label": "Enable filtering",
+      "info": "Customize filters with the Search & Discovery app. [Learn more](https://help.shopify.com/manual/online-store/search-and-discovery/filters)"
     },
     {
       "type": "checkbox",
       "id": "enable_sorting",
       "default": true,
-      "label": "t:sections.main-collection-product-grid.settings.enable_sorting.label"
+      "label": "Enable sorting"
     },
     {
       "type": "header",
-      "content": "t:sections.main-search.settings.header__2.content",
-      "info": "t:sections.main-search.settings.header__2.info"
+      "content": "Blog card"
     },
     {
       "type": "checkbox",
       "id": "article_show_date",
       "default": true,
-      "label": "t:sections.main-search.settings.article_show_date.label"
+      "label": "Show date"
     },
     {
       "type": "checkbox",
       "id": "article_show_author",
       "default": true,
-      "label": "t:sections.main-search.settings.article_show_author.label"
+      "label": "Show author"
     }
   ]
 }

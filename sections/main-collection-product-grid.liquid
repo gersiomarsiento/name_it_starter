@@ -7,7 +7,7 @@
       {%- render 'collection-sort', collection: collection -%}
     {%- endif -%}
 
-    <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-5 lg:gap-10">
+    <div class="grid grid-cols-1 {% if section.settings.enable_filtering %} md:grid-cols-3 lg:grid-cols-4 gap-5 lg:gap-10 {% endif %}">
       {%- if section.settings.enable_filtering -%}
         <aside
           aria-labelledby="Filters"
@@ -18,14 +18,13 @@
           {%- render 'facets',
             results: collection,
             enable_sorting: section.settings.enable_sorting,
-            filter_type: section.settings.filter_type,
             paginate: paginate
           -%}
         </aside>
       {%- endif -%}
 
       <div
-        class="col-span-1 md:col-span-2 lg:col-span-3"
+        class="col-span-1 {% if section.settings.enable_filtering %} md:col-span-2 lg:col-span-3 {% endif %}"
         id="ProductGridContainer"
       >
         <div class="loading-overlay gradient"></div>
@@ -187,27 +186,6 @@
       "default": true,
       "label": "Enable filtering",
       "info": "Customize filters with the Search & Discovery app. [Learn more](https://help.shopify.com/manual/online-store/search-and-discovery/filters)"
-    },
-    {
-      "type": "select",
-      "id": "filter_type",
-      "options": [
-        {
-          "value": "horizontal",
-          "label": "Horizontal"
-        },
-        {
-          "value": "vertical",
-          "label": "Vertical"
-        },
-        {
-          "value": "drawer",
-          "label": "Drawer"
-        }
-      ],
-      "default": "vertical",
-      "label": "Desktop filter layout",
-      "info": "Drawer is the default mobile layout."
     },
     {
       "type": "checkbox",
