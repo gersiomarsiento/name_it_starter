@@ -28,24 +28,25 @@
         class="col-span-1 md:col-span-2 lg:col-span-3"
         id="ProductGridContainer"
       >
+        <div class="loading-overlay gradient"></div>
+
         {%- if collection.products.size == 0 -%}
-          <div class="collection collection--empty" id="product-grid" data-id="{{ section.id }}">
-            <div class="loading-overlay gradient"></div>
-            <div class="title-wrapper center">
-              <h2 class="title title--primary">
-                {{ 'sections.collection_template.empty' | t -}}
-                <br>
-                {{
-                  'sections.collection_template.use_fewer_filters_html'
-                  | t: link: collection.url, class: 'underlined-link link'
-                }}
-              </h2>
-            </div>
+          <div
+            class="w-full"
+            id="product-grid"
+            data-id="{{ section.id }}"
+          >
+            <h2 class="body-3 text-center py-12">
+              {{ 'sections.collection_template.empty' | t -}}
+              <br>
+              {{
+                'sections.collection_template.use_fewer_filters_html'
+                | t: link: collection.url, class: 'underline underline-offset-2'
+              }}
+            </h2>
           </div>
         {%- else -%}
           <div class="collection flex flex-col gap-y-5">
-            <div class="loading-overlay gradient"></div>
-
             {%- assign columnsDesktop = 'lg:grid-cols-3' -%}
             {%- case section.settings.columns_desktop -%}
               {%- when 2 -%}

@@ -2552,12 +2552,6 @@ details-disclosure > details {
   word-break: break-word;
 }
 
-.gradient {
-  background: rgb(var(--color-background));
-  background: var(--gradient-background);
-  background-attachment: fixed;
-}
-
 @media screen and (forced-colors: active) {
   .icon {
     color: CanvasText;
