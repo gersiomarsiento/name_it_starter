@@ -74,3 +74,12 @@
 .animate-arrow:hover .icon-arrow path {
   transform: translateX(-0.05rem);
 }
+
+/* Loading overlay */
+.loading-overlay {
+  @apply -top-2 -left-2 absolute w-[calc(100%+16px)] h-[calc(100%+16px)] bg-white/70 hidden z-30 rounded-[10px];
+
+  .loading & {
+    @apply block;
+  }
+}

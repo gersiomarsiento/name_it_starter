@@ -1,9 +1,7 @@
-{{ 'template-collection.css' | asset_url | stylesheet_tag }}
 {{ 'component-price.css' | asset_url | stylesheet_tag }}
-
 <script src="{{ 'facets.js' | asset_url }}" defer="defer"></script>
 
-<div class="c-container flex flex-col gap-y-5 md:gap-y-10 py-10 gradient color-{{ section.settings.color_scheme }}">
+<div class="c-container flex flex-col gap-y-5 md:gap-y-10 py-10 relative gradient color-{{ section.settings.color_scheme }}">
   {%- paginate collection.products by section.settings.products_per_page -%}
     {%- if section.settings.enable_sorting -%}
       {%- render 'collection-sort', collection: collection -%}
@@ -13,7 +11,7 @@
       {%- if section.settings.enable_filtering -%}
         <aside
           aria-labelledby="Filters"
-          class="col-span-1 facets-wrapper"
+          class="col-span-1"
           id="main-collection-filters"
           data-id="{{ section.id }}"
         >

@@ -1,0 +1,31 @@
+<form
+  class="w-full max-w-[600px] mx-auto"
+  action="{{ routes.search_url }}"
+  method="get"
+  role="search"
+  class="search"
+>
+  <input name="options[prefix]" type="hidden" value="last">
+
+  <div class="flex flex-row justify-between items-center border border-primary rounded-[20px] overflow-hidden py-2 has-[:focus]:outline has-[:focus]:outline-primary has-[:focus]:outline-1">
+    <div class="flex-1 flex flex-col pl-4">
+      <label class="body-4 text-primary/50" for="Search-In-Template">{{ 'general.search.search' | t }}</label>
+      <input
+        class="bg-transparent"
+        id="Search-In-Template"
+        type="search"
+        name="q"
+        value="{{ search.terms | escape }}"
+        placeholder="{{ 'general.search.search' | t }}"
+      >
+    </div>
+
+    <button
+      type="submit"
+      class="px-4 h-full"
+      aria-label="{{ 'general.search.search' | t }}"
+    >
+      {%- render 'icon-search', class: 'w-6' -%}
+    </button>
+  </div>
+</form>

@@ -1,38 +1,8 @@
-{{ 'template-collection.css' | asset_url | stylesheet_tag }}
 {{ 'component-price.css' | asset_url | stylesheet_tag }}
 
 {%- if section.settings.enable_filtering or section.settings.enable_sorting -%}
   <script src="{{ 'facets.js' | asset_url }}" defer="defer"></script>
 {%- endif -%}
-
-<style>
-  .template-search__header {
-    margin-bottom: 3rem;
-  }
-
-  .template-search__search {
-    margin: 0 auto 3.5rem;
-    max-width: 74.1rem;
-  }
-
-  .template-search__search .search {
-    margin-top: 3rem;
-  }
-
-  .template-search--empty {
-    padding-bottom: 18rem;
-  }
-
-  @media screen and (min-width: 750px) {
-    .template-search__header {
-      margin-bottom: 5rem;
-    }
-  }
-
-  .search__button .icon {
-    height: 1.8rem;
-  }
-</style>
 
 {%- liquid
   assign sort_by = search.sort_by | default: search.default_sort_by
@@ -41,8 +11,12 @@
 -%}
 
 {% paginate search.results by 24 %}
-  <section class="py-12 template-search{% unless search.performed and search.results_count > 0 %} template-search--empty{% endunless %}">
-    <div class="template-search__header c-container{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+  <section
+    role="region"
+    class="py-12"
+    aria-label="Search results"
+  >
+    <div class="c-container flex flex-col gap-y-5 relative">
       <h1 class="h2 center">
         {%- if search.performed -%}
           {{- 'templates.search.title' | t -}}
@@ -51,39 +25,7 @@
         {%- endif -%}
       </h1>
 
-      <div class="template-search__search">
-        <main-search>
-          <form action="{{ routes.search_url }}" method="get" role="search" class="search">
-            <div class="field">
-              <input
-                class="search__input field__input"
-                id="Search-In-Template"
-                type="search"
-                name="q"
-                value="{{ search.terms | escape }}"
-                placeholder="{{ 'general.search.search' | t }}"
-              >
-              <label class="field__label" for="Search-In-Template">{{ 'general.search.search' | t }}</label>
-              <input name="options[prefix]" type="hidden" value="last">
-
-              <button
-                type="reset"
-                class="reset__button field__button{% if search.terms == blank %} hidden{% endif %}"
-                aria-label="{{ 'general.search.reset' | t }}"
-              >
-                <svg class="icon icon-close" aria-hidden="true" focusable="false">
-                  <use xlink:href="#icon-reset">
-                </svg>
-              </button>
-              <button type="submit" class="search__button field__button" aria-label="{{ 'general.search.search' | t }}">
-                <svg class="icon icon-search" aria-hidden="true" focusable="false">
-                  <use xlink:href="#icon-search">
-                </svg>
-              </button>
-            </div>
-          </form>
-        </main-search>
-      </div>
+      {%- render 'search-page-form', search: search -%}
 
       {%- if search.performed -%}
         {%- unless section.settings.enable_filtering or section.settings.enable_sorting -%}
@@ -98,94 +40,44 @@
           <p role="status">{{ 'templates.search.no_results' | t: terms: search.terms }}</p>
         {%- endif -%}
       {%- endif -%}
-    </div>
 
-    {%- if search.performed -%}
-      {%- if section.settings.enable_sorting and search.filters != empty -%}
-        <facet-filters-form class="facets facets-vertical-sort c-container small-hide">
-          <form class="facets-vertical-form" id="FacetSortForm">
-            <div class="facet-filters sorting caption">
-              <div class="facet-filters__field">
-                <h2 class="facet-filters__label caption-large text-body">
-                  <label for="SortBy">{{ 'products.facets.sort_by_label' | t }}</label>
-                </h2>
-                <div class="select">
-                  {%- assign sort_by = search.sort_by | default: search.default_sort_by -%}
-                  <select
-                    name="sort_by"
-                    class="facet-filters__sort select__select caption-large"
-                    id="SortBy"
-                    aria-describedby="a11y-refresh-page-message"
-                  >
-                    {%- for option in search.sort_options -%}
-                      <option
-                        value="{{ option.value | escape }}"
-                        {% if option.value == sort_by %}
-                          selected="selected"
-                        {% endif %}
-                      >
-                        {{ option.name | escape }}
-                      </option>
-                    {%- endfor -%}
-                  </select>
-                  {% render 'icon-caret' %}
-                </div>
-              </div>
-            </div>
-
-            <div class="product-count-vertical light" role="status">
-              <h2 class="product-count__text text-body">
-                <span id="ProductCountDesktop">
-                  {%- if search.results_count -%}
-                    {{ 'templates.search.results_with_count' | t: terms: search.terms, count: search.results_count }}
-                  {%- elsif search.products_count == search.all_products_count -%}
-                    {{ 'products.facets.product_count_simple' | t: count: search.products_count }}
-                  {%- else -%}
-                    {{
-                      'products.facets.product_count'
-                      | t: product_count: search.products_count, count: search.all_products_count
-                    }}
-                  {%- endif -%}
-                </span>
-              </h2>
-              {%- render 'loading-spinner' -%}
-            </div>
-          </form>
-        </facet-filters-form>
-      {%- endif -%}
-
-      <div class="grid grid-cols-1 {% if section.settings.enable_filtering %} md:grid-cols-3 lg:grid-cols-4 {% endif %} gap-5 lg:gap-10 facets-vertical c-container">
-        {%- if search.filters != empty -%}
-          {%- if section.settings.enable_filtering -%}
-            <aside
-              aria-labelledby="Filters"
-              class="col-span-1 facets-wrapper{% unless section.settings.enable_filtering %} facets-wrapper--no-filters{% endunless %}"
-              id="main-search-filters"
-              data-id="{{ section.id }}"
-            >
-              {% render 'facets',
-                results: search,
-                enable_sorting: section.settings.enable_sorting,
-                filter_type: 'vertical',
-                paginate: paginate
-              %}
-            </aside>
-          {%- endif -%}
+      {%- if search.performed -%}
+        {%- if section.settings.enable_sorting and search.filters != empty -%}
+          {%- render 'search-sort', search: search -%}
         {%- endif -%}
 
-        <div
-          class="col-span-1 {% if section.settings.enable_filtering %} md:col-span-2 lg:col-span-3 {% endif %} product-grid-container"
-          id="ProductGridContainer"
-        >
-          {%- if search.results.size == 0 and search.filters != empty -%}
+        <div class="grid grid-cols-1 {% if section.settings.enable_filtering %} md:grid-cols-3 lg:grid-cols-4 {% endif %} gap-5 lg:gap-10">
+          {%- if search.filters != empty -%}
+            {%- if section.settings.enable_filtering -%}
+              <aside
+                aria-labelledby="Filters"
+                class="col-span-1"
+                id="main-search-filters"
+                data-id="{{ section.id }}"
+              >
+                {% render 'facets',
+                  results: search,
+                  enable_sorting: section.settings.enable_sorting,
+                  filter_type: 'vertical',
+                  paginate: paginate
+                %}
+              </aside>
+            {%- endif -%}
+          {%- endif -%}
+
+          <div
+            class="col-span-1 {% if section.settings.enable_filtering %} md:col-span-2 lg:col-span-3 {% endif %} product-grid-container"
+            id="ProductGridContainer"
+          >
+            <div class="loading-overlay gradient"></div>
+
             <div
-              class="template-search__results collection collection--empty"
+              class="flex flex-col gap-y-8"
               id="product-grid"
               data-id="{{ section.id }}"
             >
-              <div class="loading-overlay gradient"></div>
-              <div class="title-wrapper center">
-                <h2 class="title title--primary">
+              {%- if search.results.size == 0 and search.filters != empty -%}
+                <h2 class="body-3 text-center py-12">
                   {{ 'sections.collection_template.empty' | t -}}
                   <br>
                   {{
@@ -193,132 +85,125 @@
                     | t: link: search_url, class: 'underlined-link link'
                   }}
                 </h2>
-              </div>
-            </div>
-          {%- else -%}
-            <div
-              class="template-search__results collection flex flex-col gap-y-8"
-              id="product-grid"
-              data-id="{{ section.id }}"
-            >
-              <div class="loading-overlay gradient"></div>
 
-              {%- assign columnsDesktop = 'lg:grid-cols-3' -%}
-              {%- case section.settings.columns_desktop -%}
-                {%- when 2 -%}
-                  {%- assign columnsDesktop = 'lg:grid-cols-2' -%}
-                {%- when 3 -%}
-                  {%- assign columnsDesktop = 'lg:grid-cols-3' -%}
-                {%- when 4 -%}
-                  {%- assign columnsDesktop = 'lg:grid-cols-4' -%}
-                {%- when 5 -%}
-                  {%- assign columnsDesktop = 'lg:grid-cols-5' -%}
-              {%- endcase -%}
+              {%- else -%}
+                {%- assign columnsDesktop = 'lg:grid-cols-3' -%}
+                {%- case section.settings.columns_desktop -%}
+                  {%- when 2 -%}
+                    {%- assign columnsDesktop = 'lg:grid-cols-2' -%}
+                  {%- when 3 -%}
+                    {%- assign columnsDesktop = 'lg:grid-cols-3' -%}
+                  {%- when 4 -%}
+                    {%- assign columnsDesktop = 'lg:grid-cols-4' -%}
+                  {%- when 5 -%}
+                    {%- assign columnsDesktop = 'lg:grid-cols-5' -%}
+                {%- endcase -%}
 
-              {%- assign columnsMobile = 'grid-cols-1' -%}
-              {%- case section.settings.columns_mobile -%}
-                {%- when '1' -%}
-                  {%- assign columnsMobile = 'grid-cols-1' -%}
-                {%- when '2' -%}
-                  {%- assign columnsMobile = 'grid-cols-2' -%}
-              {%- endcase -%}
+                {%- assign columnsMobile = 'grid-cols-1' -%}
+                {%- case section.settings.columns_mobile -%}
+                  {%- when '1' -%}
+                    {%- assign columnsMobile = 'grid-cols-1' -%}
+                  {%- when '2' -%}
+                    {%- assign columnsMobile = 'grid-cols-2' -%}
+                {%- endcase -%}
 
-              {%- assign search_products = search.results | where: 'object_type', 'product' -%}
-              {%- assign search_pages = search.results | where: 'object_type', 'page' -%}
-              {%- assign search_articles = search.results | where: 'object_type', 'article' -%}
+                {%- assign search_products = search.results | where: 'object_type', 'product' -%}
+                {%- assign search_pages = search.results | where: 'object_type', 'page' -%}
+                {%- assign search_articles = search.results | where: 'object_type', 'article' -%}
 
-              {%- if search_products.size > 0 -%}
-                <ul
-                  class="grid {{ columnsMobile }} md:grid-cols-2 {{ columnsDesktop }} gap-x-3 md:gap-x-5 gap-y-5"
-                  role="list"
-                >
-                  {%- for product in search_products -%}
-                    {% assign priority = false %}
-                    {%- if forloop.index <= 3 -%}
-                      {%- assign priority = true -%}
-                    {%- endif -%}
-
-                    <li class="col-span-1">
-                      {%- render 'card-product',
-                        product: product,
-                        show_secondary_image: section.settings.show_secondary_image,
-                        show_vendor: section.settings.show_vendor,
-                        priority: priority
-                      -%}
-                    </li>
-                  {%- endfor -%}
-                </ul>
-              {%- endif -%}
-
-              {%- if search_articles.size > 0 -%}
-                <div class="w-full flex flex-col gap-y-5">
-                  <h2 class="h3">Articles</h2>
-
+                {%- if search_products.size > 0 -%}
                   <ul
                     class="grid {{ columnsMobile }} md:grid-cols-2 {{ columnsDesktop }} gap-x-3 md:gap-x-5 gap-y-5"
                     role="list"
                   >
-                    {%- for article in search_articles -%}
+                    {%- for product in search_products -%}
                       {% assign priority = false %}
-                      {%- assign itemPosition = search_products.size | plus: forloop.index -%}
-                      {%- if itemPosition <= 3 -%}
+                      {%- if forloop.index <= 3 -%}
                         {%- assign priority = true -%}
                       {%- endif -%}
 
                       <li class="col-span-1">
-                        {% render 'article-card',
-                          article: article,
-                          show_image: true,
-                          show_date: section.settings.article_show_date,
-                          show_author: section.settings.article_show_author,
-                          show_badge: true,
-                          media_aspect_ratio: 1,
+                        {%- render 'card-product',
+                          product: product,
+                          show_secondary_image: section.settings.show_secondary_image,
+                          show_vendor: section.settings.show_vendor,
                           priority: priority
-                        %}
+                        -%}
                       </li>
                     {%- endfor -%}
                   </ul>
-                </div>
-              {%- endif -%}
+                {%- endif -%}
 
-              {%- if search_pages.size > 0 -%}
-                <div class="w-full flex flex-col gap-y-5">
-                  <h2 class="h3">Pages</h2>
+                {%- if search_articles.size > 0 -%}
+                  <div class="w-full flex flex-col gap-y-5">
+                    <h2 class="h3">Articles</h2>
 
-                  <ul
-                    class="w-full flex flex-col gap-y-5"
-                    role="list"
-                  >
-                    {%- for page in search_pages -%}
-                      <li class="flex flex-col gap-y-3 w-full p-5 rounded-[15px] border border-gray-500/50 relative overflow-hidden">
-                        {%- if page.title != blank -%}
-                          <a href="{{ page.url }}" class="body-3 font-semibold">{{- page.title -}}</a>
+                    <ul
+                      class="grid {{ columnsMobile }} md:grid-cols-2 {{ columnsDesktop }} gap-x-3 md:gap-x-5 gap-y-5"
+                      role="list"
+                    >
+                      {%- for article in search_articles -%}
+                        {% assign priority = false %}
+                        {%- assign itemPosition = search_products.size | plus: forloop.index -%}
+                        {%- if itemPosition <= 3 -%}
+                          {%- assign priority = true -%}
                         {%- endif -%}
 
-                        {%- assign content = page.content -%}
-                        {%- if content != blank -%}
-                          {%- assign shortContent = content | strip_html | truncate: 500, '...' -%}
-                          <div class="body-4 line-clamp-3">{{- shortContent -}}</div>
-                        {%- endif -%}
+                        <li class="col-span-1">
+                          {% render 'article-card',
+                            article: article,
+                            show_image: true,
+                            show_date: section.settings.article_show_date,
+                            show_author: section.settings.article_show_author,
+                            show_badge: true,
+                            media_aspect_ratio: 1,
+                            priority: priority
+                          %}
+                        </li>
+                      {%- endfor -%}
+                    </ul>
+                  </div>
+                {%- endif -%}
 
-                        <a class="body-4 font-semibold underline" href="{{ page.url }}">
-                          <span>Read more</span>
-                          <span class="sr-only">{{ page.title }}</span>
-                        </a>
-                      </li>
-                    {%- endfor -%}
-                  </ul>
-                </div>
-              {%- endif -%}
+                {%- if search_pages.size > 0 -%}
+                  <div class="w-full flex flex-col gap-y-5">
+                    <h2 class="h3">Pages</h2>
 
-              {%- if paginate.pages > 1 -%}
-                {% render 'pagination', paginate: paginate %}
+                    <ul
+                      class="w-full flex flex-col gap-y-5"
+                      role="list"
+                    >
+                      {%- for page in search_pages -%}
+                        <li class="flex flex-col gap-y-3 w-full p-5 rounded-[15px] border border-gray-500/50 relative overflow-hidden">
+                          {%- if page.title != blank -%}
+                            <a href="{{ page.url }}" class="body-3 font-semibold">{{- page.title -}}</a>
+                          {%- endif -%}
+
+                          {%- assign content = page.content -%}
+                          {%- if content != blank -%}
+                            {%- assign shortContent = content | strip_html | truncate: 500, '...' -%}
+                            <div class="body-4 line-clamp-3">{{- shortContent -}}</div>
+                          {%- endif -%}
+
+                          <a class="body-4 font-semibold underline" href="{{ page.url }}">
+                            <span>Read more</span>
+                            <span class="sr-only">{{ page.title }}</span>
+                          </a>
+                        </li>
+                      {%- endfor -%}
+                    </ul>
+                  </div>
+                {%- endif -%}
+
+                {%- if paginate.pages > 1 -%}
+                  {% render 'pagination', paginate: paginate %}
+                {%- endif -%}
               {%- endif -%}
             </div>
-          {%- endif -%}
+          </div>
         </div>
-      </div>
-    {%- endif -%}
+      {%- endif -%}
+    </div>
   </section>
 {% endpaginate %}
 
