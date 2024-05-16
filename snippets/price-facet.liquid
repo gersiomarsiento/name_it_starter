@@ -1,8 +1,15 @@
 <span class="field-currency">{{ cart.currency.symbol }}</span>
 
-<div class="field">
+<div class="flex flex-col px-5 py-2 rounded-full border border-primary border-opacity-70 has-[:focus]:outline has-[:focus]:outline-primary has-[:focus]:outline-1 overflow-hidden">
+  <label
+    class="body-6 text-gray-500 font-semibold leading-[1]"
+    for="{{ id_prefix }}{{ filter.label | escape }}-GTE"
+  >
+    {{- 'products.facets.from' | t -}}
+  </label>
+
   <input
-    class="field__input"
+    class="bg-transparent max-w-full w-full"
     name="{{ filter.min_value.param_name }}"
     id="{{ id_prefix }}{{ filter.label | escape }}-GTE"
     {%- if filter.min_value.value -%}
@@ -15,18 +22,18 @@
     data-min="0"
     data-max="{{ filter.range_max | money_without_currency }}"
   >
-  <label class="field__label" for="{{ id_prefix }}{{ filter.label | escape }}-GTE">
-    {{- 'products.facets.from' | t -}}
-  </label>
 </div>
 
-{%- if filter_type != 'vertical' -%}
-  <span class="field-currency">{{ cart.currency.symbol }}</span>
-{%- endif -%}
+<div class="flex flex-col px-5 py-2 rounded-full border border-primary border-opacity-70 has-[:focus]:outline has-[:focus]:outline-primary has-[:focus]:outline-1 overflow-hidden">
+  <label
+    class="body-6 text-gray-500 font-semibold leading-[1]"
+    for="{{ id_prefix }}{{ filter.label | escape }}-LTE"
+  >
+    {{- 'products.facets.to' | t -}}
+  </label>
 
-<div class="field">
   <input
-    class="field__input"
+    class="bg-transparent max-w-full w-full"
     name="{{ filter.max_value.param_name }}"
     id="{{ id_prefix }}{{ filter.label | escape }}-LTE"
     {%- if filter.max_value.value -%}
@@ -39,7 +46,4 @@
     data-min="0"
     data-max="{{ filter.range_max | money_without_currency }}"
   >
-  <label class="field__label" for="{{ id_prefix }}{{ filter.label | escape }}-LTE">
-    {{- 'products.facets.to' | t -}}
-  </label>
 </div>

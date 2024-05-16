@@ -29,7 +29,7 @@
 }
 
 .button-primary {
-  @apply base-button bg-black text-white border-black;
+  @apply base-button bg-primary text-white border-primary;
 
   svg {
     @apply fill-white;

@@ -1,0 +1,151 @@
+{%- for filter in results.filters -%}
+  {% comment %} image,swatch,text {% endcomment %}
+  {%- assign presentation = filter.presentation | default: 'text' -%}
+
+  {%- case filter.type -%}
+    {%- when 'boolean', 'list' -%}
+      <div
+        id="Details-{{ filter.param_name | escape }}-{{ section.id }}"
+        class="js-filter py-5 {% if forloop.first %} md:border-t md:border-t-gray-300 {% else %} border-t border-t-gray-300 {% endif %}"
+        data-index="{{ forloop.index }}"
+        x-data="{ expanded: true }"
+      >
+        <button
+          type="button"
+          class="facets__summary w-full flex flex-row gap-3 justify-between"
+          aria-label="{{ filter.label | escape }} ({{ 'products.facets.filters_selected.one' | t: count: filter.active_values.size }})"
+          x-on:click="expanded = !expanded"
+        >
+          <span>
+            {{- filter.label | escape }}
+            <span class="{% if filter.active_values.size == 0 %} hidden{% endif %}">
+              ({{ filter.active_values.size }})
+            </span>
+          </span>
+
+          <span
+            class="transition-transform rotate-180"
+            :class="{ 'rotate-180': expanded }"
+          >
+            {%- render 'icon-caret' -%}
+          </span>
+        </button>
+
+        <fieldset
+          id="Facet-{{ forloop.index }}-{{ section.id }}"
+          x-show="expanded"
+          x-collapse
+        >
+          <legend class="sr-only">{{ filter.label | escape }}</legend>
+
+          <ul
+            class="flex {% if presentation == 'swatch' %} flex-row {% else %} flex-col {% endif %} gap-3 pt-5"
+            role="list"
+          >
+            {%- for value in filter.values -%}
+              {%- liquid
+                assign input_id = 'Filter-' | append: filter.param_name | escape | append: '-' | append: forloop.index
+                assign is_disabled = false
+                if value.count == 0 and value.active == false
+                  assign is_disabled = true
+                endif
+              -%}
+
+              <li>
+                {%- if presentation == 'swatch' -%}
+                  {%- render 'swatch-input-for-filter',
+                    id: input_id,
+                    value: value,
+                    product_form_id: 'FacetFiltersForm',
+                    option_disabled: is_disabled
+                  -%}
+                {%- else -%}
+                  <label
+                    for="{{ input_id }}"
+                    class="flex flex-row items-center gap-4 cursor-pointer has-[:disabled]:cursor-default has-[:disabled]:opacity-40"
+                  >
+                    <input
+                      type="checkbox"
+                      name="{{ value.param_name }}"
+                      value="{{ value.value }}"
+                      id="{{ input_id }}"
+                      class="w-6 h-6 accent-black peer enabled:cursor-pointer {% if presentation == 'image' %}sr-only{% endif %}"
+                      {% if value.active %}
+                        checked
+                      {% endif %}
+                      {% if is_disabled %}
+                        disabled
+                      {% endif %}
+                    >
+
+                    {%- if presentation == 'image' -%}
+                      {%- assign image = value.image -%}
+                      <div class="w-6">
+                        <div class="pb-[100%] relative rounded-[5px] border border-gray-400 overflow-hidden">
+                          {%- if image -%}
+                            {%- render 'image-element',
+                              image: image,
+                              fixed_width: 300,
+                              class: 'absolute inset-0 w-full h-full object-center object-cover',
+                              alt: value.alt
+                            -%}
+                          {%- endif -%}
+                        </div>
+                      </div>
+                    {%- endif -%}
+
+                    <div class="peer-checked:font-medium peer-enabled:hover:underline">
+                      <span>{{- value.label | escape }}</span>
+                      <span>({{ value.count }})</span>
+                    </div>
+                  </label>
+                {%- endif -%}
+              </li>
+            {%- endfor -%}
+          </ul>
+        </fieldset>
+      </div>
+    {%- when 'price_range' -%}
+      <div
+        id="Details-{{ filter.param_name | escape }}-{{ section.id }}"
+        class="js-filter py-5 {% if forloop.first %} md:border-t md:border-t-gray-300 {% else %} border-t border-t-gray-300 {% endif %}"
+        data-index="{{ forloop.index }}"
+        x-data="{ expanded: true }"
+      >
+        <button
+          type="button"
+          class="facets__summary w-full flex flex-row gap-3 justify-between"
+          aria-label="{{ filter.label | escape }} ({{ 'products.facets.filters_selected.one' | t: count: filter.active_values.size }})"
+          x-on:click="expanded = !expanded"
+        >
+          <span>
+            {{- filter.label | escape }}
+          </span>
+
+          <span
+            class="transition-transform rotate-180"
+            :class="{ 'rotate-180': expanded }"
+          >
+            {%- render 'icon-caret' -%}
+          </span>
+        </button>
+
+        <div
+          id="Facet-{{ forloop.index }}-{{ section.id }}"
+          x-show="expanded"
+          x-collapse
+        >
+          <div class="flex flex-col gap-5 pt-5">
+            {%- assign max_price_amount = filter.range_max | money | strip_html | escape -%}
+            <div class="body-4">
+              {{- 'products.facets.max_price' | t: price: max_price_amount -}}
+            </div>
+
+            <price-range class="flex flex-row gap-2 items-center">
+              {%- render 'price-facet', filter: filter, id_prefix: 'Filter-' -%}
+            </price-range>
+          </div>
+        </div>
+      </div>
+  {%- endcase -%}
+{%- endfor -%}

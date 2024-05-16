@@ -3,7 +3,7 @@
 
 <script src="{{ 'facets.js' | asset_url }}" defer="defer"></script>
 
-<div class="c-container flex flex-col gap-y-10 py-10 gradient color-{{ section.settings.color_scheme }}">
+<div class="c-container flex flex-col gap-y-5 md:gap-y-10 py-10 gradient color-{{ section.settings.color_scheme }}">
   {%- paginate collection.products by section.settings.products_per_page -%}
     {%- if section.settings.enable_sorting -%}
       {%- render 'collection-sort', collection: collection -%}
