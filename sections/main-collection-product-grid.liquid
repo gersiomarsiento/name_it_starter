@@ -1,7 +1,6 @@
 {{ 'template-collection.css' | asset_url | stylesheet_tag }}
 {{ 'component-price.css' | asset_url | stylesheet_tag }}
 
-{{ 'component-facets.css' | asset_url | stylesheet_tag }}
 <script src="{{ 'facets.js' | asset_url }}" defer="defer"></script>
 
 <div class="c-container flex flex-col gap-y-10 py-10 gradient color-{{ section.settings.color_scheme }}">
@@ -13,18 +12,17 @@
     <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-5 lg:gap-10">
       {%- if section.settings.enable_filtering -%}
         <aside
-          aria-labelledby="verticalTitle"
+          aria-labelledby="Filters"
           class="col-span-1 facets-wrapper"
           id="main-collection-filters"
           data-id="{{ section.id }}"
         >
-          {% render 'facets',
+          {%- render 'facets',
             results: collection,
-            enable_filtering: section.settings.enable_filtering,
             enable_sorting: section.settings.enable_sorting,
             filter_type: section.settings.filter_type,
             paginate: paginate
-          %}
+          -%}
         </aside>
       {%- endif -%}
 
