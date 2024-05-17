@@ -21,8 +21,7 @@
           {%- render 'image-element',
             image: product.media[1],
             max_width: 800,
-            class: 'absolute inset-0 w-full h-full object-center object-cover opacity-0 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300',
-            priority: priority
+            class: 'absolute inset-0 w-full h-full object-center object-cover opacity-0 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300'
           -%}
         {%- endif -%}
       {%- endif -%}
@@ -40,7 +39,7 @@
             {{- 'products.product.sold_out' | t -}}
           </span>
         {%- elsif product.compare_at_price > product.price and product.available -%}
-          <span class="rounded-full bg-green-600 text-white px-2 py-1 body-3">
+          <span class="bg-green-500 rounded-full text-white px-3 py-2 body-4 text-nowrap leading-[1]">
             {{- 'products.product.on_sale' | t -}}
           </span>
         {%- endif -%}
