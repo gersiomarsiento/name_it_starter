@@ -34,7 +34,6 @@
         "variant_picker": {
           "type": "variant_picker",
           "settings": {
-            "picker_type": "button",
             "swatch_shape": "circle"
           }
         },
@@ -58,18 +57,20 @@
           "type": "collapsible_tab",
           "settings": {
             "heading": "Collapsible row",
-            "content": "<p>Row Collapsible<\/p>",
+            "content": "<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia eius, aperiam omnis labore suscipit inventore expedita aliquid, iusto autem ea laudantium illum non odit! Vitae sint laudantium nam placeat natus!<\/p>",
             "page": "contact"
           }
         },
         "icon_with_text_tbW7eY": {
           "type": "icon-with-text",
           "settings": {
-            "layout": "horizontal",
-            "image_1": "shopify:\/\/shop_images\/MiguelGamarraLogo.jpg",
-            "heading_1": "Heading",
-            "heading_2": "Heading",
-            "heading_3": "Heading"
+            "image_height": 30,
+            "image_1": "shopify:\/\/shop_images\/Logo.png",
+            "heading_1": "Free Shipping",
+            "image_2": "shopify:\/\/shop_images\/Logo.png",
+            "heading_2": "Easy Exchanges",
+            "image_3": "shopify:\/\/shop_images\/Logo.png",
+            "heading_3": "Easy Returns"
           }
         }
       },

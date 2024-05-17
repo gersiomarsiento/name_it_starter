@@ -1,0 +1,31 @@
+<ul
+  class="flex flex-row justify-between gap-5 py-3"
+  {{ block.shopify_attributes }}
+>
+  {%- for i in (1..3) -%}
+    {%- assign headingKey = 'heading_' | append: i -%}
+    {%- assign imageKey = 'image_' | append: i -%}
+
+    {%- assign heading = block.settings[headingKey] -%}
+    {%- assign image = block.settings[imageKey] -%}
+
+    {%- if heading != blank or image != null -%}
+      <li class="flex w-1/3 flex-col gap-y-5 justify-center">
+        <div
+          class="w-full flex flex-col justify-center items-center"
+          style="height: {{ block.settings.image_height }}px;"
+        >
+          {%- if image != null -%}
+            {%- render 'image-element', image: image, max_width: 500, class: 'w-auto max-h-full' -%}
+          {%- endif -%}
+        </div>
+
+        {%- if heading != blank -%}
+          <span class="w-full h6 text-center">
+            {{- heading -}}
+          </span>
+        {%- endif -%}
+      </li>
+    {%- endif -%}
+  {%- endfor -%}
+</ul>
