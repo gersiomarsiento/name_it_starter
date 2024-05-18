@@ -8,18 +8,11 @@
     {%- assign dataLine = forloop.index -%}
     <div class="cart-line-item grid grid-cols-10 gap-3 md:gap-5 py-6 transition-all duration-500 {% unless forloop.last %} border-b border-b-gray-300 {% endunless %}">
       <div class="col-span-3">
-        {% if item.image %}
-          <a href="{{ item.url }}" class="cart-item__link" tabindex="-1" aria-hidden="true">
-            <img
-              class="rounded-md"
-              src="{{ item.image | image_url: width: 300 }}"
-              alt="{{ item.image.alt | escape }}"
-              loading="lazy"
-              width="150"
-              height="{{ 150 | divided_by: item.image.aspect_ratio | ceil }}"
-            >
+        {%- if item.image -%}
+          <a href="{{ item.url }}" class="block" tabindex="-1" aria-hidden="true">
+            {%- render 'image-element', image: item.image, fixed_width: 300, class: 'rounded-md' -%}
           </a>
-        {% endif %}
+        {%- endif -%}
       </div>
 
       <div class="col-span-7 flex flex-col gap-y-4">
@@ -33,7 +26,7 @@
               {{- item.product.title | escape -}}
             </a>
 
-            <div class="flex flex-row gap-5">
+            <div class="flex flex-row gap-3">
               {%- if item.original_price != item.final_price -%}
                 <s class="body-4 text-gray-500">
                   {{- item.original_price | money -}}
@@ -70,7 +63,7 @@
           </div>
         </div>
 
-        {%- if item.product.has_only_default_variant == false or item.properties.size != 0 -%}
+        {%- if item.product.has_only_default_variant == false or item.properties.size > 0 -%}
           <dl>
             {%- if item.product.has_only_default_variant == false -%}
               {%- for option in item.options_with_values -%}
@@ -119,9 +112,9 @@
             aria-label="{{ 'customer.order.discount' | t }}"
           >
             {%- for discount in item.line_level_discount_allocations -%}
-              <li class="flex flex-row gap-3 items-center">
+              <li class="flex flex-row gap-2 items-center">
                 {%- render 'icon-discount' -%}
-                <span>{{- discount.discount_application.title -}}</span>
+                <span class="body-4">{{- discount.discount_application.title -}}</span>
               </li>
             {%- endfor -%}
           </ul>
