@@ -148,6 +148,11 @@ Utilice las clases `.form__input`, `.form__label`, `.form__input_range`, `.form_
   <label class="form__label">...</label>
 
   <input type="text" class="form__input">
+
+  <select class="form__input"></select>
+
+  <textarea class="form__input"></textarea>
+
   <input type="range" class="form__input_range">
 
   <div class="form__switch">
