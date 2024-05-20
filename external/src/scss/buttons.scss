@@ -36,24 +36,24 @@
   }
 
   &:hover:not(.no-hover) {
-    @apply bg-gray-800 border-gray-800;
+    @apply bg-primary-light border-primary-light;
   }
 
   &[disabled],
   &.disabled {
-    @apply bg-gray-800 border-gray-800 cursor-not-allowed;
+    @apply bg-primary-light border-primary-light cursor-not-allowed;
   }
 }
 
 .button-secondary {
-  @apply base-button bg-white border-black text-black;
+  @apply base-button bg-secondary border-secondary text-white;
 
   svg {
-    @apply fill-black;
+    @apply fill-white;
   }
 
   &:hover:not(.no-hover) {
-    @apply bg-black text-white;
+    @apply bg-secondary-light text-white;
 
     svg {
       @apply fill-white;

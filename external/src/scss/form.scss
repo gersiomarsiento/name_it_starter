@@ -3,7 +3,7 @@
 }
 
 .form__input {
-  @apply body-3 border border-solid border-gray-500 min-h-[40px] rounded-[10px] w-full py-2 px-3;
+  @apply body-3 border border-solid border-primary-light min-h-[40px] rounded-[10px] w-full py-2 px-3;
 
   &.small {
     @apply min-h-[35px] py-1 body-4;
@@ -29,12 +29,6 @@ select.form__input {
       @apply text-[12px] text-disabled;
     }
   }
-}
-
-.form__checkbox {
-  accent-color: #000;
-  height: 18px;
-  width: 18px;
 }
 
 input[type='range'].form__input_range {
@@ -82,48 +76,6 @@ input[type='range'].form__input_range {
     &:active {
       box-shadow: 0 0 0 8px rgba(35, 91, 76, 0.2);
     }
-  }
-}
-
-.form__swatch {
-  @apply py-[10px] cursor-pointer rounded-[10px] font-semibold leading-[1.25] border-[1px] text-center border-solid bg-transparent border-gray-500 text-black xs-down:text-xs text-[14px] lg:text-[16px] block mb-0;
-
-  &.stretch {
-    @apply xs-down:text-xs text-[14px] py-[7px];
-  }
-
-  &:hover:not(.disabled) {
-    background-color: #797979 !important;
-    @apply text-black;
-  }
-
-  &.active:hover:not(.disabled) {
-    background-color: black !important;
-    color: white !important;
-    cursor: default !important;
-  }
-
-  &.active,
-  &:hover:not(.disabled),
-  :checked + & {
-    @apply bg-black text-white;
-  }
-
-  &.disabled:hover,
-  :checked + &.disabled {
-    @apply border-black;
-  }
-
-  &.disabled {
-    @apply bg-gray-400 text-disabled border-gray-400;
-  }
-
-  &.disabled:hover svg {
-    display: flex !important;
-  }
-
-  &.disabled.active {
-    @apply bg-gray-400 text-disabled border-black;
   }
 }
 

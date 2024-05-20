@@ -36,8 +36,16 @@ module.exports = {
         'desktop-down': { max: '1440px' },
       },
       colors: {
-        primary: '#000000',
-        secondary: '#7e5bef',
+        primary: {
+          light: '#222222',
+          DEFAULT: '#000000',
+          dark: '#000000',
+        },
+        secondary: {
+          light: '#4000e5',
+          DEFAULT: '#3200b2',
+          dark: '#24007f',
+        },
         disabled: '#595959',
       },
       gridTemplateColumns: {
