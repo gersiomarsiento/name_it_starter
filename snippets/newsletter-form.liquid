@@ -4,7 +4,7 @@
 {%- form 'customer', id: formID, class: '' -%}
   <input type="hidden" name="contact[tags]" value="newsletter">
 
-  <div class="flex flex-row justify-between border border-white rounded-[20px] h-16">
+  <div class="flex flex-row justify-between border border-white rounded-[20px] h-16 has-[:focus]:outline has-[:focus]:outline-white has-[:focus]:outline-1">
     <label class="sr-only" for="{{ formID }}-input">
       {{ 'newsletter.label' | t }}
     </label>
