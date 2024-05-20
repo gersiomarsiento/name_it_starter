@@ -33,9 +33,7 @@
   },
   "css.customData": [".vscode/tailwind.json"],
   "files.associations": {
-    "*.min.*": "plaintext",
-    "*.css": "tailwindcss",
-    "*.scss": "tailwindcss"
+    "*.min.*": "plaintext"
   },
   "search.exclude": {
     "**/node_modules": true,
