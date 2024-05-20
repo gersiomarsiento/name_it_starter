@@ -51,11 +51,11 @@
       {%- if section.settings.enable_country_selector or section.settings.enable_language_selector -%}
         <div class="hidden lg:flex flex-row items-center gap-4">
           {%- if section.settings.enable_country_selector and localization.available_countries.size > 1 -%}
-            {%- render 'country-selector', localPosition: 'AnnouncementCountry' -%}
+            {%- render 'country-selector', localPosition: 'Header' -%}
           {% endif %}
 
           {%- if section.settings.enable_language_selector and localization.available_languages.size > 1 -%}
-            {%- render 'language-selector', localPosition: 'AnnouncementLanguageForm' -%}
+            {%- render 'language-selector', localPosition: 'Header' -%}
           {%- endif -%}
         </div>
       {%- endif -%}

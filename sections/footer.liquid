@@ -30,7 +30,7 @@
           <h2 class="h4 text-center">{{ section.settings.newsletter_heading }}</h2>
         {%- endif -%}
 
-        {%- render 'newsletter-form', localPosition: 'FooterNewsletter' -%}
+        {%- render 'newsletter-form', localPosition: 'Footer' -%}
       </div>
     {%- endif -%}
   </div>
@@ -47,11 +47,11 @@
           {%- if enableLocalization -%}
             <div class="flex flex-row gap-4 items-center">
               {%- if section.settings.enable_country_selector and localization.available_countries.size > 1 -%}
-                {%- render 'country-selector', localPosition: 'AnnouncementCountry' -%}
+                {%- render 'country-selector', localPosition: 'Footer' -%}
               {% endif %}
 
               {%- if section.settings.enable_language_selector and localization.available_languages.size > 1 -%}
-                {%- render 'language-selector', localPosition: 'AnnouncementLanguageForm' -%}
+                {%- render 'language-selector', localPosition: 'Footer' -%}
               {%- endif -%}
             </div>
           {%- endif -%}

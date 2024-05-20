@@ -123,11 +123,11 @@
         {%- if localization.available_countries or localization.available_languages -%}
           <div class="flex flex-row flex-wrap gap-4">
             {%- if localization.available_countries and localization.available_countries.size > 1 -%}
-              {%- render 'country-selector', localPosition: 'AnnouncementCountry' -%}
+              {%- render 'country-selector', localPosition: 'HeaderDrawer' -%}
             {% endif %}
 
             {%- if localization.available_languages and localization.available_languages.size > 1 -%}
-              {%- render 'language-selector', localPosition: 'AnnouncementLanguageForm' -%}
+              {%- render 'language-selector', localPosition: 'HeaderDrawer' -%}
             {%- endif -%}
           </div>
         {%- endif -%}

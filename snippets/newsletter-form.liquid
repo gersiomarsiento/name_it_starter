@@ -1,5 +1,5 @@
 {%- assign localPosition = localPosition -%}
-{%- assign formID = localPosition | append: 'Form' -%}
+{%- assign formID = localPosition | append: 'NewsletterForm' -%}
 
 {%- form 'customer', id: formID, class: '' -%}
   <input type="hidden" name="contact[tags]" value="newsletter">
@@ -34,7 +34,6 @@
       type="submit"
       class="px-4 h-full group animate-arrow"
       name="commit"
-      id="Subscribe"
       aria-label="{{ 'newsletter.button_label' | t }}"
     >
       {%- render 'icon-arrow', class: 'w-6' -%}
