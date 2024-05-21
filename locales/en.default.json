@@ -436,7 +436,7 @@
       "tax": "Tax",
       "product": "Product",
       "sku": "SKU",
-      "price": "Price",
+      "price": "Unit Price",
       "quantity": "Quantity",
       "total": "Total",
       "total_refunded": "Refunded",
