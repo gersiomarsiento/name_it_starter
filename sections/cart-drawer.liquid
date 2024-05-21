@@ -8,6 +8,10 @@
   role="dialog"
   aria-label="Cart Drawer"
   aria-modal="true"
+  x-data="{}"
+  :class="{ 'is-open': $store.cart.drawerIsOpen }"
+  x-trap="$store.cart.drawerIsOpen"
+  :aria-hidden="!$store.cart.drawerIsOpen"
 >
   <div class="flex flex-col h-full gradient color-{{ settings.cart_color_scheme }}">
     {%- render 'cart-drawer-header' -%}

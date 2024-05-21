@@ -23,29 +23,15 @@ class CartUtils {
   }
 
   static openCartDrawer() {
-    const $cartDrawer = document.querySelector(defaults.cartDrawer);
-    const $cartDrawerTrigger = document.querySelector(defaults.cartDrawerTrigger);
-    const $cartDrawerClose = document.querySelector(defaults.cartDrawerClose);
-    $cartDrawer.classList.add('is-open');
-    $cartDrawerTrigger.setAttribute('aria-expanded', 'true');
     document.documentElement.style.overflow = 'hidden';
-
+    Alpine.store('cart').drawerIsOpen = true;
     this.openCartOverlay();
-
-    setTimeout(() => $cartDrawerClose.focus(), 500);
   }
 
   static closeCartDrawer() {
-    const $cartDrawer = document.querySelector(defaults.cartDrawer);
-    const $cartDrawerTrigger = document.querySelector(defaults.cartDrawerTrigger);
-    $cartDrawer.classList.remove('is-open');
-    $cartDrawer.setAttribute('aria-hidden', 'true');
-    $cartDrawerTrigger.setAttribute('aria-expanded', 'false');
     document.documentElement.style.overflow = 'auto';
-
+    Alpine.store('cart').drawerIsOpen = false;
     this.closeCartOverlay();
-
-    setTimeout(() => $cartDrawerTrigger.focus(), 500);
   }
 
   static openCartOverlay() {
@@ -105,6 +91,7 @@ class CartUtils {
 Alpine.store('cart', {
   cart: Shopify.cart || {},
   cartIsUpdating: false,
+  drawerIsOpen: false,
   init() {
     this.initClickListeners();
     this.initEventListeners();

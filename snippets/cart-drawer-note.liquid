@@ -21,9 +21,11 @@
     }
   "
 >
-  <div
-    class="flex flex-row justify-between items-center gap-4 cursor-pointer"
+  <button
+    type="button"
+    class="w-full flex flex-row justify-between items-center gap-4 cursor-pointer"
     x-on:click="toggle()"
+    aria-label="{{ 'sections.cart.note' | t }}"
   >
     <div class="body-3">{{ 'sections.cart.note' | t }}</div>
     <span
@@ -32,7 +34,7 @@
     >
       {%- render 'icon-caret', class: 'w-4' -%}
     </span>
-  </div>
+  </button>
 
   <div
     class="w-full"
