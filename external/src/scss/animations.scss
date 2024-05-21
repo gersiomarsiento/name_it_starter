@@ -77,7 +77,7 @@
 
 /* Loading overlay */
 .loading-overlay {
-  @apply -top-2 -left-2 absolute w-[calc(100%+16px)] h-[calc(100%+16px)] opacity-70 hidden z-30 rounded-[10px];
+  @apply -top-2 -left-2 absolute w-[calc(100%+16px)] h-[calc(100%+16px)] opacity-70 hidden z-[5] rounded-[10px];
 
   .loading & {
     @apply block;
