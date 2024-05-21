@@ -64,6 +64,9 @@ module.exports = {
         '350px': 'repeat(auto-fill, minmax(min(350px, 100%), 1fr))',
         '400px': 'repeat(auto-fill, minmax(min(400px, 100%), 1fr))',
       },
+      boxShadow: {
+        card: '0px 2px 8px rgb(0 0 0 / 0.15)',
+      },
       fontSize: {},
       spacing: {},
     },

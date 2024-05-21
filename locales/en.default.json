@@ -456,6 +456,8 @@
       "payment_status": "Payment status",
       "fulfillment_status": "Fulfillment status",
       "total": "Total",
+      "view_order": "View order",
+      "track": "Track order",
       "none": "You haven't placed any orders yet."
     },
     "recover_password": {
