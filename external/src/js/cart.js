@@ -110,14 +110,12 @@ Alpine.store('cart', {
       },
       body: JSON.stringify(formData),
     })
-      .then((response) => {
-        if (response.status == 422) {
-          alert('Variant is out of stock');
-        } else if (response.status != 200) {
-          alert('An error has occurred! Please try again.');
-        }
-
+      .then(async (response) => {
         if (response.status != 200) {
+          const responseJson = await response.json();
+          const message = responseJson.message || 'An error has occurred! Please try again.';
+          alert(message);
+
           throw new Error();
         }
 
@@ -140,14 +138,12 @@ Alpine.store('cart', {
       },
       body: JSON.stringify(formData),
     })
-      .then((response) => {
-        if (response.status == 422) {
-          alert('Variant is out of stock');
-        } else if (response.status != 200) {
-          alert('An error has occurred! Please try again.');
-        }
-
+      .then(async (response) => {
         if (response.status != 200) {
+          const responseJson = await response.json();
+          const message = responseJson.message || 'An error has occurred! Please try again.';
+          alert(message);
+
           throw new Error();
         }
 
