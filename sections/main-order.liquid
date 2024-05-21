@@ -6,9 +6,9 @@
   <div class="c-container flex flex-col gap-y-5">
     <div clas="flex flex-col gap-y-3">
       <h1 class="h2">{{ 'customer.order.title' | t: name: order.name }}</h1>
-      <a href="{{ routes.account_url }}" class="underline body-4 font-semibold">
+      <a href="{{ routes.account_url }}" class=" body-4 font-semibold">
         {%- render 'icon-arrow', class: 'w-4 rotate-180 inline-block' -%}
-        {{ 'customer.account.return' | t }}
+        <span class="underline">{{ 'customer.account.return' | t }}</span>
       </a>
     </div>
 
