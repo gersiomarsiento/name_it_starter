@@ -1,13 +1,13 @@
 <div x-data="predictiveSearch">
   <button
     type="button"
-    class="block"
+    class="block group"
     aria-haspopup="dialog"
     aria-label="{{ 'general.search.search' | t }}"
     :aria-expanded="searchIsOpen"
     x-on:click="toggleSearch"
   >
-    {%- render 'icon-search', class: 'h-8' -%}
+    {%- render 'icon-search', class: 'h-8 transition-transform group-hover:scale-105' -%}
   </button>
 
   <div
