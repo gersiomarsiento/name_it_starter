@@ -1,0 +1,22 @@
+<div class="flex flex-col">
+  {%- if item.original_line_price != item.final_line_price -%}
+    <s class="block body-3 text-gray-500 text-nowrap">
+      {{- item.original_line_price | money -}}
+    </s>
+  {%- endif -%}
+
+  <span class="block body-3 text-nowrap">
+    {{- item.final_line_price | money -}}
+  </span>
+
+  {%- if item.variant.available and item.unit_price_measurement -%}
+    <div class="body-5 text-gray-600">
+      {{ item.unit_price | money }}
+      <span aria-hidden="true">/</span>
+      {%- if item.unit_price_measurement.reference_value != 1 -%}
+        {{- item.unit_price_measurement.reference_value -}}
+      {%- endif -%}
+      {{ item.unit_price_measurement.reference_unit }}
+    </div>
+  {%- endif -%}
+</div>

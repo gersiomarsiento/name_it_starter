@@ -15,6 +15,10 @@ const defaults = {
   lineItemUpdate: '.js-cart-line-item-update',
   lineItemQuantity: '.js-cart-line-item-input-quantity',
   moneyFormat: Shopify.currency.default_money_format,
+  sections: {
+    cartDrawer: 'cart-drawer',
+    mainCart: 'main-cart',
+  },
 };
 
 class CartUtils {
@@ -68,8 +72,8 @@ class CartUtils {
     if (!response.sections) return;
     const sections = response.sections;
 
-    if (sections['cart-drawer']) {
-      const sectionCartDrawerText = sections['cart-drawer'].replace('loading="lazy"', 'loading="eager"');
+    if (sections[defaults.sections.cartDrawer]) {
+      const sectionCartDrawerText = sections[defaults.sections.cartDrawer].replace('loading="lazy"', 'loading="eager"');
       const drawerResponse = new DOMParser().parseFromString(sectionCartDrawerText, 'text/html');
       const drawerItems = document.querySelector(defaults.cartDrawerItems);
       drawerItems.innerHTML = drawerResponse.querySelector(defaults.cartDrawerItems).innerHTML;
@@ -80,10 +84,10 @@ class CartUtils {
       }
     }
 
-    if (sections['cart']) {
-      const cartSectionResponse = new DOMParser().parseFromString(sections['cart'], 'text/html');
-      const cartSectionContainer = document.getElementById('shopify-section-cart');
-      cartSectionContainer.innerHTML = cartSectionResponse.getElementById('shopify-section-cart').innerHTML;
+    if (sections[defaults.sections.mainCart]) {
+      const cartSectionResponse = new DOMParser().parseFromString(sections[defaults.sections.mainCart], 'text/html');
+      const cartSectionContainer = document.getElementById(defaults.sections.mainCart);
+      cartSectionContainer.innerHTML = cartSectionResponse.getElementById(defaults.sections.mainCart).innerHTML;
     }
   }
 }
@@ -166,11 +170,11 @@ Alpine.store('cart', {
 
     let formData = {
       items,
-      sections: ['cart-drawer'],
+      sections: [defaults.sections.cartDrawer],
       sections_url: window.location.pathname + '?request_type=ajax',
     };
 
-    if (window.location.pathname.includes(Shopify.routes.cart_url)) formData.sections.push('cart');
+    if (window.location.pathname.includes(Shopify.routes.cart_url)) formData.sections.push(defaults.sections.mainCart);
 
     CartUtils.setLoadingButton(addToCartButton);
     let response = await this.addJS(formData).finally(() => {
@@ -211,10 +215,10 @@ Alpine.store('cart', {
     let formData = {
       line: line,
       quantity: quantity,
-      sections: ['cart-drawer'],
+      sections: [defaults.sections.cartDrawer],
       sections_url: window.location.pathname + '?request_type=ajax',
     };
-    if (window.location.pathname.includes(Shopify.routes.cart_url)) formData.sections.push('cart');
+    if (window.location.pathname.includes(Shopify.routes.cart_url)) formData.sections.push(defaults.sections.mainCart);
 
     CartUtils.setLoadingButton(button);
     let response = await this.changeJS(formData).finally(() => {
@@ -226,9 +230,10 @@ Alpine.store('cart', {
   },
 
   async getDrawerUpdated() {
-    let endPoint = Shopify.routes.root + '?sections=cart-drawer';
+    let endPoint = Shopify.routes.root + '?request_type="ajax&sections=' + defaults.sections.cartDrawer;
 
-    if (window.location.pathname.includes(Shopify.routes.cart_url)) endendPoint = endPoint + ',cart';
+    if (window.location.pathname.includes(Shopify.routes.cart_url))
+      endendPoint = endPoint + ',' + defaults.sections.mainCart;
 
     let sections = await fetch(endPoint)
       .then((res) => {
@@ -248,7 +253,7 @@ Alpine.store('cart', {
   },
 
   async updateCartJson(response) {
-    const responseHtml = new DOMParser().parseFromString(response.sections['cart-drawer'], 'text/html');
+    const responseHtml = new DOMParser().parseFromString(response.sections[defaults.sections.cartDrawer], 'text/html');
     this.cart = JSON.parse(responseHtml.querySelector(defaults.cartDrawerCartJson).textContent);
   },
 

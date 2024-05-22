@@ -1529,9 +1529,6 @@
         }
       }
     },
-    "main-cart-items": {
-      "name": "Items"
-    },
     "main-collection-banner": {
       "name": "Collection banner",
       "settings": {

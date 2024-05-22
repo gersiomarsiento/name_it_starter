@@ -1,0 +1,14 @@
+{%- if item.line_level_discount_allocations != blank -%}
+  <ul
+    class="flex flex-col gap-y-3"
+    role="list"
+    aria-label="{{ 'customer.order.discount' | t }}"
+  >
+    {%- for discount in item.line_level_discount_allocations -%}
+      <li class="flex flex-row gap-2 items-center">
+        {%- render 'icon-discount' -%}
+        <span class="body-4">{{- discount.discount_application.title -}}</span>
+      </li>
+    {%- endfor -%}
+  </ul>
+{%- endif -%}

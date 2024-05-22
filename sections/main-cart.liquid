@@ -1,0 +1,35 @@
+<section
+  class="w-full py-8 lg:py-12 gradient color-{{ section.settings.color_scheme }}"
+  role="region"
+  aria-label="{{ section.settings.heading }}"
+  id="main-cart"
+>
+  <div class="c-container flex flex-col gap-y-8">
+    {%- if cart.empty? -%}
+      {%- render 'cart-drawer-empty' -%}
+    {%- else -%}
+      <h1 class="h2">{{ section.settings.heading }}</h1>
+      {%- render 'main-cart-items' -%}
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Main cart items",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color Scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Your Cart"
+    }
+  ]
+}
+{% endschema %}

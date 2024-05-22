@@ -1,0 +1,57 @@
+<form
+  action="{{ routes.cart_url }}"
+  id="CartDrawer-Form"
+  class="flex flex-col"
+  method="post"
+>
+  {%- for item in cart.items -%}
+    {%- assign dataLine = forloop.index -%}
+    <div class="cart-line-item grid grid-cols-10 gap-3 md:gap-5 py-6 transition-all duration-500 border-b border-b-gray-300">
+      <div class="col-span-3 md:col-span-1">
+        {%- if item.image -%}
+          <a href="{{ item.url }}" class="block" tabindex="-1" aria-hidden="true">
+            {%- render 'image-element', image: item.image, fixed_width: 300, class: 'rounded-md' -%}
+          </a>
+        {%- endif -%}
+      </div>
+
+      <div class="col-span-7 md:col-span-9 flex flex-col gap-y-4">
+        <div class="grid grid-cols-1 md:grid-cols-10 gap-5 items-center">
+          <div class="col-span-1 md:col-span-5 lg:col-span-6 flex flex-col gap-y-2">
+            <div class="flex flex-row justify-between gap-3">
+              <div class="flex flex-col gap-y-2">
+                {%- if settings.show_vendor -%}
+                  <p class="body-4">{{ item.product.vendor }}</p>
+                {%- endif -%}
+
+                <a href="{{ item.url }}" class="h5">
+                  {{- item.product.title | escape -}}
+                </a>
+
+                {%- render 'line-item-unit-price', item: item -%}
+
+                {%- render 'line-item-volume-price-or-quantity-rules-info', item: item -%}
+              </div>
+
+              <div class="md:hidden">
+                {%- render 'line-item-final-price', item: item -%}
+              </div>
+            </div>
+
+            {%- render 'line-item-options-and-properties', item: item -%}
+            {%- render 'line-item-selling-plan', item: item -%}
+            {%- render 'line-item-discounts', item: item -%}
+          </div>
+
+          <div class="col-span-1 md:col-span-3 lg:col-span-2 md:flex md:justify-center">
+            {%- render 'line-item-qty-actions', item: item, dataLine: dataLine -%}
+          </div>
+
+          <div class="hidden col-span-1 md:col-span-2 lg:col-span-2 md:flex md:justify-end">
+            {%- render 'line-item-final-price', item: item -%}
+          </div>
+        </div>
+      </div>
+    </div>
+  {%- endfor -%}
+</form>

@@ -1,0 +1,53 @@
+<div class="flex flex-row gap-5 justify-between items-center">
+  <div class="flex flex-row border rounded-full h-12" style="border-color: rgba(var(--color-foreground));">
+    <button
+      type="button"
+      data-type="minus"
+      data-line="{{ dataLine }}"
+      class="js-cart-line-item-update w-12 grid h-full place-content-center"
+      aria-label="{{ 'products.product.quantity.decrease' | t: product: item.product.title | escape }}"
+      style="--spinner-color: rgba(var(--color-foreground));"
+    >
+      {%- render 'icon-minus' -%}
+    </button>
+
+    <input
+      class="js-cart-line-item-input-quantity w-12 text-center appearance-none outer-spin-none"
+      type="number"
+      name="updates[]"
+      value="{{ item.quantity }}"
+      min="0"
+      data-min="{{ item.variant.quantity_rule.min }}"
+      {% if item.variant.quantity_rule.max != null %}
+        max="{{ item.variant.quantity_rule.max }}"
+      {% endif %}
+      step="{{ item.variant.quantity_rule.increment }}"
+      aria-label="{{ 'products.product.quantity.input_label' | t: product: item.product.title | escape }}"
+      disabled
+    >
+
+    <button
+      type="button"
+      data-type="plus"
+      data-line="{{ dataLine }}"
+      class="js-cart-line-item-update w-12 grid h-full place-content-center"
+      aria-label="{{ 'products.product.quantity.increase' | t: product: item.product.title | escape }}"
+      style="--spinner-color: rgba(var(--color-foreground));"
+      {% if item.variant.quantity_rule.max == item.quantity %}
+        disabled
+      {% endif %}
+    >
+      {%- render 'icon-plus' -%}
+    </button>
+  </div>
+
+  <button
+    type="button"
+    data-type="remove"
+    data-line="{{ dataLine }}"
+    class="js-cart-line-item-update"
+    aria-label="{{ 'sections.cart.remove_title' | t: title: item.title }}"
+  >
+    {%- render 'icon-remove', class: 'w-6' -%}
+  </button>
+</div>

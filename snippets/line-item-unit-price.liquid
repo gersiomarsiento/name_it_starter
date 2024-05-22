@@ -1,0 +1,11 @@
+<div class="flex flex-row gap-3">
+  {%- if item.original_price != item.final_price -%}
+    <s class="body-4 text-gray-500">
+      {{- item.original_price | money -}}
+    </s>
+  {%- endif -%}
+
+  <span class="body-4">
+    {{- item.final_price | money -}}
+  </span>
+</div>
