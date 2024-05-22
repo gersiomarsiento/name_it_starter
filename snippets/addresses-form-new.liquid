@@ -142,7 +142,7 @@
 
     <div class="flex flex-row justify-center gap-5">
       <button type="submit" class="button-primary">{{ 'customer.addresses.add' | t }}</button>
-      <button type="reset" class="button-secondary">{{ 'customer.addresses.cancel' | t }}</button>
+      <button type="reset" class="button-secondary" @click="closeModal()">{{ 'customer.addresses.cancel' | t }}</button>
     </div>
   {%- endform -%}
 </div>
