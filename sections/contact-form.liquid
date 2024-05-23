@@ -21,7 +21,7 @@
         {{ section.settings.heading }}
       </h2>
     {%- else -%}
-      <h2 class="visually-hidden">{{ 'templates.contact.form.title' | t }}</h2>
+      <h2 class="sr-only">{{ 'templates.contact.form.title' | t }}</h2>
     {%- endif -%}
     {%- liquid
       assign contact_form_class = 'isolate'
@@ -87,7 +87,7 @@
           >
           {%- if form.errors contains 'email' -%}
             <small class="contact__field-error" id="ContactForm-email-error">
-              <span class="visually-hidden">{{ 'accessibility.error' | t }}</span>
+              <span class="sr-only">{{ 'accessibility.error' | t }}</span>
               <span class="form__message">
                 {%- render 'icon-error' -%}
                 {{- form.errors.translated_fields.email | capitalize }}
