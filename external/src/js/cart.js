@@ -15,10 +15,6 @@ const defaults = {
   lineItemUpdate: '.js-cart-line-item-update',
   lineItemQuantity: '.js-cart-line-item-input-quantity',
   moneyFormat: Shopify.currency.default_money_format,
-  sections: {
-    cartDrawer: 'cart-drawer',
-    mainCart: 'main-cart',
-  },
 };
 
 class CartUtils {
@@ -70,25 +66,31 @@ class CartUtils {
 
   static updateSections(response) {
     if (!response.sections) return;
-    const sections = response.sections;
 
-    if (sections[defaults.sections.cartDrawer]) {
-      const sectionCartDrawerText = sections[defaults.sections.cartDrawer].replace('loading="lazy"', 'loading="eager"');
-      const drawerResponse = new DOMParser().parseFromString(sectionCartDrawerText, 'text/html');
-      const drawerItems = document.querySelector(defaults.cartDrawerItems);
-      drawerItems.innerHTML = drawerResponse.querySelector(defaults.cartDrawerItems).innerHTML;
+    CartUtils.getSectionsToRender().forEach((section) => {
+      const sectionHtml = new DOMParser().parseFromString(response.sections[section.section], 'text/html');
+      section.selectors.forEach((selector) => {
+        document.querySelector(selector).innerHTML = sectionHtml.querySelector(selector).innerHTML;
+      });
+    });
+  }
 
-      const drawerFooter = document.querySelector(defaults.cartDrawerFooter);
-      if (drawerFooter != null) {
-        drawerFooter.innerHTML = drawerResponse.querySelector(defaults.cartDrawerFooter).innerHTML;
-      }
+  static getSectionsToRender() {
+    let sections = [
+      {
+        section: document.getElementById('cart-drawer').dataset.sectionId,
+        selectors: [defaults.cartDrawerItems, defaults.cartDrawerFooter],
+      },
+    ];
+
+    if (window.location.pathname.includes(Shopify.routes.cart_url)) {
+      sections.push({
+        section: document.getElementById('main-cart').dataset.sectionId,
+        selectors: ['#main-cart'],
+      });
     }
 
-    if (sections[defaults.sections.mainCart]) {
-      const cartSectionResponse = new DOMParser().parseFromString(sections[defaults.sections.mainCart], 'text/html');
-      const cartSectionContainer = document.getElementById(defaults.sections.mainCart);
-      cartSectionContainer.innerHTML = cartSectionResponse.getElementById(defaults.sections.mainCart).innerHTML;
-    }
+    return sections;
   }
 }
 
@@ -170,11 +172,9 @@ Alpine.store('cart', {
 
     let formData = {
       items,
-      sections: [defaults.sections.cartDrawer],
+      sections: CartUtils.getSectionsToRender().map((section) => section.section),
       sections_url: window.location.pathname + '?request_type=ajax',
     };
-
-    if (window.location.pathname.includes(Shopify.routes.cart_url)) formData.sections.push(defaults.sections.mainCart);
 
     CartUtils.setLoadingButton(addToCartButton);
     let response = await this.addJS(formData).finally(() => {
@@ -215,10 +215,9 @@ Alpine.store('cart', {
     let formData = {
       line: line,
       quantity: quantity,
-      sections: [defaults.sections.cartDrawer],
+      sections: CartUtils.getSectionsToRender().map((section) => section.section),
       sections_url: window.location.pathname + '?request_type=ajax',
     };
-    if (window.location.pathname.includes(Shopify.routes.cart_url)) formData.sections.push(defaults.sections.mainCart);
 
     CartUtils.setLoadingButton(button);
     let response = await this.changeJS(formData).finally(() => {
@@ -230,11 +229,11 @@ Alpine.store('cart', {
   },
 
   async getDrawerUpdated() {
-    let endPoint = Shopify.routes.root + '?request_type="ajax&sections=' + defaults.sections.cartDrawer;
+    const sectionsToRender = CartUtils.getSectionsToRender()
+      .map((section) => section.section)
+      .join(',');
 
-    if (window.location.pathname.includes(Shopify.routes.cart_url))
-      endendPoint = endPoint + ',' + defaults.sections.mainCart;
-
+    let endPoint = Shopify.routes.root + '?request_type=ajax&sections=' + sectionsToRender;
     let sections = await fetch(endPoint)
       .then((res) => {
         return res.json();
@@ -253,7 +252,8 @@ Alpine.store('cart', {
   },
 
   async updateCartJson(response) {
-    const responseHtml = new DOMParser().parseFromString(response.sections[defaults.sections.cartDrawer], 'text/html');
+    const drawerSection = CartUtils.getSectionsToRender()[0].section;
+    const responseHtml = new DOMParser().parseFromString(response.sections[drawerSection], 'text/html');
     this.cart = JSON.parse(responseHtml.querySelector(defaults.cartDrawerCartJson).textContent);
   },
 

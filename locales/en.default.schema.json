@@ -1518,17 +1518,6 @@
         }
       }
     },
-    "main-cart-footer": {
-      "name": "Subtotal",
-      "blocks": {
-        "subtotal": {
-          "name": "Subtotal price"
-        },
-        "buttons": {
-          "name": "Checkout button"
-        }
-      }
-    },
     "main-collection-banner": {
       "name": "Collection banner",
       "settings": {

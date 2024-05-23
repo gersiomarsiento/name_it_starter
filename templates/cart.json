@@ -2,37 +2,29 @@
   "sections": {
     "main-cart": {
       "type": "main-cart",
-      "settings": {
-        "color_scheme": "scheme-1",
-        "padding_top": 36,
-        "padding_bottom": 36
-      }
-    },
-    "cart-footer": {
-      "type": "main-cart-footer",
       "blocks": {
-        "subtotal": {
+        "subtotal_Ldr6ij": {
           "type": "subtotal",
-          "settings": {}
+          "settings": {
+          }
         },
-        "buttons": {
+        "buttons_UpzP8P": {
           "type": "buttons",
-          "settings": {}
+          "settings": {
+          }
         }
       },
       "block_order": [
-        "subtotal",
-        "buttons"
+        "subtotal_Ldr6ij",
+        "buttons_UpzP8P"
       ],
       "settings": {
         "color_scheme": "scheme-1",
-        "padding_top": 20,
-        "padding_bottom": 40
+        "heading": "Your Cart"
       }
     }
   },
   "order": [
-    "main-cart",
-    "cart-footer"
+    "main-cart"
   ]
 }

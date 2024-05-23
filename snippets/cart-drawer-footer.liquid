@@ -3,7 +3,7 @@
   class="flex flex-col gap-y-2 px-4 md:px-5 py-4 border-t border-gray-300"
 >
   {%- if settings.show_cart_note -%}
-    {%- render 'cart-drawer-note' -%}
+    {%- render 'cart-drawer-note', localPosition: 'CartDrawer' -%}
   {%- endif -%}
 
   <div class="flex flex-col gap-y-2">
@@ -27,17 +27,7 @@
       <span class="h4 font-normal text-nowrap">{{ cart.total_price | money }}</span>
     </div>
 
-    <small class="body-5">
-      {%- if cart.taxes_included and shop.shipping_policy.body != blank -%}
-        {{- 'sections.cart.taxes_included_and_shipping_policy_html' | t: link: shop.shipping_policy.url -}}
-      {%- elsif cart.taxes_included -%}
-        {{- 'sections.cart.taxes_included_but_shipping_at_checkout' | t -}}
-      {%- elsif shop.shipping_policy.body != blank -%}
-        {{- 'sections.cart.taxes_and_shipping_policy_at_checkout_html' | t: link: shop.shipping_policy.url -}}
-      {%- else -%}
-        {{- 'sections.cart.taxes_and_shipping_at_checkout' | t -}}
-      {%- endif -%}
-    </small>
+    {%- render 'cart-tax-note' -%}
   </div>
 
   <div class="flex flex-col gap-y-3">

@@ -1,7 +1,10 @@
+{%- assign localPosition = localPosition | default: blank -%}
+{%- assign open = open | default: false, allow_false: true -%}
+
 <div
   x-data="
     {
-      open: false,
+      open: {{ open | json }},
       note: '{{ cart.note }}',
       toggle() {
         this.open = !this.open;
@@ -29,7 +32,7 @@
   >
     <div class="body-3">{{ 'sections.cart.note' | t }}</div>
     <span
-      class="transition-transform"
+      class="transition-transform {% if open %} rotate-180 {% endif %}"
       :class="{ 'rotate-180': open }"
     >
       {%- render 'icon-caret', class: 'w-4' -%}
@@ -40,13 +43,15 @@
     class="w-full"
     x-show="open"
     x-collapse
-    style="display: none;"
+    {% unless open %}
+      style="display: none;"
+    {% endunless %}
   >
-    <label class="sr-only" for="CartDrawer-Note">{{ 'sections.cart.note' | t }}</label>
+    <label class="sr-only" for="{{ localPosition }}-Note">{{ 'sections.cart.note' | t }}</label>
     <textarea
       class="form__input min-h-24 mt-2"
       name="note"
-      id="CartDrawer-Note"
+      id="{{ localPosition }}-Note"
       placeholder="{{ 'sections.cart.note' | t }}"
       x-on:input.debounce="onUpdatedNote"
       x-model="note"
