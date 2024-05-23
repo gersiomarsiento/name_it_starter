@@ -33,7 +33,9 @@
   },
   "css.customData": [".vscode/tailwind.json"],
   "files.associations": {
-    "*.min.*": "plaintext"
+    "*.min.*": "plaintext",
+    "**/assets/main.js": "plaintext",
+    "**/assets/main.css": "plaintext"
   },
   "search.exclude": {
     "**/node_modules": true,

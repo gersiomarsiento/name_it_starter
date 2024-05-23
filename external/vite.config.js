@@ -23,7 +23,8 @@ export default defineConfig({
   },
   build: {
     minify: true,
-    sourcemap: true,
+    sourcemap: 'inline',
+    chunkSizeWarningLimit: 3000,
     outDir: '../../assets',
     emptyOutDir: false,
     rollupOptions: {
