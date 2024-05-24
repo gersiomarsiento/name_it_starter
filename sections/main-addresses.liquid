@@ -1,216 +1,65 @@
-<script src="{{ 'customer.js' | asset_url }}" defer></script>
-
 <section
   role="region"
   aria-label="{{ 'customer.addresses.title' | t }}"
   class="w-full py-8 lg:py-12"
 >
-  {%- paginate customer.addresses by 5 -%}
-    <div class="c-container" data-customer-addresses>
-      <h1>{{ 'customer.addresses.title' | t }}</h1>
+  {%- paginate customer.addresses by 6 -%}
+    <div class="c-container flex flex-col gap-y-8">
+      <div class="flex flex-col md:flex-row md:justify-between md:items-center gap-8">
+        <div class="flex flex-col gap-y-3">
+          <h1 class="h2">{{ 'customer.addresses.title' | t }}</h1>
 
-      <a href="{{ routes.account_url }}">
-        {{ 'customer.account.return' | t }}
-      </a>
-
-      <div data-address>
-        {%- capture AddressesFormNew -%}
-          {%- render 'addresses-form-new' -%}
-        {%- endcapture -%}
+          <a href="{{ routes.account_url }}" class=" body-4 font-semibold">
+            {%- render 'icon-arrow', class: 'w-4 rotate-180 inline-block' -%}
+            <span class="underline">{{ 'customer.account.return' | t }}</span>
+          </a>
+        </div>
 
         <button
           type="button"
-          class="button-primary"
+          class="button-primary w-max"
           aria-expanded="false"
           aria-controls="AddAddress"
           data-modal="AddressesFormNew"
         >
           {{- 'customer.addresses.add_new' | t -}}
         </button>
-
-        {%- render 'modal',
-          width: 600,
-          class: '',
-          id: 'AddressesFormNew',
-          hasPadding: false,
-          modalContent: AddressesFormNew,
-          isOpen: section.settings.debug_mode
-        -%}
       </div>
 
-      <ul role="list">
+      <ul role="list" class="grid grid-cols-350px gap-8">
         {%- for address in customer.addresses -%}
-          <li data-address>
+          {%- assign modalID = 'AddressesFormEdit' | append: address.id -%}
+
+          <li class="grid grid-cols-1 gap-y-5 shadow-card border border-gray-300 rounded-[15px] p-5">
             {%- if address == customer.default_address -%}
-              <h2>{{ 'customer.addresses.default' | t }}</h2>
+              <div class="font-bold body-4">{{ 'customer.addresses.default' | t }}</div>
             {%- endif -%}
 
             {{ address | format_address }}
 
-            <button
-              type="button"
-              id="EditFormButton_{{ address.id }}"
-              aria-label="{{ 'customer.addresses.edit_address' | t }} {{ forloop.index }}"
-              aria-controls="EditAddress_{{ address.id }}"
-              aria-expanded="false"
-              data-address-id="{{ address.id }}"
-            >
-              {{ 'customer.addresses.edit' | t }}
-            </button>
+            <div class="flex flex-row justify-around gap-5 items-center self-end">
+              <button
+                type="button"
+                class="button-secondary small flex-1"
+                aria-label="{{ 'customer.addresses.edit_address' | t }} {{ forloop.index }}"
+                aria-controls="EditAddress_{{ address.id }}"
+                aria-expanded="false"
+                data-modal="{{ modalID }}"
+              >
+                {{- 'customer.addresses.edit' | t -}}
+              </button>
+              {% comment %} MODAL code is at the bottom  {% endcomment %}
 
-            <button
-              type="button"
-              aria-label="{{ 'customer.addresses.delete' | t }} {{ forloop.index }}"
-              data-target="{{ address.url }}"
-              data-confirm-message="{{ 'customer.addresses.delete_confirm' | t }}"
-            >
-              {{ 'customer.addresses.delete' | t }}
-            </button>
-
-            <div id="EditAddress_{{ address.id }}">
-              <h2>{{ 'customer.addresses.edit_address' | t }}</h2>
-              {%- form 'customer_address', address -%}
-                <div class="field">
-                  <input
-                    type="text"
-                    id="AddressFirstName_{{ form.id }}"
-                    name="address[first_name]"
-                    value="{{ form.first_name }}"
-                    autocomplete="given-name"
-                    placeholder="{{ 'customer.addresses.first_name' | t }}"
-                  >
-                  <label for="AddressFirstName_{{ form.id }}">{{ 'customer.addresses.first_name' | t }}</label>
-                </div>
-
-                <div class="field">
-                  <input
-                    type="text"
-                    id="AddressLastName_{{ form.id }}"
-                    name="address[last_name]"
-                    value="{{ form.last_name }}"
-                    autocomplete="family-name"
-                    placeholder="{{ 'customer.addresses.last_name' | t }}"
-                  >
-                  <label for="AddressLastName_{{ form.id }}">{{ 'customer.addresses.last_name' | t }}</label>
-                </div>
-
-                <div class="field">
-                  <input
-                    type="text"
-                    id="AddressCompany_{{ form.id }}"
-                    name="address[company]"
-                    value="{{ form.company }}"
-                    autocomplete="organization"
-                    placeholder="{{ 'customer.addresses.company' | t }}"
-                  >
-                  <label for="AddressCompany_{{ form.id }}">{{ 'customer.addresses.company' | t }}</label>
-                </div>
-
-                <div class="field">
-                  <input
-                    type="text"
-                    id="AddressAddress1_{{ form.id }}"
-                    name="address[address1]"
-                    value="{{ form.address1 }}"
-                    autocomplete="address-line1"
-                    placeholder="{{ 'customer.addresses.address1' | t }}"
-                  >
-                  <label for="AddressAddress1_{{ form.id }}">{{ 'customer.addresses.address1' | t }}</label>
-                </div>
-
-                <div class="field">
-                  <input
-                    type="text"
-                    id="AddressAddress2_{{ form.id }}"
-                    name="address[address2]"
-                    value="{{ form.address2 }}"
-                    autocomplete="address-line2"
-                    placeholder="{{ 'customer.addresses.address2' | t }}"
-                  >
-                  <label for="AddressAddress2_{{ form.id }}">{{ 'customer.addresses.address2' | t }}</label>
-                </div>
-
-                <div class="field">
-                  <input
-                    type="text"
-                    id="AddressCity_{{ form.id }}"
-                    name="address[city]"
-                    value="{{ form.city }}"
-                    autocomplete="address-level2"
-                    placeholder="{{ 'customer.addresses.city' | t }}"
-                  >
-                  <label for="AddressCity_{{ form.id }}">{{ 'customer.addresses.city' | t }}</label>
-                </div>
-
-                <div>
-                  <label for="AddressCountry_{{ form.id }}">
-                    {{ 'customer.addresses.country' | t }}
-                  </label>
-                  <div class="select">
-                    <select
-                      id="AddressCountry_{{ form.id }}"
-                      name="address[country]"
-                      data-address-country-select
-                      data-default="{{ form.country }}"
-                      data-form-id="{{ form.id }}"
-                      autocomplete="country"
-                    >
-                      {{ all_country_option_tags }}
-                    </select>
-                  </div>
-                </div>
-
-                <div id="AddressProvinceContainer_{{ form.id }}" style="display:none;">
-                  <label for="AddressProvince_{{ form.id }}">
-                    {{ 'customer.addresses.province' | t }}
-                  </label>
-                  <div class="select">
-                    <select
-                      id="AddressProvince_{{ form.id }}"
-                      name="address[province]"
-                      data-default="{{ form.province }}"
-                      autocomplete="address-level1"
-                    ></select>
-                  </div>
-                </div>
-
-                <div class="field">
-                  <input
-                    type="text"
-                    id="AddressZip_{{ form.id }}"
-                    name="address[zip]"
-                    value="{{ form.zip }}"
-                    autocapitalize="characters"
-                    autocomplete="postal-code"
-                    placeholder="{{ 'customer.addresses.zip' | t }}"
-                  >
-                  <label for="AddressZip_{{ form.id }}">{{ 'customer.addresses.zip' | t }}</label>
-                </div>
-
-                <div class="field">
-                  <input
-                    type="tel"
-                    id="AddressPhone_{{ form.id }}"
-                    name="address[phone]"
-                    value="{{ form.phone }}"
-                    autocomplete="tel"
-                    placeholder="{{ 'customer.addresses.phone' | t }}"
-                  >
-                  <label for="AddressPhone_{{ form.id }}">{{ 'customer.addresses.phone' | t }}</label>
-                </div>
-
-                <div>
-                  {{ form.set_as_default_checkbox }}
-                  <label for="address_default_address_{{ form.id }}">
-                    {{ 'customer.addresses.set_default' | t }}
-                  </label>
-                </div>
-
-                <div>
-                  <button>{{ 'customer.addresses.update' | t }}</button>
-                  <button type="reset">{{ 'customer.addresses.cancel' | t }}</button>
-                </div>
-              {%- endform -%}
+              <button
+                type="button"
+                class="base-button small flex-1 bg-red-600 text-white hover:bg-red-500"
+                aria-label="{{ 'customer.addresses.delete' | t }} {{ forloop.index }}"
+                data-target="{{ address.url }}"
+                data-delete-message="{{ 'customer.addresses.delete_confirm' | t }}"
+              >
+                {{- 'customer.addresses.delete' | t -}}
+              </button>
+              {% comment %} Delete function is at the bottom  {% endcomment %}
             </div>
           </li>
         {%- endfor -%}
@@ -220,11 +69,67 @@
         {%- render 'pagination', paginate: paginate -%}
       {%- endif -%}
     </div>
+
+    {% comment %} NEW MODAL {% endcomment %}
+    {%- capture AddressesFormNew -%}
+      {%- render 'addresses-form-new' -%}
+    {%- endcapture -%}
+
+    {%- render 'modal',
+      width: 600,
+      class: '',
+      id: 'AddressesFormNew',
+      hasPadding: false,
+      modalContent: AddressesFormNew,
+      isOpen: section.settings.debug_mode
+    -%}
+    {% comment %} END NEW MODAL {% endcomment %}
+
+    {% comment %} EDIT MODALS {% endcomment %}
+    {%- for address in customer.addresses -%}
+      {%- assign modalID = 'AddressesFormEdit' | append: address.id -%}
+
+      {%- capture AddressesFormEdit -%}
+        {%- render 'addresses-edit-form', address: address -%}
+      {%- endcapture -%}
+
+      {%- render 'modal',
+        width: 600,
+        class: '',
+        id: modalID,
+        hasPadding: false,
+        modalContent: AddressesFormEdit,
+        isOpen: section.settings.debug_mode
+      -%}
+    {%- endfor -%}
+    {% comment %} END EDIT MODALS {% endcomment %}
   {%- endpaginate -%}
 </section>
+
 <script>
   window.addEventListener('load', () => {
-    typeof CustomerAddresses !== 'undefined' && new CustomerAddresses();
+    new Shopify.CountryProvinceSelector('AddressCountryNew', 'AddressProvinceNew', {
+      hideElement: 'AddressProvinceContainerNew',
+    });
+
+    document.querySelectorAll('[data-address-country-select]').forEach((select) => {
+      const formId = select.dataset.formId;
+      new Shopify.CountryProvinceSelector(`AddressCountry_${formId}`, `AddressProvince_${formId}`, {
+        hideElement: `AddressProvinceContainer_${formId}`,
+      });
+    });
+
+    function handleDeleteButtonClick({ currentTarget }) {
+      if (confirm(currentTarget.getAttribute('data-delete-message'))) {
+        Shopify.postLink(currentTarget.dataset.target, {
+          parameters: { _method: 'delete' },
+        });
+      }
+    }
+
+    document.querySelectorAll('button[data-delete-message]').forEach((button) => {
+      button.addEventListener('click', handleDeleteButtonClick);
+    });
   });
 </script>
 
