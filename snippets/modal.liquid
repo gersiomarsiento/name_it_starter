@@ -40,64 +40,62 @@
   "
   @keydown.escape.window="closeModal"
   x-cloak
+  style="display: none;"
+  x-show="modalIsOpen"
+  x-trap="modalIsOpen"
+  class="fixed inset-0 z-50 overflow-hidden w-full h-full flex items-end md:items-center justify-center md:px-4 text-center"
+  role="dialog"
+  aria-modal="true"
 >
   <div
+    @click="closeModal"
     x-show="modalIsOpen"
-    x-trap="modalIsOpen"
-    class="fixed inset-0 z-50 overflow-hidden w-full h-full flex items-end md:items-center justify-center md:px-4 text-center"
-    role="dialog"
-    aria-modal="true"
+    x-transition:enter="transition ease-out duration-300 transform"
+    x-transition:enter-start="opacity-0"
+    x-transition:enter-end="opacity-100"
+    x-transition:leave="transition ease-in duration-200 transform"
+    x-transition:leave-start="opacity-100"
+    x-transition:leave-end="opacity-0"
+    class="fixed inset-0 transition-opacity bg-black bg-opacity-70"
+    aria-hidden="true"
+  ></div>
+
+  <div
+    x-show="modalIsOpen"
+    x-transition:enter="transition ease-out duration-300 transform"
+    x-transition:enter-start="opacity-50 translate-y-16 md:translate-y-0 md:scale-95"
+    x-transition:enter-end="opacity-100 translate-y-0 md:scale-100"
+    x-transition:leave="transition ease-in duration-200 transform"
+    x-transition:leave-start="opacity-100 translate-y-0 md:scale-100"
+    x-transition:leave-end="opacity-0 translate-y-16 md:translate-y-0 md:scale-95"
+    class="
+      {% if width == blank and widthPercentage == blank %} md:max-w-[500px] {% endif %}
+      {% if fullHeight %} h-full {% endif %}
+      {% if hasPadding %} px-7 py-6 {% else %} p-0 {% endif %}
+      relative w-full max-h-[90%] text-left overflow-y-auto
+      transition-all transform bg-white rounded-[20px] md-down:rounded-b-none shadow-xl {{ class }}
+    "
+    {% if width != blank %}
+      style="max-width: {{ width }}px;"
+    {% elsif widthPercentage != blank %}
+      style="max-width: {{ widthPercentage | append: '%' }};"
+    {% endif %}
   >
-    <div
-      @click="closeModal"
-      x-show="modalIsOpen"
-      x-transition:enter="transition ease-out duration-300 transform"
-      x-transition:enter-start="opacity-0"
-      x-transition:enter-end="opacity-100"
-      x-transition:leave="transition ease-in duration-200 transform"
-      x-transition:leave-start="opacity-100"
-      x-transition:leave-end="opacity-0"
-      class="fixed inset-0 transition-opacity bg-black bg-opacity-70"
-      aria-hidden="true"
-    ></div>
-
-    <div
-      x-show="modalIsOpen"
-      x-transition:enter="transition ease-out duration-300 transform"
-      x-transition:enter-start="opacity-50 translate-y-16 md:translate-y-0 md:scale-95"
-      x-transition:enter-end="opacity-100 translate-y-0 md:scale-100"
-      x-transition:leave="transition ease-in duration-200 transform"
-      x-transition:leave-start="opacity-100 translate-y-0 md:scale-100"
-      x-transition:leave-end="opacity-0 translate-y-16 md:translate-y-0 md:scale-95"
-      class="
-        {% if width == blank and widthPercentage == blank %} md:max-w-[500px] {% endif %}
-        {% if fullHeight %} h-full {% endif %}
-        {% if hasPadding %} px-7 py-6 {% else %} p-0 {% endif %}
-        relative w-full max-h-[90%] text-left overflow-y-auto
-        transition-all transform bg-white rounded-[20px] md-down:rounded-b-none shadow-xl {{ class }}
-      "
-      {% if width != blank %}
-        style="max-width: {{ width }}px;"
-      {% elsif widthPercentage != blank %}
-        style="max-width: {{ widthPercentage | append: '%' }};"
-      {% endif %}
-    >
-      {%- unless disableClose -%}
-        {%- if closeButtonClass == blank -%}
-          {%- assign closeButtonClass = 'absolute right-3 top-3' -%}
-          {%- if hasPadding -%}
-            {%- assign closeButtonClass = 'absolute right-0 top-0' -%}
-          {%- endif -%}
+    {%- unless disableClose -%}
+      {%- if closeButtonClass == blank -%}
+        {%- assign closeButtonClass = 'absolute right-3 top-3' -%}
+        {%- if hasPadding -%}
+          {%- assign closeButtonClass = 'absolute right-0 top-0' -%}
         {%- endif -%}
+      {%- endif -%}
 
-        <div class="sticky top-0 w-full z-[6] {{ closeButtonWrapperClass }}">
-          <button class="{{ closeButtonClass}}" @click="closeModal">
-            {%- render 'icon-close', class: 'w-8' -%}
-          </button>
-        </div>
-      {%- endunless -%}
+      <div class="sticky top-0 w-full z-[6] {{ closeButtonWrapperClass }}">
+        <button class="{{ closeButtonClass}}" @click="closeModal">
+          {%- render 'icon-close', class: 'w-8' -%}
+        </button>
+      </div>
+    {%- endunless -%}
 
-      {{- modalContent -}}
-    </div>
+    {{- modalContent -}}
   </div>
 </div>
