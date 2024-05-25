@@ -1,60 +1,80 @@
-{{ 'section-collection-list.css' | asset_url | stylesheet_tag }}
+<section
+  role="region"
+  aria-label="{{ section.settings.title | escape }}"
+  class="w-full py-8 lg:py-12"
+>
+  <div class="c-container flex flex-col gap-y-8">
+    {%- if section.settings.title != blank -%}
+      <h1 class="h2">
+        {{- section.settings.title -}}
+      </h1>
+    {%- endif -%}
 
-<div class="page-width">
-  <h1 class="title title--primary inline-richtext{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
-    {{ section.settings.title }}
-  </h1>
-  {%- liquid
-    case section.settings.sort
-      when 'products_high', 'products_low'
-        assign collections = collections | sort: 'all_products_count'
-      when 'date', 'date_reversed'
-        assign collections = collections | sort: 'published_at'
-    endcase
+    {%- liquid
+      case section.settings.sort
+        when 'products_high', 'products_low'
+          assign collections = collections | sort: 'all_products_count'
+        when 'date', 'date_reversed'
+          assign collections = collections | sort: 'published_at'
+      endcase
 
-    if section.settings.sort == 'products_high' or section.settings.sort == 'date_reversed' or section.settings.sort == 'alphabetical_reversed'
-      assign collections = collections | reverse
-    endif
+      if section.settings.sort == 'products_high' or section.settings.sort == 'date_reversed' or section.settings.sort == 'alphabetical_reversed'
+        assign collections = collections | reverse
+      endif
 
-    assign moduloResult = 28 | modulo: section.settings.columns_desktop
-    assign paginate_by = 30
-    if moduloResult == 0
-      assign paginate_by = 28
-    endif
-  -%}
-  {%- paginate collections by paginate_by -%}
-    <ul
-      class="collection-list grid grid--{{ section.settings.columns_desktop }}-col-desktop grid--{{ section.settings.columns_mobile }}-col-tablet-down"
-      role="list"
-    >
-      {%- for collection in collections -%}
-        <li
-          class="collection-list__item grid__item{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
-          {% if settings.animations_reveal_on_scroll %}
-            data-cascade
-            style="--animation-order: {{ forloop.index }};"
-          {% endif %}
-        >
-          {% render 'card-collection',
-            card_collection: collection,
-            media_aspect_ratio: section.settings.image_ratio,
-            columns: 3
-          %}
-        </li>
-      {%- endfor -%}
-    </ul>
-    {% render 'pagination', paginate: paginate %}
-  {%- endpaginate -%}
-</div>
+      assign moduloResult = 28 | modulo: section.settings.columns_desktop
+      assign paginate_by = 30
+      if moduloResult == 0
+        assign paginate_by = 28
+      endif
+    -%}
+
+    {%- paginate collections by paginate_by -%}
+      {%- assign columnsDesktop = 'lg:grid-cols-3' -%}
+      {%- case section.settings.columns_desktop -%}
+        {%- when 2 -%}
+          {%- assign columnsDesktop = 'lg:grid-cols-2' -%}
+        {%- when 3 -%}
+          {%- assign columnsDesktop = 'lg:grid-cols-3' -%}
+        {%- when 4 -%}
+          {%- assign columnsDesktop = 'lg:grid-cols-4' -%}
+        {%- when 5 -%}
+          {%- assign columnsDesktop = 'lg:grid-cols-5' -%}
+      {%- endcase -%}
+
+      {%- assign columnsMobile = 'grid-cols-1' -%}
+      {%- case section.settings.columns_mobile -%}
+        {%- when '1' -%}
+          {%- assign columnsMobile = 'grid-cols-1' -%}
+        {%- when '2' -%}
+          {%- assign columnsMobile = 'grid-cols-2' -%}
+      {%- endcase -%}
+
+      <ul
+        class="grid {{ columnsMobile }} md:grid-cols-2 {{ columnsDesktop }} gap-x-3 md:gap-x-5 gap-y-5"
+        role="list"
+      >
+        {%- for collection in collections -%}
+          <li>
+            {% render 'card-collection', card_collection: collection %}
+          </li>
+        {%- endfor -%}
+      </ul>
+
+      {%- render 'pagination', paginate: paginate -%}
+    {%- endpaginate -%}
+  </div>
+</section>
+
 {% schema %}
 {
-  "name": "t:sections.main-list-collections.name",
+  "name": "Collections list page",
   "class": "section",
   "settings": [
     {
       "type": "inline_richtext",
       "id": "title",
-      "label": "t:sections.main-list-collections.settings.title.label",
+      "label": "Heading",
       "default": "Collections"
     },
     {
@@ -63,52 +83,31 @@
       "options": [
         {
           "value": "alphabetical",
-          "label": "t:sections.main-list-collections.settings.sort.options__1.label"
+          "label": "Alphabetically, A-Z"
         },
         {
           "value": "alphabetical_reversed",
-          "label": "t:sections.main-list-collections.settings.sort.options__2.label"
+          "label": "Alphabetically, Z-A"
         },
         {
           "value": "date_reversed",
-          "label": "t:sections.main-list-collections.settings.sort.options__3.label"
+          "label": "Date, new to old"
         },
         {
           "value": "date",
-          "label": "t:sections.main-list-collections.settings.sort.options__4.label"
+          "label": "Date, old to new"
         },
         {
           "value": "products_high",
-          "label": "t:sections.main-list-collections.settings.sort.options__5.label"
+          "label": "Product count, high to low"
         },
         {
           "value": "products_low",
-          "label": "t:sections.main-list-collections.settings.sort.options__6.label"
+          "label": "Product count, low to high"
         }
       ],
       "default": "alphabetical",
-      "label": "t:sections.main-list-collections.settings.sort.label"
-    },
-    {
-      "type": "select",
-      "id": "image_ratio",
-      "options": [
-        {
-          "value": "adapt",
-          "label": "t:sections.main-list-collections.settings.image_ratio.options__1.label"
-        },
-        {
-          "value": "portrait",
-          "label": "t:sections.main-list-collections.settings.image_ratio.options__2.label"
-        },
-        {
-          "value": "square",
-          "label": "t:sections.main-list-collections.settings.image_ratio.options__3.label"
-        }
-      ],
-      "default": "adapt",
-      "label": "t:sections.main-list-collections.settings.image_ratio.label",
-      "info": "t:sections.main-list-collections.settings.image_ratio.info"
+      "label": "Sort collections by:"
     },
     {
       "type": "range",
@@ -117,11 +116,7 @@
       "max": 6,
       "step": 1,
       "default": 3,
-      "label": "t:sections.main-list-collections.settings.columns_desktop.label"
-    },
-    {
-      "type": "header",
-      "content": "t:sections.main-list-collections.settings.header_mobile.content"
+      "label": "Number of columns on desktop"
     },
     {
       "type": "select",
@@ -129,15 +124,15 @@
       "options": [
         {
           "value": "1",
-          "label": "t:sections.main-list-collections.settings.columns_mobile.options__1.label"
+          "label": "1 column"
         },
         {
           "value": "2",
-          "label": "t:sections.main-list-collections.settings.columns_mobile.options__2.label"
+          "label": "2 columns"
         }
       ],
       "default": "2",
-      "label": "t:sections.main-list-collections.settings.columns_mobile.label"
+      "label": "Number of columns on mobile"
     }
   ]
 }
