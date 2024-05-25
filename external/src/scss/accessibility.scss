@@ -12,3 +12,11 @@ html:not(.focus-is-visible) {
     outline: 2px auto;
   }
 }
+
+.skip-to-content-link:focus {
+  z-index: 9999;
+  overflow: auto;
+  width: auto;
+  height: auto;
+  clip: auto;
+}

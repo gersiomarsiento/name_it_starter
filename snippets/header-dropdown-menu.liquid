@@ -2,12 +2,12 @@
   class="w-full max-w-[300px] p-4 rounded-[15px] shadow-md z-[10] overflow-hidden border border-gray-200 border-opacity-20 color-{{ section.settings.menu_color_scheme }} gradient"
   role="list"
   tabindex="-1"
-  x-show="open"
-  x-trap="open"
+  x-show="isMenuOpen"
+  x-trap="isMenuOpen"
   x-transition.origin.top.left
   x-anchor.bottom-start.offset.10="$refs.navLinkMenu"
   style="display: none; color: rgba(var(--color-foreground)); background-color: rgb(var(--color-background));"
-  :aria-hidden="!open"
+  :aria-hidden="!isMenuOpen"
 >
   {%- for childlink in link.links -%}
     <li>
@@ -15,9 +15,9 @@
         <div
           x-data="
             {
-              openChild: false,
-              toggleChild() {
-                this.openChild = !this.openChild;
+              isChildMenuOpen: false,
+              onToggleChildMenu() {
+                this.isChildMenuOpen = !this.isChildMenuOpen;
               }
             }
           "
@@ -25,13 +25,13 @@
           <button
             type="button"
             class="w-full flex flex-row justify-between items-center gap-4 py-3"
-            x-on:click="toggleChild()"
-            :aria-expanded="openChild"
+            x-on:click="onToggleChildMenu()"
+            :aria-expanded="isChildMenuOpen"
           >
             <span>{{ childlink.title | escape }}</span>
             <span
               class="transition-transform"
-              :class="{ 'rotate-180': openChild }"
+              :class="{ 'rotate-180': isChildMenuOpen }"
               aria-hidden="true"
             >
               {%- render 'icon-caret' -%}
@@ -40,7 +40,7 @@
 
           <div
             class="w-full"
-            x-show="openChild"
+            x-show="isChildMenuOpen"
             x-collapse
             style="display: none;"
           >

@@ -16,24 +16,24 @@
           <div
             x-data="
               {
-                open: false,
-                toggle() {
-                  this.open = !this.open;
+                isMenuOpen: false,
+                onToggleMenu() {
+                  this.isMenuOpen = !this.isMenuOpen;
                 },
-                close() {
-                  if (!this.open) return;
-                  this.open = false;
+                onCloseMenu() {
+                  if (!this.isMenuOpen) return;
+                  this.isMenuOpen = false;
                 }
               }
             "
-            x-on:click.outside="close()"
-            @keydown.escape.window="close()"
+            x-on:click.outside="onCloseMenu()"
+            @keydown.escape.window="onCloseMenu()"
           >
             <button
               class="flex flex-row items-center gap-2"
-              x-on:click="toggle()"
+              x-on:click="onToggleMenu()"
               x-ref="navLinkMenu"
-              :aria-expanded="open"
+              :aria-expanded="isMenuOpen"
             >
               <span class="{% if link.child_active %} font-semibold{% endif %}">
                 {{- link.title | escape -}}
@@ -41,7 +41,7 @@
 
               <span
                 class="transition-transform"
-                :class="{ 'rotate-180': open }"
+                :class="{ 'rotate-180': isMenuOpen }"
                 aria-hidden="true"
               >
                 {%- render 'icon-caret' -%}
