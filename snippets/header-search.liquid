@@ -97,50 +97,54 @@
 </div>
 
 <script>
-  document.addEventListener('alpine:init', () => {
-    Alpine.data('predictiveSearch', () => ({
-      searchIsOpen: false,
-      isLoading: false,
-      query: '',
-      openResults: false,
-      toggleSearch() {
-        this.searchIsOpen = !this.searchIsOpen;
-      },
-      closeSearch() {
-        if (!this.searchIsOpen) return;
-        this.searchIsOpen = false;
-      },
-      getPredictiveSearchResults() {
-        if (this.query.length == 0) return;
+  document.addEventListener(
+    'alpine:init',
+    () => {
+      Alpine.data('predictiveSearch', () => ({
+        searchIsOpen: false,
+        isLoading: false,
+        query: '',
+        openResults: false,
+        toggleSearch() {
+          this.searchIsOpen = !this.searchIsOpen;
+        },
+        closeSearch() {
+          if (!this.searchIsOpen) return;
+          this.searchIsOpen = false;
+        },
+        getPredictiveSearchResults() {
+          if (this.query.length == 0) return;
 
-        this.isLoading = true;
-        fetch(`${Shopify.routes.predictive_search_url}?q=${this.query}&section_id=predictive-search`)
-          .then((response) => {
-            if (!response.ok) throw new Error(response.status);
-            return response.text();
-          })
-          .then((text) => {
-            const resultsMarkup = new DOMParser()
-              .parseFromString(text, 'text/html')
-              .querySelector('#shopify-section-predictive-search').innerHTML;
+          this.isLoading = true;
+          fetch(`${Shopify.routes.predictive_search_url}?q=${this.query}&section_id=predictive-search`)
+            .then((response) => {
+              if (!response.ok) throw new Error(response.status);
+              return response.text();
+            })
+            .then((text) => {
+              const resultsMarkup = new DOMParser()
+                .parseFromString(text, 'text/html')
+                .querySelector('#shopify-section-predictive-search').innerHTML;
 
-            this.$refs.searchQueryResults.innerHTML = resultsMarkup;
-          })
-          .catch((error) => {
-            // Code 20 means the call was aborted
-            if (error?.code === 20) return;
-            throw error;
-          })
-          .finally(() => {
-            this.isLoading = false;
+              this.$refs.searchQueryResults.innerHTML = resultsMarkup;
+            })
+            .catch((error) => {
+              // Code 20 means the call was aborted
+              if (error?.code === 20) return;
+              throw error;
+            })
+            .finally(() => {
+              this.isLoading = false;
+            });
+        },
+        init() {
+          this.getPredictiveSearchResults();
+          this.$watch('searchIsOpen', (value) => {
+            document.body.classList.toggle('overflow-hidden', this.searchIsOpen);
           });
-      },
-      init() {
-        this.getPredictiveSearchResults();
-        this.$watch('searchIsOpen', (value) => {
-          document.body.classList.toggle('overflow-hidden', this.searchIsOpen);
-        });
-      },
-    }));
-  });
+        },
+      }));
+    },
+    { once: true }
+  );
 </script>

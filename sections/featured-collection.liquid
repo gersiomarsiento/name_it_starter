@@ -84,51 +84,55 @@
 </section>
 
 <script>
-  document.addEventListener('alpine:init', () => {
-    Alpine.data('{{ alpineDataName }}', () => ({
-      init() {
-        new Swiper(this.$refs.swiperContainer, {
-          slidesPerView: 1.3,
-          spaceBetween: 10,
-          mousewheel: {
-            forceToAxis: true,
-          },
-          freeMode: true,
-          breakpoints: {
-            580: {
-              slidesPerView: 2.3,
-              spaceBetween: 10,
+  document.addEventListener(
+    'alpine:init',
+    () => {
+      Alpine.data('{{ alpineDataName }}', () => ({
+        init() {
+          new Swiper(this.$refs.swiperContainer, {
+            slidesPerView: 1.3,
+            spaceBetween: 10,
+            mousewheel: {
+              forceToAxis: true,
             },
-            768: {
-              slidesPerView: 3.3,
-              spaceBetween: 20,
+            freeMode: true,
+            breakpoints: {
+              580: {
+                slidesPerView: 2.3,
+                spaceBetween: 10,
+              },
+              768: {
+                slidesPerView: 3.3,
+                spaceBetween: 20,
+              },
+              1280: {
+                slidesPerView: 3.8,
+                spaceBetween: 20,
+              },
+              1441: {
+                slidesPerView: 4,
+                spaceBetween: 20,
+              },
             },
-            1280: {
-              slidesPerView: 3.8,
-              spaceBetween: 20,
+            navigation: {
+              prevEl: this.$refs.swiperPrev,
+              nextEl: this.$refs.swiperNext,
             },
-            1441: {
-              slidesPerView: 4,
-              spaceBetween: 20,
+            pagination: {
+              el: this.$refs.swiperPagination,
+              clickable: true,
             },
-          },
-          navigation: {
-            prevEl: this.$refs.swiperPrev,
-            nextEl: this.$refs.swiperNext,
-          },
-          pagination: {
-            el: this.$refs.swiperPagination,
-            clickable: true,
-          },
-          scrollbar: {
-            el: this.$refs.swiperScrollbar,
-            hide: false,
-            draggable: true,
-          },
-        });
-      },
-    }));
-  });
+            scrollbar: {
+              el: this.$refs.swiperScrollbar,
+              hide: false,
+              draggable: true,
+            },
+          });
+        },
+      }));
+    },
+    { once: true }
+  );
 </script>
 
 {% schema %}
