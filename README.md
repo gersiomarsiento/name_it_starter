@@ -172,6 +172,26 @@ Utilice las clases `.richtext` para parrafos enriquecidos.
 </div>
 ````
 
+## Modal
+
+Utilice el snippet `'modal'` para invocar modales.
+
+```liquid
+{%- capture modalContent -%}
+  {%- render 'custom-content' -%}
+{%- endcapture -%}
+
+{%- render 'modal',
+  modalContent: modalContent,
+  id: 'YOUR_MODAL_ID',
+  width: 600,
+  class: '',
+  hasPadding: true
+-%}
+
+<button data-modal="YOUR_MODAL_ID">...</button>
+````
+
 ## Utilidades
 
 Utilice o agregue nuevas utilidades css tailwind en `/external/src/scss/utilities.scss`. Tambien puede agregarlos en `tailwind.config.js`

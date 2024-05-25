@@ -80,8 +80,7 @@
       class: '',
       id: 'AddressesFormNew',
       hasPadding: false,
-      modalContent: AddressesFormNew,
-      isOpen: section.settings.debug_mode
+      modalContent: AddressesFormNew
     -%}
     {% comment %} END NEW MODAL {% endcomment %}
 
@@ -93,14 +92,7 @@
         {%- render 'addresses-edit-form', address: address -%}
       {%- endcapture -%}
 
-      {%- render 'modal',
-        width: 600,
-        class: '',
-        id: modalID,
-        hasPadding: false,
-        modalContent: AddressesFormEdit,
-        isOpen: section.settings.debug_mode
-      -%}
+      {%- render 'modal', width: 600, class: '', id: modalID, hasPadding: false, modalContent: AddressesFormEdit -%}
     {%- endfor -%}
     {% comment %} END EDIT MODALS {% endcomment %}
   {%- endpaginate -%}
