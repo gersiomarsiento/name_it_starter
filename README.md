@@ -249,7 +249,7 @@ document.addEventListener('alpine:init', () => {
     },
     ...
   })
-});
+}, { once: true });
 </script>
 ````
 
