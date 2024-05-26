@@ -10,7 +10,7 @@
 
   {%- form 'create_customer', novalidate: 'novalidate', class: 'w-full flex flex-col gap-y-4' -%}
     {%- if form.errors -%}
-      <div class="flex flex-col gap-y-3 text-red-700">
+      <div class="flex flex-col gap-y-3 text-error">
         <p tabindex="-1" autofocus>
           {{- 'templates.contact.form.error_heading' | t -}}
         </p>
@@ -96,7 +96,7 @@
       >
 
       {%- if form.errors contains 'email' -%}
-        <span id="RegisterForm-email-error" class="text-red-700 body-4">
+        <span id="RegisterForm-email-error" class="text-error body-4">
           {%- render 'icon-error', class: 'w-3 inline-block' -%}
           {{ form.errors.translated_fields.email | capitalize }}
           {{ form.errors.messages.email }}.
@@ -123,7 +123,7 @@
       >
 
       {%- if form.errors contains 'password' -%}
-        <span id="RegisterForm-password-error" class="text-red-700 body-4">
+        <span id="RegisterForm-password-error" class="text-error body-4">
           {%- render 'icon-error', class: 'w-3 inline-block' -%}
           {{ form.errors.translated_fields.password | capitalize }}
           {{ form.errors.messages.password }}.

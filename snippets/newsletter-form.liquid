@@ -41,7 +41,7 @@
   </div>
 
   {%- if form.errors -%}
-    <div class="richtext text-red-700 text-center mt-5 body-2" id="ContactFooter-error">
+    <div class="richtext text-error text-center mt-5 body-2" id="ContactFooter-error">
       {%- render 'icon-error', class: 'w-4 inline-block' -%}
       {{- form.errors.translated_fields.email | capitalize }}
       {{ form.errors.messages.email -}}
