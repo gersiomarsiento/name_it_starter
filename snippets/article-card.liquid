@@ -1,89 +1,59 @@
-{% comment %}
-  Renders an article card for a given blog with settings to either show the image or not.
-
-  Accepts:
-  - blog: {Object} Blog object
-  - article: {Object} Article object
-  - media_aspect_ratio: {String} The setting changes the aspect ratio of the article image, if shown
-  - media_height: {String} The setting changes the height of the article image. Overrides media_aspect_ratio.
-  - show_image: {String} The setting either show the article image or not. If it's not included it will show the image by default
-  - show_date: {String} The setting either show the article date or not. If it's not included it will not show the image by default
-  - show_author: {String} The setting either show the article author or not. If it's not included it will not show the author by default
-  - show_badge: {String} The setting either show the blog badge or not.
-  - lazy_load: {Boolean} Image should be lazy loaded. Default: true (optional)
-
-  Usage:
-  {% render 'article-card' blog: blog, article: article, show_image: section.settings.show_image %}
-{% endcomment %}
-
 {%- assign priority = priority | default: false, allow_false: true -%}
+{%- assign show_date = show_date | default: false, allow_false: true -%}
+{%- assign show_author = show_author | default: false, allow_false: true -%}
 
-<div class="article-card-wrapper card-wrapper underline-links-hover">
-  {% comment %} <article aria-labelledby="Article-{{ article.id }}"> {% endcomment %}
-  <div
-    class="
-      card article-card
-      card--{{ settings.blog_card_style }}
-      {% if media_height and media_height != 'adapt' %} article-card__image--{{ media_height }}{% endif %}
-      {% if article.image and show_image %} card--media{% else %} card--text{% endif %}
-      {% if settings.blog_card_style == 'card' %} color-{{ settings.blog_card_color_scheme }} gradient{% endif %}
-      {% if settings.blog_card_style == 'card' and media_height == nil and article.image == empty or show_image == false %} ratio{% endif %}
-    "
+<div class="border border-gray-300 rounded-[10px] overflow-hidden">
+  <a
+    href="{{ article.url }}"
+    class="block w-full pb-[100%] relative shrink-0 overflow-hidden bg-gray-200/50"
+    tabindex="-1"
   >
-    <div class="">
-      <div class="w-full pb-[100%] relative shrink-0 rounded-[5px] overflow-hidden bg-gray-200/50">
-        {%- if show_image == true and article.image -%}
-          {%-
-            render 'image-element',
-            image: article image,
-            max_width: 1200,
-            class: 'absolute w-full h-full inset-0 object-cover object-center'
-            priority: priority
-          -%}
-        {%- endif -%}
-      </div>
+    {%- if article.image -%}
+      {%-
+        render 'image-element',
+        image: article image,
+        max_width: 1200,
+        class: 'absolute w-full h-full inset-0 object-cover object-center'
+        priority: priority
+      -%}
+    {%- endif -%}
 
-      <div class="card__content">
-        <div class="card__information">
-          <h3 class="card__heading{% if show_excerpt %} h2{% endif %}">
-            <a href="{{ article.url }}" class="full-unstyled-link">
-              {{ article.title | truncate: 50 | escape }}
-            </a>
-          </h3>
-
-          {%- if show_date -%}
-            <div class="body-5">{{ article.published_at | time_tag: format: 'date' }}</div>
-          {%- endif -%}
-
-          {%- if show_author -%}
-            <span class="body-5 font-medium">{{ article.author }}</span>
-          {%- endif -%}
-
-          {%- if show_excerpt -%}
-            {%- if article.excerpt.size > 0 or article.content.size > 0 -%}
-              <p class="article-card__excerpt rte-width">
-                {%- if article.excerpt.size > 0 -%}
-                  {{ article.excerpt | strip_html | truncatewords: 30 }}
-                {%- else -%}
-                  {{ article.content | strip_html | truncatewords: 30 }}
-                {%- endif -%}
-              </p>
-            {%- endif -%}
-
-            <div class="article-card__footer">
-              {%- if article.comments_count > 0 and blog.comments_enabled? -%}
-                <span>{{ 'blogs.article.comments' | t: count: article.comments_count }}</span>
-              {%- endif -%}
-            </div>
-          {%- endif -%}
-        </div>
-
-        {%- if show_badge -%}
-          <div class="card__badge {{ settings.badge_position }}">
-            <span class="badge color-{{ settings.color_schemes | first }}">{{ 'blogs.article.blog' | t }}</span>
-          </div>
-        {%- endif -%}
-      </div>
+    <div class="absolute w-full top-4 px-4 flex flex-row gap-3">
+      <span class="px-3 py-1.5 body-4 bg-green-600 text-white rounded-full leading-[1]">
+        {{- 'blogs.article.blog' | t -}}
+      </span>
     </div>
+  </a>
+
+  <div class="p-4 flex flex-col gap-y-3">
+    <h3 class="h5">
+      <a href="{{ article.url }}" class="line-clamp-2">
+        {{- article.title -}}
+      </a>
+    </h3>
+
+    {%- if show_date -%}
+      <div class="body-5">{{ article.published_at | time_tag: format: 'date' }}</div>
+    {%- endif -%}
+
+    {%- if show_author -%}
+      <span class="body-5 font-semibold">{{ article.author }}</span>
+    {%- endif -%}
+
+    {%- if article.excerpt.size > 0 or article.content.size > 0 -%}
+      <p class="body-4 line-clamp-3">
+        {%- if article.excerpt.size > 0 -%}
+          {{- article.excerpt | strip_html | truncatewords: 30 -}}
+        {%- else -%}
+          {{- article.content | strip_html | truncatewords: 30 -}}
+        {%- endif -%}
+      </p>
+    {%- endif -%}
+
+    {%- if article.comments_count > 0 -%}
+      <div class="body-4 font-bold">
+        {{- 'blogs.article.comments' | t: count: article.comments_count -}}
+      </div>
+    {%- endif -%}
   </div>
 </div>
