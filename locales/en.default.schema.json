@@ -2105,9 +2105,6 @@
     "main-register": {
       "name": "Registration"
     },
-    "main-reset-password": {
-      "name": "Password reset"
-    },
     "main-search": {
       "name": "Search results",
       "settings": {
