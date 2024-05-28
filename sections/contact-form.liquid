@@ -37,6 +37,7 @@
             </ul>
           </div>
         {%- endif -%}
+
         <div class="flex flex-col gap-y-1">
           <label class="form__label" for="ContactForm-name">{{ 'templates.contact.form.name' | t }}</label>
           <input
@@ -50,6 +51,7 @@
             placeholder="{{ 'templates.contact.form.name' | t }}"
           >
         </div>
+
         <div class="flex flex-col gap-y-1">
           <label class="form__label" for="ContactForm-email">
             {{- 'templates.contact.form.email' | t }}
@@ -81,6 +83,7 @@
             </div>
           {%- endif -%}
         </div>
+
         <div class="flex flex-col gap-y-1">
           <label class="form__label" for="ContactForm-phone">{{ 'templates.contact.form.phone' | t }}</label>
           <input
@@ -94,6 +97,7 @@
             placeholder="{{ 'templates.contact.form.phone' | t }}"
           >
         </div>
+
         <div class="flex flex-col gap-y-1">
           <label class="form__label form__label" for="ContactForm-body">
             {{- 'templates.contact.form.comment' | t -}}
@@ -108,6 +112,7 @@
             {{- form.body -}}
           </textarea>
         </div>
+
         <button type="submit" class="button-primary">
           {{- 'templates.contact.form.send' | t -}}
         </button>

@@ -3,6 +3,7 @@
   <style>  
 {% endif %}
 
+  {% comment %} Gets all fontweights that are available for the font. Check in the customizer. {% endcomment %}
   {%- assign fontWeights = '300,400,500,600,700' | split: ',' -%}
   {%- for weight in fontWeights -%}
     {{ settings.type_body_font | font_modify: 'weight', weight | font_face: font_display: 'swap' }}
