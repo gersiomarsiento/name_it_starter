@@ -15,11 +15,12 @@
       {%- endif -%}
     </a>
 
-    <h2 class="h5 p-3 md:p-5">
-      <a href="{{ card_collection.url }}" class="animate-arrow flex flex-row justify-between gap-3 items-center">
-        <span>{{- card_collection.title | escape -}}</span>
-        {%- render 'icon-arrow', class: 'w-4 shrink-0' -%}
-      </a>
-    </h2>
+    <a
+      href="{{ card_collection.url }}"
+      class="animate-arrow flex flex-row justify-between gap-3 items-center h5 p-3 md:p-5"
+    >
+      <span>{{- card_collection.title | escape -}}</span>
+      {%- render 'icon-arrow', class: 'w-4 shrink-0' -%}
+    </a>
   </div>
 {%- endif -%}

@@ -55,8 +55,12 @@
         role="list"
       >
         {%- for collection in collections -%}
+          {%- assign priority = false -%}
+          {%- if forloop.index <= section.settings.columns_desktop -%}
+            {%- assign priority = true -%}
+          {%- endif -%}
           <li>
-            {% render 'card-collection', card_collection: collection %}
+            {% render 'card-collection', card_collection: collection, priority: priority %}
           </li>
         {%- endfor -%}
       </ul>
