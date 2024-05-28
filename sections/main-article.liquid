@@ -124,13 +124,13 @@
           <h2 class="h3">{{ 'blogs.article.comment_form_title' | t }}</h2>
 
           {%- if form.errors -%}
-            <div class="flex flex-col gap-y-3 text-error" role="alert">
+            <div class="flex flex-col gap-y-2 text-error body-4" role="alert">
               <div class="flex flex-row items-center gap-1" tabindex="-1" autofocus>
                 {%- render 'icon-error', class: 'w-4' -%}
                 <span>{{ 'templates.contact.form.error_heading' | t }}</span>
               </div>
 
-              <ul class="list-disc list-inside">
+              <ul class="list-disc list-inside flex flex-col gap-y-1">
                 {%- for field in form.errors -%}
                   <li>
                     <a href="#CommentForm-{{ field }}" class="richtext">

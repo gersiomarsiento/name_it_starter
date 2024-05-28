@@ -22,12 +22,13 @@
             {{- 'templates.contact.form.post_success' | t }}
           </div>
         {%- elsif form.errors -%}
-          <div class="richtext text-error body-3">
+          <div class="richtext text-error body-4 flex flex-col gap-y-2">
             <div class="flex flex-row items-center gap-1" role="alert" tabindex="-1" autofocus>
               {%- render 'icon-error', class: 'w-4' -%}
               <span>{{ 'templates.contact.form.error_heading' | t }}</span>
             </div>
-            <ul class="flex flex-col gap-y-3" role="list">
+
+            <ul class="flex flex-col gap-y-1" role="list">
               <li>
                 <a href="#ContactForm-email" class="link">
                   {{ form.errors.translated_fields.email | capitalize }}
@@ -40,8 +41,8 @@
 
         <div class="flex flex-col gap-y-1">
           <label class="form__label" for="ContactForm-name">{{ 'templates.contact.form.name' | t }}</label>
+
           <input
-            class="form__input"
             autocomplete="name"
             type="text"
             id="ContactForm-name"
@@ -57,6 +58,7 @@
             {{- 'templates.contact.form.email' | t }}
             <span aria-hidden="true">*</span>
           </label>
+
           <input
             autocomplete="email"
             type="email"
@@ -73,6 +75,7 @@
             {% endif %}
             placeholder="{{ 'templates.contact.form.email' | t }}"
           >
+
           {%- if form.errors contains 'email' -%}
             <div class="text-error body-5 richtext flex flex-row items-center gap-1" id="ContactForm-email-error">
               {%- render 'icon-error', class: 'w-4' -%}
@@ -86,6 +89,7 @@
 
         <div class="flex flex-col gap-y-1">
           <label class="form__label" for="ContactForm-phone">{{ 'templates.contact.form.phone' | t }}</label>
+
           <input
             type="tel"
             id="ContactForm-phone"
@@ -102,6 +106,7 @@
           <label class="form__label form__label" for="ContactForm-body">
             {{- 'templates.contact.form.comment' | t -}}
           </label>
+
           <textarea
             rows="10"
             id="ContactForm-body"
@@ -113,7 +118,7 @@
           </textarea>
         </div>
 
-        <button type="submit" class="button-primary">
+        <button type="submit" class="button-primary medium">
           {{- 'templates.contact.form.send' | t -}}
         </button>
       {%- endform -%}

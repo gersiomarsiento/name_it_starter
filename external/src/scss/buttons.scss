@@ -4,7 +4,7 @@
   @apply border border-solid rounded-full px-6;
 
   &:not(.tiny):not(.small):not(.medium):not(.big) {
-    @apply py-3 md:py-4;
+    @apply py-4;
   }
 
   &.tiny {
