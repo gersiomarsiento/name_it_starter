@@ -1,7 +1,3 @@
-.section-header.shopify-section-group-header-group {
-  z-index: 3;
-}
-
 .shopify-section-header-sticky {
   position: sticky;
   top: 0;
@@ -20,9 +16,5 @@
 }
 
 .shopify-section-group-header-group {
-  z-index: 4;
-}
-
-.section-header ~ .shopify-section-group-header-group {
-  z-index: initial;
+  z-index: 10;
 }
