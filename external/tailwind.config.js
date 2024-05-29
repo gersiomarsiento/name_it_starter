@@ -48,6 +48,7 @@ module.exports = {
         },
         disabled: '#595959',
         error: '#d31334',
+        success: '#00b300',
       },
       gridTemplateColumns: {
         13: 'repeat(13, minmax(0, 1fr))',

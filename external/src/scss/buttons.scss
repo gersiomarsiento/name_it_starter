@@ -36,7 +36,7 @@
   }
 
   &:hover:not(.no-hover) {
-    @apply bg-primary-light border-primary-light;
+    @apply bg-primary-dark border-primary-dark shadow-primary-dark shadow-[0_0_0_0.1rem];
   }
 
   &[disabled],
@@ -46,17 +46,13 @@
 }
 
 .button-secondary {
-  @apply base-button bg-secondary border-secondary text-white;
+  @apply base-button bg-transparent border-secondary text-secondary;
 
   svg {
-    @apply fill-white;
+    @apply fill-secondary;
   }
 
   &:hover:not(.no-hover) {
-    @apply bg-secondary-light text-white;
-
-    svg {
-      @apply fill-white;
-    }
+    @apply bg-transparent border-secondary-dark shadow-secondary-dark shadow-[0_0_0_0.1rem];
   }
 }
