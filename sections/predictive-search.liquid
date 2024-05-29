@@ -105,8 +105,8 @@
 
                   <div class="w-full flex-col gap-y-1">
                     {%- if settings.predictive_search_show_vendor -%}
-                      <span class="sr-only">{{ 'accessibility.vendor' | t }}</span>
                       <div class="body-4 uppercase">
+                        <span class="sr-only">{{ 'accessibility.vendor' | t }}</span>
                         {{- product.vendor -}}
                       </div>
                     {%- endif -%}
