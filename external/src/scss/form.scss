@@ -3,14 +3,14 @@
 }
 
 .form__input {
-  @apply body-3 border border-solid border-primary-light min-h-[50px] rounded-[25px] w-full py-2 px-3 bg-transparent;
+  @apply body-3 border border-solid border-primary-light min-h-[50px] rounded-[25px] w-full py-2 px-4 bg-transparent;
 
   &.small {
     @apply min-h-[35px] py-1 body-4;
   }
 
   &:focus {
-    @apply outline outline-primary-light outline-offset-0 outline-1;
+    @apply outline outline-primary-light outline-offset-0 outline-2;
   }
 }
 
