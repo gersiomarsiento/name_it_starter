@@ -28,12 +28,10 @@
 
     {%- render 'meta-tags' -%}
 
-    <script src="{{ 'constants.js' | asset_url }}" defer="defer"></script>
-    <script src="{{ 'pubsub.js' | asset_url }}" defer="defer"></script>
-    <script src="{{ 'global.js' | asset_url }}" defer="defer"></script>
-
     {{ content_for_header }}
     {%- render 'extend-shopify-header' -%}
+
+    <script src="{{ 'global.js' | asset_url }}" defer="defer"></script>
 
     {%- style -%}
       {%- render 'global-style-fonts', styleTag: false -%}
@@ -61,8 +59,6 @@
     {%- section 'cart-drawer' -%}
 
     <script>
-      window.shopUrl = '{{ request.origin }}';
-
       window.variantStrings = {
         addToCart: `{{ 'products.product.add_to_cart' | t }}`,
         soldOut: `{{ 'products.product.sold_out' | t }}`,
@@ -72,12 +68,6 @@
 
       window.quickOrderListStrings = {
         each: `{{- 'sections.quick_order_list.each' | t: money: '[money]' }}`,
-      };
-
-      window.accessibilityStrings = {
-        shareSuccess: `{{ 'general.share.success_message' | t }}`,
-        pauseSlideshow: `{{ 'sections.slideshow.pause_slideshow' | t }}`,
-        playSlideshow: `{{ 'sections.slideshow.play_slideshow' | t }}`,
       };
     </script>
 
