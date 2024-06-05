@@ -18,48 +18,51 @@
           style="color: {{ block.settings.color }};"
         >
           <div class="hero-overlay-{{ block.settings.overlay_type }}">
-            {%- if block.settings.use_video -%}
-              {%- assign videoDesktop = block.settings.video_desktop -%}
-              {%- assign videoMobile = block.settings.video_mobile | default: videoDesktop -%}
+            {%- assign imageDesktop = block.settings.image_desktop -%}
+            {%- assign imageMobile = block.settings.image_mobile | default: imageDesktop -%}
+            {%- assign videoDesktop = block.settings.video_desktop -%}
+            {%- assign videoMobile = block.settings.video_mobile | default: videoDesktop -%}
 
-              {%- render 'video-element',
-                video: videoMobile,
-                autoplay: true,
-                muted: true,
-                togglePlay: false,
-                class: 'absolute w-full h-full object-cover object-center',
-                wrapperClass: 'h-full w-full md:hidden'
-              -%}
-
-              {%- render 'video-element',
-                video: videoDesktop,
-                autoplay: true,
-                muted: true,
-                togglePlay: false,
-                class: 'absolute w-full h-full object-cover object-center',
-                wrapperClass: 'h-full w-full hidden md:block'
-              -%}
-
-            {%- else -%}
-              {%- assign imageDesktop = block.settings.image_desktop -%}
-              {%- assign imageMobile = block.settings.image_mobile | default: imageDesktop -%}
-
-              {%- if imageDesktop != blank -%}
-                {%- render 'image-element',
-                  image: imageMobile,
-                  class: 'absolute object-cover object-top w-full h-full md:hidden',
-                  fixed_width: 800,
-                  preload: forloop.first
+            {%- if imageMobile != blank or videoMobile != blank -%}
+              {%- if block.settings.use_video -%}
+                {%- render 'video-element',
+                  video: videoMobile,
+                  autoplay: true,
+                  muted: true,
+                  togglePlay: false,
+                  class: 'absolute w-full h-full object-cover object-center',
+                  wrapperClass: 'h-full w-full md:hidden'
                 -%}
 
-                {%- render 'image-element',
-                  image: imageDesktop,
-                  class: 'absolute object-cover object-top w-full h-full hidden md:block',
-                  fixed_width: 1440,
-                  priority: forloop.first,
-                  preload: false
+                {%- render 'video-element',
+                  video: videoDesktop,
+                  autoplay: true,
+                  muted: true,
+                  togglePlay: false,
+                  class: 'absolute w-full h-full object-cover object-center',
+                  wrapperClass: 'h-full w-full hidden md:block'
                 -%}
+
+              {%- else -%}
+                {%- if imageDesktop != blank -%}
+                  {%- render 'image-element',
+                    image: imageMobile,
+                    class: 'absolute object-cover object-center w-full h-full md:hidden',
+                    fixed_width: 800,
+                    preload: forloop.first
+                  -%}
+
+                  {%- render 'image-element',
+                    image: imageDesktop,
+                    class: 'absolute object-cover object-center w-full h-full hidden md:block',
+                    fixed_width: 1440,
+                    priority: forloop.first,
+                    preload: false
+                  -%}
+                {%- endif -%}
               {%- endif -%}
+            {%- else -%}
+              {{- 'hero-apparel-1' | placeholder_svg_tag: 'absolute object-cover object-center w-full h-full' -}}
             {%- endif -%}
           </div>
 

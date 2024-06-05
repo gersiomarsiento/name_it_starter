@@ -6,7 +6,6 @@
         "slide-0": {
           "type": "slide",
           "settings": {
-            "image_desktop": "shopify:\/\/shop_images\/Logo.png",
             "use_video": false,
             "overlay_type": "dark",
             "heading": "Lorem Ipsum",
@@ -65,9 +64,9 @@
           "type": "image",
           "settings": {
             "justify_content": "center",
-            "use_video_or_image": "image",
             "rounded_corners": true,
-            "bg_color": ""
+            "bg_color": "",
+            "use_video_or_image": "image"
           }
         },
         "content_pwTDfX": {
