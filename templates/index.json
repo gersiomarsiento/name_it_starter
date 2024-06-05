@@ -47,7 +47,7 @@
     "featured-collection-0": {
       "type": "featured-collection",
       "settings": {
-        "color_scheme": "scheme-1",
+        "color_scheme": "scheme-2",
         "heading": "Featured collection",
         "description": "<p>Discover the difference with our exclusive Lorem Ipsum collection. Elevate your routine with high-quality goods that make a statement.<\/p>",
         "collection": "all",
@@ -57,10 +57,51 @@
         "show_vendor": true,
         "quick_add": "standard"
       }
+    },
+    "image_with_text_x6cL3k": {
+      "type": "image-with-text",
+      "blocks": {
+        "image_xetJxU": {
+          "type": "image",
+          "settings": {
+            "justify_content": "center",
+            "use_video_or_image": "image",
+            "rounded_corners": true,
+            "bg_color": ""
+          }
+        },
+        "content_pwTDfX": {
+          "type": "content",
+          "settings": {
+            "justify_content": "start",
+            "rounded_corners": true,
+            "bg_color": "#e1e5e9",
+            "text_color": "#000000",
+            "caption": "Caption text",
+            "heading_text": "<p>Lorem ipsum dolor<\/p>",
+            "description": "<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio amet a illo eaque eligendi dignissimos alias optio quas, ipsam sint facilis eum vitae provident consequatur repellat cupiditate sed quisquam consequuntur tempore vel. In explicabo omnis ducimus, error a natus nemo!<\/p>",
+            "button_text_1": "Shop Women",
+            "button_link_1": "",
+            "button_text_2": "Shop Men",
+            "button_link_2": ""
+          }
+        }
+      },
+      "block_order": [
+        "image_xetJxU",
+        "content_pwTDfX"
+      ],
+      "settings": {
+        "color_scheme": "scheme-1",
+        "container_width": "medium",
+        "container_spacer_type": "padding",
+        "section_id": ""
+      }
     }
   },
   "order": [
     "hero",
-    "featured-collection-0"
+    "featured-collection-0",
+    "image_with_text_x6cL3k"
   ]
 }

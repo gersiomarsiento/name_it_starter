@@ -4,6 +4,10 @@ html {
 
 .c-container {
   @apply xs-down:px-2 px-4 md:px-8 xl:px-24 mx-auto max-w-desk w-full;
+
+  &.wide {
+    @apply md:px-6;
+  }
 }
 
 b,
