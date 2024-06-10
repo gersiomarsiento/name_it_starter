@@ -6,10 +6,14 @@
 {%- assign crop = crop | default: null -%}
 {%- assign class = class | default: blank -%}
 {%- assign alt = alt | default: image.alt -%}
-{%- assign defaultWidhts = '500,650,800,1000,1200,1500,1920' -%}
-{%- assign widths = widths | default: defaultWidhts -%}
 {%- assign sizes = sizes | default: null -%}
 {%- assign style = style | default: null -%}
+
+{%- assign defaultWidhts = '500,650,800,1000,1200,1500,1920' -%}
+{%- if max_width < 500 -%}
+  {%- assign defaultWidhts = max_width | append: ',' | append: defaultWidhts -%}
+{%- endif -%}
+{%- assign widths = widths | default: defaultWidhts -%}
 
 {%- liquid
   assign imageWidth = image.width
