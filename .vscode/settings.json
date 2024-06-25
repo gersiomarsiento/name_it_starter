@@ -32,8 +32,11 @@
     "editor.tabSize": 2,
     "editor.formatOnSave": true
   },
-  "css.customData": [".vscode/tailwind.json"],
+  "css.customData": [
+    ".vscode/tailwind.json"
+  ],
   "files.associations": {
+    "*.json": "json",
     "*.min.*": "plaintext",
     "**/assets/main.js": "plaintext",
     "**/assets/main.css": "plaintext"
