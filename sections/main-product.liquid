@@ -41,6 +41,10 @@
                 {%- render 'product-block-price', product: product, block: block -%}
               {%- when 'rating' -%}
                 {%- render 'product-block-rating', product: product -%}
+              {%- when 'size_guide' -%}
+                {%- render 'product-block-size-guide', product: product -%}
+              {%- when 'color_picker' -%}
+                {%- render 'product-block-color-picker', product: product -%}
               {%- when 'variant_picker' -%}
                 {% render 'product-variant-picker', product: product, block: block, product_form_id: product_form_id %}
               {%- when 'quantity_selector' -%}
@@ -201,6 +205,16 @@
     {
       "type": "description",
       "name": "Description",
+      "limit": 1
+    },
+    {
+      "type": "size_guide",
+      "name": "Size Guide",
+      "limit": 1
+    },
+    {
+      "type": "color_picker",
+      "name": "Color Picker",
       "limit": 1
     },
     {

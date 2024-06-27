@@ -14,7 +14,7 @@
   data-media-id="{{ section.id }}-{{ media.id }}"
   data-position="{{ position }}"
 >
-  <div class="w-full pb-[100%] rounded-[10px] relative overflow-hidden">
+  <div class="w-full pb-[100%] rounded-[10px] relative overflow-hidden aspect-[3/4]">
     {%- if media.media_type == 'image' -%}
       {%- render 'image-element',
         image: media,

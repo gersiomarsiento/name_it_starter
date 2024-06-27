@@ -8,7 +8,14 @@
         id="Details-{{ filter.param_name | escape }}-{{ section.id }}"
         class="js-filter py-5 {% if forloop.first %} md:border-t md:border-t-gray-300 {% else %} border-t border-t-gray-300 {% endif %}"
         data-index="{{ forloop.index }}"
-        x-data="{ expanded: true }"
+        x-data="{ expanded: true, isHidden: false, hasActiveValues: false }"
+        {% comment %} {% if filter.label == 'Size' or filter.label == 'Categorías' %}
+          :class="{ 'hidden': isHidden}"
+        {% endif %}
+        {% if filter.label == 'Product type' %}
+          x-init="hasActiveValues = {{filter.active_values.size}} > 0;"
+          x-ref="productTypeFilter"
+        {% endif %} {% endcomment %}
       >
         <button
           type="button"

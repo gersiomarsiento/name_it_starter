@@ -1,0 +1,216 @@
+<div
+  x-data="
+    {
+      chartIsOpen: false,
+      toggleChart() {
+        this.chartIsOpen = !this.chartIsOpen;
+        document.body.classList.toggle('overflow-hidden', this.chartIsOpen);
+      },
+      closeChart() {
+        if (!this.chartIsOpen) return;
+        this.chartIsOpen = false;
+        document.body.classList.remove('overflow-hidden');
+      }
+    }
+  "
+>
+  <button
+    type="button"
+    @click="toggleChart()"
+    class="body-3 font-[600] underline "
+  >
+    Guía de tallas
+  </button>
+
+  {%- assign default_guide = product.metafields.custom.guia_de_talles.value -%}
+  {%- assign guias_de_talles = shop.metaobjects.guias_de_talles.values -%}
+  {%- assign lineasArray = '' -%}
+  {%- assign delimitador = ', ' -%}
+  {%- for guia in guias_de_talles -%}
+    {%- unless lineasArray contains guia.linea -%}
+      {%- assign lineasArray = lineasArray | append: delimitador | append: guia.linea -%}
+    {%- endunless -%}
+  {%- endfor -%}
+  {%- assign lineasArray = lineasArray | split: delimitador -%}
+
+  <div
+    class="flex justify-end h-full w-full bg-black bg-opacity-50 transition-transform translate-x-full fixed top-0 left-0 z-[3] overflow-x-hidden "
+    :class="
+      {
+        'translate-x-0': chartIsOpen,
+        'translate-x-full': !chartIsOpen
+      }
+    "
+    x-trap="chartIsOpen"
+    x-cloak
+    id="size-guide-modal-container"
+  >
+    <div class="md:!block h-full w-[calc(100%-720px)]" @click="closeChart()"></div>
+    <div class="bg-white h-fit min-h-full w-full max-w-[720px] p-5 closeModalTrigger">
+      <div class="flex justify-between mb-5 md:mb-10">
+        <div class="h3">GUÍA DE TALLES</div>
+        <button type="button" @click="closeChart()" aria-label="cerrar">{%- render 'icon-close' -%}</button>
+      </div>
+      {% comment %}
+        <div class="flex md-down:flex-col gap-2 md:gap-5 mb-5 md:mb-10">
+          <div class="relative w-full flex flex-col border border-[#BFBFBF] px-3 py-1 md:py-2">
+            <label for="linea" class="pb-1 text-[12px] leading-[12px]">Línea</label>
+            <div class="flex justify-between relative">
+              <select
+                class="text-[16px] md:text-[18px] w-full cursor-pointer"
+                name="linea"
+                id="linea"
+                style="-webkit-appearance: none; -moz-appearance : none;"
+                onchange="cambiarLinea(this)"
+              >
+                <option class="no-update" disabled selected value="">- Seleccionar -</option>
+
+                {%- for linea in lineasArray -%}
+                  {%- unless linea == blank -%}
+                    <option class="no-update py-3 leading-[30px]" value="{{ linea }}">{{ linea }}</option>
+                  {%- endunless -%}
+                {%- endfor -%}
+              </select>
+              {%- render 'icon-chevron-down', class: 'absolute right-0 bottom-0 pointer-events-none' -%}
+            </div>
+          </div>
+          <div class="relative w-full flex flex-col border border-[#BFBFBF] px-3 py-1 md:py-2">
+            <label for="prendas" class="pb-1 text-[12px] leading-[12px]">Prendas y accesorios</label>
+            <div class="flex justify-between relative">
+              <select
+                class="text-[16px] md:text-[18px] w-full cursor-pointer"
+                name="prendas"
+                id="prendas"
+                style="-webkit-appearance: none; -moz-appearance : none;"
+                onchange="cambiarContenido(this)"
+              >
+                <option class="no-update" disabled selected value="">- Seleccionar -</option>
+                {%- for guia in guias_de_talles -%}
+                  <option
+                    class="prendas-option hidden no-update"
+                    data-linea="{{ guia.linea }}"
+                    data-imagen="{{ guia.imagen_planilla | image_url }}"
+                    data-imagenmobile="{{ guia.imagen_planilla_moviles | image_url }}"
+                    data-imagenmedir="{{ guia.imagen_como_medir  | image_url}}"
+                    data-imagentextomedir="{{ guia.imagen_texto_medir  | image_url}}"
+                    value="{{ guia.prendas_y_accesorios }}"
+                  >
+                    {{ guia.prendas_y_accesorios }}
+                  </option>
+                {%- endfor -%}
+              </select>
+              {%- render 'icon-chevron-down', class: 'absolute right-0 bottom-0 pointer-events-none' -%}
+            </div>
+          </div>
+        </div>
+        <div class="mb-3 md:mb-5">
+          <h4 class="h4 mb-3 md:mb-5" id="titulo_seleccion"></h4>
+          <img
+            src=""
+            id="imagen_planilla_mobile"
+            alt=""
+            width="auto"
+            height="auto"
+            class="md:hidden w-full"
+          >
+          <img
+            src=""
+            alt=""
+            id="imagen_planilla"
+            width="auto"
+            height="auto"
+            class="md-down:hidden w-full"
+          >
+        </div>
+        <div
+          class="border border-[#BFBFBF] py-1 px-3 md:py-2 hidden como-medir-container"
+        >
+          <h4 class="h4 w-full text-center">Cómo medir</h4>
+
+          <div
+            class="collapsible-content flex md-down:flex-col gap-2.5 md:gap-3 mt-2.5 md:mt-5 md-down:pb-2 md:p-3"
+          >
+            <img
+              src=""
+              id="imagen_medir"
+              alt=""
+              height="auto"
+              width="auto"
+              class="md:w-2/5 aspect-[0.58] h-fit self-center"
+            >
+
+            <img
+              src=""
+              class="md:w-3/5"
+              id="texto_medir"
+              alt=""
+              height="auto"
+              width="auto"
+            >
+          </div>
+        </div>
+      {% endcomment %}
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    if ('{{ default_guide }}' === '') return;
+    document.querySelector('#linea').value = '{{ default_guide.linea }}';
+    document.querySelector('#prendas').value = '{{ default_guide.prendas_y_accesorios }}';
+    document.querySelector('.como-medir-container').classList.remove('hidden');
+    document.querySelector('#titulo_seleccion').textContent = '{{ default_guide.prendas_y_accesorios }}';
+    document.querySelector('#imagen_planilla_mobile').src = '{{ default_guide.imagen_planilla_moviles | image_url }}';
+    document.querySelector('#imagen_planilla').src = '{{ default_guide.imagen_planilla | image_url }}';
+    document.querySelector('#imagen_medir').src = '{{ default_guide.imagen_como_medir | image_url }}';
+    document.querySelector('#texto_medir').src = '{{ default_guide.imagen_texto_medir | image_url }}';
+  });
+
+  function cambiarLinea(e) {
+    // Reset content dropdown
+    document.querySelector('#prendas').value = '';
+    // Reset content
+    document.querySelector('.como-medir-container').classList.add('hidden');
+    document.querySelector('#titulo_seleccion').textContent = '';
+    document.querySelector('#imagen_planilla_mobile').src = '';
+    document.querySelector('#imagen_planilla').src = '';
+    document.querySelector('#imagen_medir').src = '';
+    document.querySelector('#texto_medir').src = '';
+    let prendas = document.querySelectorAll('.prendas-option');
+    prendas.forEach((prenda) => {
+      if (prenda.dataset.linea == e.value) {
+        prenda.classList.remove('hidden');
+      } else {
+        prenda.classList.add('hidden');
+      }
+    });
+  }
+
+  function cambiarContenido(e) {
+    var selectedOption = e.options[e.selectedIndex];
+    document.querySelector('.como-medir-container').classList.remove('hidden');
+    document.querySelector('#titulo_seleccion').textContent = e.value;
+    document.querySelector('#imagen_planilla_mobile').src = selectedOption.dataset.imagenmobile;
+    document.querySelector('#imagen_planilla').src = selectedOption.dataset.imagen;
+    document.querySelector('#imagen_medir').src = selectedOption.dataset.imagenmedir;
+    document.querySelector('#texto_medir').src = selectedOption.dataset.imagentextomedir;
+  }
+</script>
+
+<style>
+  select:focus-visible {
+    outline: none;
+    box-shadow: none;
+  }
+
+  select {
+    line-height: 20px;
+    font-size: 18px;
+  }
+
+  option {
+    line-height: 20px;
+    font-size: 18px;
+  }
+</style>

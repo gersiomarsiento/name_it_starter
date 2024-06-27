@@ -49,6 +49,17 @@
         {%- render 'icon-caret', class: 'w-4 -rotate-90' -%}
       </button>
     {%- endif -%}
+    <!-- THUMBS START -->
+    <div thumbsSlider="" class="swiper swiperThumbs" x-ref="swiperThumbs">
+      <div class="swiper-wrapper">
+        {%- for img in product.images -%}
+          <div class="swiper-slide w-[90px] aspect-[3/4]">
+            {%- render 'image-element', image: img, class: 'w-full h-full object-cover' -%}
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+    <!-- THUMBS END -->
   </div>
 
   <div class="w-full flex justify-center mt-3">
@@ -62,3 +73,8 @@
     ></div>
   </div>
 </section>
+<style>
+  .swiperThumbs .swiper-slide-thumb-active {
+    border: 2px solid #000;
+  }
+</style>

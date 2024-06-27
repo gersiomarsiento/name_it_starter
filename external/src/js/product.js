@@ -9,6 +9,11 @@ Alpine.data('product_gallery', () => ({
     window.productGalleryGoToSlide = (index) => self.goToSlide(index);
   },
   initSlider() {
+    swiperThumbs = new Swiper(this.$refs.swiperThumbs, {
+      slidesPerView: 4,
+      spaceBetween: 10,
+    });
+
     this.swiperReference = new Swiper(this.$refs.swiperContainer, {
       slidesPerView: 1,
       spaceBetween: 10,
@@ -19,6 +24,9 @@ Alpine.data('product_gallery', () => ({
       navigation: {
         nextEl: this.$refs.next_arrow,
         prevEl: this.$refs.prev_arrow,
+      },
+      thumbs: {
+        swiper: swiperThumbs,
       },
     });
   },

@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "shopify": "shopify theme dev -s dev-miguel-test-store.myshopify.com --path ../",
+    "shopify": "shopify theme dev -s dango-dawn-test.myshopify.com --path ../",
     "shopify:pull": "shopify theme pull --development --nodelete --path ../",
     "dev": "vite build --watch"
   },

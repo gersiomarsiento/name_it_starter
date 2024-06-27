@@ -1,0 +1,17 @@
+{%- unless product.metafields.custom.general_product_name == blank -%}
+  <!-- CREATE A METAFIELD 'GENERAL_PRODUCT_NAME' TO MATCH PRODUCTS -->
+  {% assign general_product = product.metafields.custom.general_product_name %}
+  <div class="colors-container flex">
+    {% for prod in collections.all.products %}
+      {% if prod.metafields.custom.general_product_name != blank
+        and prod.metafields.custom.general_product_name == general_product
+      %}
+        <a class="color-swatch-block" href="{{ prod.url }}">
+          <button class="color-swatch aspect-[3/4] max-h-[82px] {% if prod.url == product.url %} border border-black{% endif %} {% if prod.available != true %}disabled {% endif %}">
+            {%- render 'image-element', image: prod.featured_image, class: 'h-full w-full object-cover' -%}
+          </button>
+        </a>
+      {% endif %}
+    {% endfor %}
+  </div>
+{%- endunless -%}

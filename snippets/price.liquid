@@ -50,6 +50,17 @@
       <span class="bg-green-500 rounded-full text-white px-3 py-2 body-4 text-nowrap leading-[1]">
         {{- 'products.product.on_sale' | t -}}
       </span>
+      <span class="bg-[#D62027] rounded-full text-white px-3 py-2 body-4 text-nowrap leading-[1]">
+        {% assign percentage = product.price | times: 100 | divided_by: product.compare_at_price %}
+        -
+        {{- 100 | minus: percentage -}}
+        %
+      </span>
+      {% if product.metafields.custom.main_collection != blank %}
+        <span class="bg-blue-500 rounded-full text-white px-3 py-2 body-4 text-nowrap leading-[1]">
+          {{- product.metafields.custom.main_collection.value.title | upcase -}}
+        </span>
+      {% endif %}
     {%- endif -%}
   {%- endif -%}
 </div>
