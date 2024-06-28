@@ -22,7 +22,11 @@
   assign variants_option2_arr = product.variants | map: 'option2'
   assign variants_option3_arr = product.variants | map: 'option3'
 
-  assign product_form_id = 'product-form-' | append: section.id
+  if upsellProduct
+    assign product_form_id = 'product-form-' | append: section.id | append: upsell
+  else
+    assign product_form_id = 'product-form-' | append: section.id
+  endif
 -%}
 
 {%- for value in option.values -%}
@@ -45,32 +49,29 @@
           endif
       endcase
     endfor
+
+    assign swatch_focal_point = null
+    if value.swatch.image
+      assign image_url = value.swatch.image | image_url: width: 50
+      assign swatch_value = 'url(' | append: image_url | append: ')'
+      assign swatch_focal_point = value.swatch.image.presentation.focal_point
+    elsif value.swatch.color
+      assign swatch_value = 'rgb(' | append: value.swatch.color.rgb | append: ')'
+    else
+      assign swatch_value = null
+    endif
   -%}
 
-  {%- capture input_id -%}
+  {%- unless upsellProduct -%}
+    {%- capture input_id -%}
     {{ section.id }}-{{ option.position }}-{{ forloop.index0 -}}
-  {%- endcapture -%}
-
-  {%- if picker_type == 'swatch' -%}
-    {%- liquid
-      assign checked = false
-      if option.selected_value == value
-        assign checked = true
-      endif
-    -%}
-
-    {%-
-      render 'swatch-input',
-      id: input_id,
-      name: option.name,
-      value: value | escape,
-      swatch: value.swatch,
-      product_form_id: product_form_id,
-      checked: checked,
-      option_disabled: option_disabled
-    -%}
-
-  {%- elsif picker_type == 'button' -%}
+    {%- endcapture -%}
+  {%- else -%}
+    {%- capture input_id -%}
+    upsell-{{forloop_index}}{{ section.id }}-{{ option.position }}-{{ forloop.index0 -}}
+    {%- endcapture -%}
+  {%- endunless -%}
+  {%- if upsellProduct -%}
     <div class="flex">
       <input
         type="radio"
@@ -87,13 +88,100 @@
       <label
         for="{{ input_id }}"
         class="
-          border border-black rounded-full px-5 py-3 leading-[1] text-center relative cursor-pointer
-          peer-checked:bg-primary peer-checked:text-white
-          peer-[.disabled]:text-disabled peer-[.disabled]:line-through
+          custom-radio relative body-3 flex justify-center items-center h-[42px] w-[42px] md2:h-[52px] md2:w-[56px] cursor-pointer border border-[#BFBFBF]
+          peer-checked:border-black
+          peer-[.disabled]:text-[#BFBFBF]
         "
       >
         {{- value -}}
       </label>
     </div>
+
+  {%- else -%}
+    {%- if picker_type == 'swatch' -%}
+      {%- liquid
+        assign checked = false
+        if option.selected_value == value
+          assign checked = true
+        endif
+      -%}
+
+      {%-
+        render 'swatch-input',
+        id: input_id,
+        name: option.name,
+        value: value | escape,
+        swatch: value.swatch,
+        product_form_id: product_form_id,
+        checked: checked,
+        option_disabled: option_disabled,
+        shape: block.settings.swatch_shape
+      -%}
+
+    {%- elsif picker_type == 'button' -%}
+      <div
+        class="
+          flex relative
+          {% case value %}
+            {% when 'XS' %}
+              order-1
+            {% when 'S' %}
+              order-2
+            {% when 'M' %}
+              order-3
+            {% when 'L' %}
+              order-4
+            {% when 'XL' %}
+              order-5
+            {% when 'XXL' %}
+              order-6
+          {% endcase %}
+        "
+        {%- if value contains 'Años' or value contains 'Año' -%}
+          {%- assign prefix = 2 -%}
+        {%- elsif value contains 'Meses' or value contains 'Mes' -%}
+          {%- assign prefix = 1 -%}
+        {%- endif -%}
+        style="order: {{ value | split: ' ' | first | append: 0 | replace: ',50', '5' | prepend: prefix}}"
+        x-data="{ isHovered: false }"
+        x-on:mouseover="isHovered = true"
+        x-on:mouseout="isHovered = false"
+        {% unless option_disabled %}
+          x-on:click="wasClicked = true"
+        {% endunless %}
+      >
+        <input
+          type="radio"
+          id="{{ input_id }}"
+          name="{{ option.name }}"
+          value="{{ value | escape }}"
+          form="{{ product_form_id }}"
+
+          {% if option.selected_value == value and option.values.size == 1 %}
+            checked
+          {% endif %}
+
+          class="sr-only peer {% if option_disabled %} disabled {% endif %}"
+        >
+
+        <label
+          for="{{ input_id }}"
+          class="
+            custom-radio relative body-3 flex text-center justify-center items-center h-[42px] w-[42px] md2:h-[52px] md2:w-[56px] cursor-pointer border border-[#BFBFBF]
+            peer-checked:border-black
+            peer-[.disabled]:text-white peer-[.disabled]:bg-[#bfbfbf] peer-[.disabled]:pointer-events-none
+          "
+        >
+          {{- value -}}
+        </label>
+        <div
+          class="tooltip absolute -top-[30px] h-[30px] inset-center-x border border-black text-[13px] font-[400] p-1 bg-white hidden peer-[.disabled]:block"
+          x-show="isHovered"
+          x-cloak
+        >
+          AGOTADO
+        </div>
+      </div>
+    {%- endif -%}
   {%- endif -%}
 {%- endfor -%}

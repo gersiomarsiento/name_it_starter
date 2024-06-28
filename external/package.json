@@ -20,6 +20,7 @@
     "@alpinejs/anchor": "^3.14.0",
     "@alpinejs/collapse": "^3.14.0",
     "@alpinejs/focus": "^3.14.0",
+    "@alpinejs/intersect": "^3.14.1",
     "@alpinejs/persist": "^3.14.0",
     "@shopify/theme-currency": "^4.1.1",
     "alpinejs": "^3.14.0",

@@ -1,0 +1,62 @@
+{%- if product.metafields.custom.productos_destacados != blank -%}
+  <h4 class="h4 md:uppercase">Completa Tu Set</h4>
+  <div class="flex flex-col gap-4">
+    {%- for upsell_product in product.metafields.custom.productos_destacados.value -%}
+      {%- assign upsell = '-upsell-' | append: forloop.index %}
+      {%- assign upsell_product_form_id = 'product-form-' | append: section.id | append: upsell -%}
+      {%- assign forloop_index = forloop.index -%}
+      {%- for option in upsell_product.options_with_values -%}
+        {%- if option.name == 'Talla' -%}
+          {%- assign size_options = option.values -%}
+        {%- elsif option.name == 'Color' -%}
+          {%- assign color_options = option.values -%}
+        {%- endif -%}
+      {%- endfor -%}
+      <div class="relative flex border-b border-[#BFBFBF] pb-3 items-center justify-between {{ upsell }}">
+        <a class="contents" href="{{ upsell_product.url }}">
+          {%- render 'image-element',
+            image: upsell_product.featured_image,
+            class: 'object-cover h-[124px] w-[82px] md:h-[130px] md:w-[86px] mr-2 md:mr-3'
+          -%}
+        </a>
+        <div class="flex flex-col mr-3 self-start w-full">
+          <a
+            class="uppercase text-[14px] md:text-[16px] leading-[18px] md:leading-[20px]"
+            href="{{ upsell_product.url }}"
+          >
+            {{ upsell_product.title | upcase | escape }}
+          </a>
+          {% render 'product-variant-picker',
+            product: upsell_product,
+            block: block,
+            product_form_id: upsell_product_form_id,
+            upsellProduct: true,
+            upsell: upsell,
+            forloop_index: forloop_index,
+            update_url: false
+          %}
+        </div>
+        <div class="flex flex-col self-start text-end text-nowrap">
+          {%- if upsell_product.compare_at_price > upsell_product.price -%}
+            <h6 class="body-3 text-[12px] md:text-[16px] leading-[16px] md:leading-[20px] line-through">
+              {{ upsell_product.compare_at_price | money }}
+            </h6>
+          {%- endif -%}
+          <h5 class="h5 text-[14px] md:text-[20px] leading-[18px] md:leading-[20px]">
+            {{ upsell_product.price | money }}
+          </h5>
+        </div>
+        {%- render 'buy-buttons',
+          block: block,
+          product: upsell_product,
+          product_form_id: upsell_product_form_id,
+          section_id: section.id,
+          upsell: upsell,
+          btn_classes: '!p-2 !pb-1.5 text-[12px] md:text-[14px] tracking-[0.3px] md:tracking-[0.5px] w-fit absolute right-0 bottom-3',
+          width_fit: true,
+          short_text: true
+        -%}
+      </div>
+    {%- endfor -%}
+  </div>
+{%- endif -%}

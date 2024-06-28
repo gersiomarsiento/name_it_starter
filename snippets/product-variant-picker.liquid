@@ -49,18 +49,63 @@
           </div>
         </fieldset>
       {%- elsif picker_type == 'button' -%}
-        <fieldset class="js product-form__input flex flex-col gap-y-1">
-          <legend class="form__label mb-2">{{ option.name }}</legend>
+        {%- if upsellProduct -%}
+          <div class="flex flex-col">
+            <label for="{{ option.name }}" class="text-[12px] leading-[12px]{{ label_classes }}">
+              {{- option.name }}:</label
+            >
+            <select
+              name="{{ option.name }}"
+              class="w-fit max-w-[150px] text-ellipsis border px-1 py-0.5 text-[14px] leading-[14px]"
+              x-init="
+                const selectElement = $el;
+                const options = Array.from(selectElement.options);
+                const sizeOrder = ['XS', 'S', 'M', 'L', 'XL'];
 
-          <div class="flex flex-row flex-wrap gap-3">
-            {%- render 'product-variant-options',
-              product: product,
-              option: option,
-              block: block,
-              picker_type: picker_type
-            -%}
+                // Sort options based on custom order
+                options.sort((a, b) => {
+                  const indexA = sizeOrder.indexOf(a.textContent);
+                  const indexB = sizeOrder.indexOf(b.textContent);
+
+                  // If both elements are in sizeOrder, sort by their index
+                  if (indexA !== -1 && indexB !== -1) {
+                    return indexA - indexB;
+                  }
+
+                  // Sort alphabetically for elements not in sizeOrder
+                  return a.textContent.localeCompare(b.textContent);
+                });
+
+                // Remove existing options from <select>
+                while (selectElement.options.length > 0) {
+                  selectElement.remove(0);
+                }
+
+                // Add sorted options back to <select>
+                options.forEach(option => {
+                  selectElement.add(option);
+                });
+              "
+            >
+              {%- for value in option.values -%}
+                <option value="{{ value }}">{{ value }}</option>
+              {%- endfor -%}
+            </select>
           </div>
-        </fieldset>
+        {%- else -%}
+          <fieldset class="js product-form__input flex flex-col gap-y-1">
+            <legend class="form__label mb-2">{{ option.name }}</legend>
+
+            <div class="flex flex-row flex-wrap gap-3">
+              {%- render 'product-variant-options',
+                product: product,
+                option: option,
+                block: block,
+                picker_type: picker_type
+              -%}
+            </div>
+          </fieldset>
+        {%- endif -%}
       {%- endif -%}
     {%- endfor -%}
 
