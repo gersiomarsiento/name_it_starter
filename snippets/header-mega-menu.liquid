@@ -51,6 +51,21 @@
                           {{- childlink.title -}}
                         </a>
                       </li>
+                      {%- if childlink.links.size > 0 -%}
+                        {%- for grandchildlink in childlink.links -%}
+                          <li>
+                            <a
+                              href="{{ grandchildlink.url }}"
+                              class="flex body-3 hover:underline"
+                              {% if grandchildlink.current %}
+                                aria-current="page"
+                              {% endif %}
+                            >
+                              {{- grandchildlink.title -}}
+                            </a>
+                          </li>
+                        {%- endfor -%}
+                      {%- endif -%}
                     {%- endfor -%}
                   </ul>
                 {%- endif -%}

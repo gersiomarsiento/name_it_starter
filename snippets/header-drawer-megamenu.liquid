@@ -22,13 +22,22 @@
           class="flex flex-col gap-y-5 py-5 border-t border-t-gray-200 border-opacity-20"
           role="navigation"
           aria-label="{{ block.settings.title }} {{ link.title }}"
+          {% if link.links.size > 0 %}
+            x-data="{ expanded: false }"
+          {% endif %}
         >
-          <h4 class="h5">
-            {{- link.title -}}
-          </h4>
+          {% if link.links.size > 0 %}
+            <button class="h5" @click="expanded = !expanded">
+              {{- link.title -}}
+            </button>
+          {%- else -%}
+            <h4 class="h5">
+              {{- link.title -}}
+            </h4>
+          {% endif %}
 
           {%- if link.links.size > 0 -%}
-            <ul class="flex flex-col gap-y-3">
+            <ul class="flex flex-col gap-y-3" x-show="expanded" x-collapse>
               {%- for childlink in link.links -%}
                 <li>
                   <a
@@ -41,6 +50,21 @@
                     {{- childlink.title -}}
                   </a>
                 </li>
+                {%- if childlink.links.size > 0 -%}
+                  {%- for grandchildlink in childlink.links -%}
+                    <li>
+                      <a
+                        href="{{ grandchildlink.url }}"
+                        class="flex body-3 hover:underline"
+                        {% if grandchildlink.current %}
+                          aria-current="page"
+                        {% endif %}
+                      >
+                        {{- grandchildlink.title -}}
+                      </a>
+                    </li>
+                  {%- endfor -%}
+                {%- endif -%}
               {%- endfor -%}
             </ul>
           {%- endif -%}
