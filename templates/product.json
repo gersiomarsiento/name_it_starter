@@ -1,3 +1,12 @@
+/*
+* ------------------------------------------------------------
+* IMPORTANT: The contents of this file are auto-generated.
+*
+* This file may be updated by the Shopify admin theme editor
+* or related systems. Please exercise caution as any changes
+* made to this file may be overwritten.
+* ------------------------------------------------------------
+*/
 {
   "sections": {
     "main": {
@@ -28,6 +37,16 @@
         },
         "price": {
           "type": "price",
+          "settings": {
+          }
+        },
+        "color_picker_h9Tpbe": {
+          "type": "color_picker",
+          "settings": {
+          }
+        },
+        "size_guide_KGUPkY": {
+          "type": "size_guide",
           "settings": {
           }
         },
@@ -65,11 +84,11 @@
           "type": "icon-with-text",
           "settings": {
             "image_height": 30,
-            "image_1": "shopify:\/\/shop_images\/Logo.png",
+            "image_1": "shopify:\/\/shop_images\/logo.png",
             "heading_1": "Free Shipping",
-            "image_2": "shopify:\/\/shop_images\/Logo.png",
+            "image_2": "shopify:\/\/shop_images\/logo.png",
             "heading_2": "Easy Exchanges",
-            "image_3": "shopify:\/\/shop_images\/Logo.png",
+            "image_3": "shopify:\/\/shop_images\/logo.png",
             "heading_3": "Easy Returns"
           }
         }
@@ -80,6 +99,8 @@
         "sku_QRke7Q",
         "rating",
         "price",
+        "color_picker_h9Tpbe",
+        "size_guide_KGUPkY",
         "variant_picker",
         "quantity_selector",
         "buy_buttons",
