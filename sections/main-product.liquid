@@ -39,6 +39,8 @@
                 {%- render 'product-block-title', product: product, block: block -%}
               {%- when 'sku' -%}
                 {%- render 'product-block-sku', product: product, block: block -%}
+              {%- when 'badges' -%}
+                {%- render 'product-block-badges', product: product, block: block -%}
               {%- when 'price' -%}
                 {%- render 'product-block-price', product: product, block: block -%}
               {%- when 'rating' -%}
@@ -199,6 +201,11 @@
     {
       "type": "title",
       "name": "Title",
+      "limit": 1
+    },
+    {
+      "type": "badges",
+      "name": "Badges",
       "limit": 1
     },
     {
