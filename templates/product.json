@@ -12,6 +12,11 @@
     "main": {
       "type": "main-product",
       "blocks": {
+        "badges_i4bBhF": {
+          "type": "badges",
+          "settings": {
+          }
+        },
         "vendor": {
           "type": "text",
           "settings": {
@@ -93,9 +98,15 @@
             "image_3": "shopify:\/\/shop_images\/logo.png",
             "heading_3": "Easy Returns"
           }
+        },
+        "upsells_pbWHkB": {
+          "type": "upsells",
+          "settings": {
+          }
         }
       },
       "block_order": [
+        "badges_i4bBhF",
         "vendor",
         "title",
         "sku_QRke7Q",
@@ -108,7 +119,8 @@
         "buy_buttons",
         "description",
         "collapsible_tab_7XHXDr",
-        "icon_with_text_tbW7eY"
+        "icon_with_text_tbW7eY",
+        "upsells_pbWHkB"
       ],
       "settings": {
         "color_scheme": "scheme-1",
