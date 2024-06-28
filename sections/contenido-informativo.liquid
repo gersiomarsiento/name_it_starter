@@ -1,0 +1,132 @@
+<div
+  class="pb-10 max-w-[1080px] mx-auto c-container"
+  x-data
+>
+  <div class="flex px-3 md:px-[100px] mt-5 mb-10 md:mt-10">
+    <input
+      type="text"
+      class="search-input border-b border-black w-full"
+      placeholder="Buscar ayuda..."
+      @input="updateSearchQuery()"
+    >
+    {%- render 'icon-search' -%}
+  </div>
+  {%- for block in section.blocks -%}
+    <div
+      class="collapsible-block border-b border-black md2:border-[#BFBFBF] mb-3 md:mb-5"
+      x-data="
+        {
+          openChild: {{forloop.first }},
+          toggleChild() {
+            this.openChild = !this.openChild;
+          }
+        }
+      "
+      x-cloak
+    >
+      <button
+        type="button"
+        class="w-full flex flex-row justify-between items-center gap-4 pb-3 md:pb-5"
+        x-on:click="toggleChild()"
+        :aria-expanded="openChild"
+      >
+        <div class="flex gap-5 items-center">
+          {%- if block.settings.icon != blank -%}
+            {%- render 'image-element',
+              image: block.settings.icon,
+              class: 'h-[24px] md:h-[34px] w-[24px] md:w-[34px]'
+            -%}
+          {%- endif -%}
+          <span class="h3 text-left md:text-[48px] md:tracking-[0.8px] md:leading-[54px]">
+            {{- block.settings.titulo -}}
+          </span>
+        </div>
+        <span
+          class="transition-transform"
+          :class="{ 'rotate-180': openChild }"
+          aria-hidden="true"
+        >
+          {%- render 'icon-chevron-down', class: 'h-[24px] md:h-[34px] w-[24px] md:w-[34px]' -%}
+        </span>
+      </button>
+
+      <div class="richtext rte pb-3 md:pb-5 md:-mt-2" x-show="openChild" x-collapse x-cloak>
+        {{ block.settings.contenido }}
+      </div>
+    </div>
+  {%- endfor -%}
+</div>
+
+<script>
+  function updateSearchQuery() {
+    const searchQuery = event.target.value.toLowerCase();
+    const blocks = document.querySelectorAll('.collapsible-block');
+    blocks.forEach((block) => {
+      const title = block.querySelector('.h3').textContent.toLowerCase();
+      const content = block.querySelector('.richtext').textContent.toLowerCase();
+      const searchMatches = title.includes(searchQuery) || content.includes(searchQuery);
+      block.style.display = searchMatches ? 'block' : 'none';
+    });
+  }
+</script>
+
+<style>
+  #shopify-section-{{ section.id }} .richtext.rte h1,
+  #shopify-section-{{ section.id }} .richtext.rte h2,
+  #shopify-section-{{ section.id }} .richtext.rte h3,
+  #shopify-section-{{ section.id }} .richtext.rte h4,
+  #shopify-section-{{ section.id }} .richtext.rte h5,
+  #shopify-section-{{ section.id }} .richtext.rte h6,
+  #shopify-section-{{ section.id }} .richtext.rte p {
+    margin-bottom: 12px;
+  }
+
+  @media screen and (min-width: 768px) {
+    #shopify-section-{{ section.id }} .richtext.rte h1,
+    #shopify-section-{{ section.id }} .richtext.rte h2,
+    #shopify-section-{{ section.id }} .richtext.rte h3,
+    #shopify-section-{{ section.id }} .richtext.rte h4,
+    #shopify-section-{{ section.id }} .richtext.rte h5,
+    #shopify-section-{{ section.id }} .richtext.rte h6,
+    #shopify-section-{{ section.id }} .richtext.rte p {
+      margin-bottom: 20px;
+    }
+
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Contenido Informativo",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "Item",
+      "name": "Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "titulo",
+          "label": "Título",
+          "default": "TITULO"
+        },
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Ícono"
+        },
+        {
+          "type": "richtext",
+          "id": "contenido",
+          "label": "Contenido"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Contenido Informativo"
+    }
+  ]
+}
+{% endschema %}

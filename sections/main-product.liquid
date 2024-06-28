@@ -65,74 +65,10 @@
                   section_id: section.id
                 -%}
                 <!-- STICKY ATC -->
-                <div
-                  class="flex gap-2 fixed w-full left-0 md-down:bottom-0 md:top-[78px] bg-white bg-opacity-95 z-[2] max-h-[93px] p-2.5 md:px-5 justify-between items-center"
-                  x-show="stickyAtcShown"
-                  x-transition
-                  x-cloak
-                >
-                  <div class="wrapper flex h-full gap-2 items-center">
-                    <div>
-                      {%- render 'image-element',
-                        image: product.featured_image,
-                        class: 'sticky_atc_img h-[74px] w-[55px] min-w-[55px] object-cover'
-                      -%}
-                    </div>
-                    <div class="title-price flex flex-col lg:gap-3 py-1.5">
-                      <div class="sm-down:text-[13px] sm-down:leading-[15px] text-[14px] leading-[16px]">
-                        {{ product.title }}
-                      </div>
-                      <div class="lg:hidden">
-                        <span class="font-[600] text-[13px] leading-[20px] sticky_atc_Color">
-                          {{- product.selected_or_first_available_variant.option1 -}}
-                        </span>
-                        /
-                        <span class="font-[600] text-[13px] leading-[20px] sticky_atc_Talla">
-                          {{- product.selected_or_first_available_variant.option2 -}}
-                        </span>
-                      </div>
-                      <div>
-                        {%- render 'card-product-price',
-                          product: product,
-                          classMoneyPrice: '!text-[14px] !leading-[20px] md:!text-[16px] md:!leading-[20px] md:!font-[600]',
-                          classComparePrice: '!text-[14px] !leading-[20px] !font-[400] md:!text-[16px] md:!leading-[20px]'
-                        -%}
-                      </div>
-                    </div>
-                  </div>
-                  <div class="flex md:gap-[58px] items-center">
-                    <div class="hidden lg:flex gap-3 items-center">
-                      <div>
-                        Color:
-                        <span class="font-[600] sticky_atc_Color">
-                          {{- product.selected_or_first_available_variant.option1 -}}
-                        </span>
-                      </div>
-                    </div>
-                    {% comment %}
-                      <div class="hidden lg:flex gap-3 items-center" x-show="!hasJeansLogic">
-                        <div>
-                          Talla:
-                          <span class="font-[600] sticky_atc_Talla">
-                            {{- product.selected_or_first_available_variant.option2 -}}
-                          </span>
-                        </div>
-                      </div>
-                    {% endcomment %}
-                    {%- render 'buy-buttons',
-                      block: block,
-                      product: product,
-                      product_form_id: product_form_id,
-                      section_id: section.id,
-                      btn_classes: 'text-[10px] md:text-[16px] leading-[14px] md:leading-[16px] text-nowrap sticky_add_button',
-                      width_fit: true,
-                      short_text: true
-                    -%}
-                  </div>
-                </div>
+                {%- render 'sticky-atc', product: product, block: block -%}
               {%- when 'upsells' -%}
                 {%- render 'product-block-upsells', product: product, block: block -%}
-              {%- when 'collapsible_tab' -%}
+              {%- when 'collapsible_tab' -%}  
                 {%- render 'product-block-collapsible-tab', product: product, block: block -%}
               {%- when 'description' -%}
                 {%- render 'product-block-description', product: product, block: block -%}

@@ -1,0 +1,359 @@
+{%- liquid
+  assign featured_collection = section.settings.collection
+  assign featured_collection_2 = section.settings.collection_2
+  assign title = section.settings.title
+  assign collection_1_title = section.settings.collection_title | default: featured_collection.title
+  assign collection_2_title = section.settings.collection_2_title | default: featured_collection_2.title
+  assign max_products = section.settings.products_to_show
+  assign show_view_all = section.settings.show_view_all
+  assign always_show_view_all = section.settings.always_show_view_all
+  assign dont_show_view_all = section.settings.dont_show_view_all
+  assign view_all_text = section.settings.view_all_text
+  assign view_all_style = section.settings.view_all_style
+  assign show_secondary_image = section.settings.show_secondary_image
+  assign is_full_width = section.settings.full_width
+  assign quick_add = section.settings.quick_add
+
+  assign products_to_display = featured_collection.all_products_count
+
+  if featured_collection.all_products_count > max_products
+    assign products_to_display = max_products
+    assign more_in_collection = true
+  endif
+-%}
+
+<section id="FeatCollectionSlider-{{ section.id }}" x-data="feat_collection_slider">
+  {%- if title != blank -%}
+    <h2 class="h2 pr-2">{{ title }}</h2>
+  {%- endif -%}
+  <div x-data="{secondSwiper: false}">
+    <div class="flex">
+      <h4 class="cursor-pointer" @click="secondSwiper = false">{{ collection_1_title }}</h4>
+      <h4 class="cursor-pointer" @click="secondSwiper = true">{{ collection_2_title }}</h4>
+    </div>
+    <!-- SWIPER 1 -->
+    <div x-show="secondSwiper == false">
+      {%- if featured_collection.all_products_count > 0 -%}
+        <div class="c-container flex flex-row justify-between mb-3 md:mb-[22px]">
+          {%- unless section.settings.view_all_at_bottom -%}
+            {%- unless dont_show_view_all -%}
+              {%- unless always_show_view_all -%}
+                {%- if show_view_all and more_in_collection -%}
+                  <a
+                    href="{{ featured_collection.url }}"
+                    class=" {% if view_all_style == 'link' %}link underlined-link{% elsif view_all_style == 'solid' %}button-primary{% else %}button-outlined text-nowrap whitespace-nowrap max-h-[34px]{% endif %}"
+                    aria-label="{{ 'sections.featured_collection.view_all_label' | t: collection_name: featured_collection.title | escape }}"
+                  >
+                    {{ view_all_text }}
+                  </a>
+                {%- endif -%}
+              {%- else -%}
+                <a
+                  href="{{ featured_collection.url }}"
+                  class=" {% if view_all_style == 'link' %}link underlined-link{% elsif view_all_style == 'solid' %}button-primary{% else %}button-outlined text-nowrap whitespace-nowrap max-h-[34px]{% endif %}"
+                  aria-label="{{ 'sections.featured_collection.view_all_label' | t: collection_name: featured_collection.title | escape }}"
+                >
+                  {{ view_all_text }}
+                </a>
+              {%- endunless -%}
+            {%- endunless -%}
+          {%- endunless -%}
+        </div>
+      {%- endif -%}
+      <div
+        class="overflow-x-hidden overflow-y-hidden {% unless is_full_width %}c-container{% endunless %} mx-auto swiper_feat_collection_slider_1 relative"
+      >
+        <div class="swiper-wrapper">
+          {%- for product in featured_collection.products limit: products_to_display -%}
+            <div
+              class="swiper-slide"
+              id="FeatCollectionSlide-{{ section.id }}-{{ forloop.index }}"
+            >
+              {% render 'card-product',
+                product: product,
+                show_secondary_image: show_secondary_image,
+                section_id: section.id,
+                quick_add: quick_add
+              %}
+            </div>
+          {%- endfor -%}
+        </div>
+        <div class="swiper-navigation">
+          <div
+            class="swiper-button-prev h-[34px] w-[34px] absolute top-[238px] bg-white/50 text-black tw-rotate-180"
+          ></div>
+          <div class="swiper-button-next h-[34px] w-[34px] absolute top-[238px] bg-white/50 text-black "></div>
+        </div>
+      </div>
+      {%- if section.settings.view_all_at_bottom -%}
+        {%- unless dont_show_view_all -%}
+          {%- unless always_show_view_all -%}
+            {%- if show_view_all and more_in_collection -%}
+              <a
+                href="{{ featured_collection.url }}"
+                class="c-container md:hidden my-5 ml-[10px] max-w-fit {% if view_all_style == 'link' %}link underlined-link{% elsif view_all_style == 'solid' %}button-primary{% else %}button-outlined max-h-[34px]{% endif %}"
+                aria-label="{{ 'sections.featured_collection.view_all_label' | t: collection_name: featured_collection.title | escape }}"
+              >
+                {{ view_all_text }}
+              </a>
+            {%- endif -%}
+          {%- else -%}
+            <a
+              href="{{ featured_collection.url }}"
+              class="c-container md:hidden my-5 ml-[10px] max-w-fit {% if view_all_style == 'link' %}link underlined-link{% elsif view_all_style == 'solid' %}button-primary{% else %}button-outlined max-h-[34px]{% endif %}"
+              aria-label="{{ 'sections.featured_collection.view_all_label' | t: collection_name: featured_collection.title | escape }}"
+            >
+              {{ view_all_text }}
+            </a>
+          {%- endunless -%}
+        {%- endunless -%}
+      {%- endif -%}
+    </div>
+
+    <!-- SWIPER 2 -->
+    {%- if featured_collection_2 != blank -%}
+      <div x-show="secondSwiper == true">
+        {%- if featured_collection_2.all_products_count > 0 -%}
+          <div class="c-container flex flex-row justify-between mb-3 md:mb-[22px]">
+            {%- unless section.settings.view_all_at_bottom -%}
+              {%- unless dont_show_view_all -%}
+                {%- unless always_show_view_all -%}
+                  {%- if show_view_all and more_in_collection -%}
+                    <a
+                      href="{{ featured_collection_2.url }}"
+                      class=" {% if view_all_style == 'link' %}link underlined-link{% elsif view_all_style == 'solid' %}button-primary{% else %}button-outlined text-nowrap whitespace-nowrap max-h-[34px]{% endif %}"
+                      aria-label="{{ 'sections.featured_collection.view_all_label' | t: collection_name: featured_collection_2.title | escape }}"
+                    >
+                      {{ view_all_text }}
+                    </a>
+                  {%- endif -%}
+                {%- else -%}
+                  <a
+                    href="{{ featured_collection_2.url }}"
+                    class=" {% if view_all_style == 'link' %}link underlined-link{% elsif view_all_style == 'solid' %}button-primary{% else %}button-outlined text-nowrap whitespace-nowrap max-h-[34px]{% endif %}"
+                    aria-label="{{ 'sections.featured_collection.view_all_label' | t: collection_name: featured_collection_2.title | escape }}"
+                  >
+                    {{ view_all_text }}
+                  </a>
+                {%- endunless -%}
+              {%- endunless -%}
+            {%- endunless -%}
+          </div>
+        {%- endif -%}
+        <div
+          class="overflow-x-hidden overflow-y-hidden {% unless is_full_width %}c-container{% endunless %} mx-auto swiper_feat_collection_slider_1 relative"
+        >
+          <div class="swiper-wrapper">
+            {%- for product in featured_collection_2.products limit: products_to_display -%}
+              <div
+                class="swiper-slide"
+                id="FeatCollectionSlide-{{ section.id }}-{{ forloop.index }}"
+              >
+                {% render 'card-product',
+                  product: product,
+                  show_secondary_image: show_secondary_image,
+                  section_id: section.id,
+                  quick_add: quick_add
+                %}
+              </div>
+            {%- endfor -%}
+          </div>
+          <div class="swiper-navigation">
+            <div
+              class="swiper-button-prev h-[34px] w-[34px] absolute top-[238px] bg-white/50 text-black tw-rotate-180"
+            ></div>
+            <div class="swiper-button-next h-[34px] w-[34px] absolute top-[238px] bg-white/50 text-black "></div>
+          </div>
+        </div>
+        {%- if section.settings.view_all_at_bottom -%}
+          {%- unless dont_show_view_all -%}
+            {%- unless always_show_view_all -%}
+              {%- if show_view_all and more_in_collection -%}
+                <a
+                  href="{{ featured_collection_2.url }}"
+                  class="c-container md:hidden my-5 ml-[10px] max-w-fit {% if view_all_style == 'link' %}link underlined-link{% elsif view_all_style == 'solid' %}button-primary{% else %}button-outlined max-h-[34px]{% endif %}"
+                  aria-label="{{ 'sections.featured_collection.view_all_label' | t: collection_name: featured_collection_2.title | escape }}"
+                >
+                  {{ view_all_text }}
+                </a>
+              {%- endif -%}
+            {%- else -%}
+              <a
+                href="{{ featured_collection_2.url }}"
+                class="c-container md:hidden my-5 ml-[10px] max-w-fit {% if view_all_style == 'link' %}link underlined-link{% elsif view_all_style == 'solid' %}button-primary{% else %}button-outlined max-h-[34px]{% endif %}"
+                aria-label="{{ 'sections.featured_collection.view_all_label' | t: collection_name: featured_collection_2.title | escape }}"
+              >
+                {{ view_all_text }}
+              </a>
+            {%- endunless -%}
+          {%- endunless -%}
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+<style>
+  #shopify-section-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+  @media screen and (max-width: 767px){
+    #shopify-section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_mobile }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Colección Destacada",
+  "settings": [
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Colección"
+    },
+    {
+      "type": "collection",
+      "id": "collection_2",
+      "label": "Colección 2"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "title",
+      "default": "MEJOR VENDIDOS",
+      "label": "Título",
+      "info": "Para no mostrar el título ni el botón, dejar en blanco."
+    },
+    {
+      "type": "text",
+      "id": "collection_title",
+      "label": "Título de la colección 1"
+    },
+    {
+      "type": "text",
+      "id": "collection_2_title",
+      "label": "Título de la colección 2"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "min": 2,
+      "max": 25,
+      "step": 1,
+      "default": 4,
+      "label": "Cantidad de productos a mostrar."
+    },
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "Ancho completo.",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_view_all",
+      "default": true,
+      "label": "Mostrar botón para ir a la colección si tiene más productos."
+    },
+    {
+      "type": "checkbox",
+      "id": "always_show_view_all",
+      "label": "Siempre mostrar botón para ir a la collección."
+    },
+    {
+      "type": "checkbox",
+      "id": "dont_show_view_all",
+      "label": "No mostrar botón para ir a la collección."
+    },
+    {
+      "type": "checkbox",
+      "id": "view_all_at_bottom",
+      "label": "Posicionar botón para ir a la colección debajo (móviles)"
+    },
+    {
+      "type": "text",
+      "id": "view_all_text",
+      "label": "Texto del botón para ir a la colección"
+    },
+    {
+      "type": "select",
+      "id": "view_all_style",
+      "label": "Estilo del botón",
+      "options": [
+        {
+          "value": "link",
+          "label": "Link"
+        },
+        {
+          "value": "outline",
+          "label": "Contorno"
+        },
+        {
+          "value": "solid",
+          "label": "Sólido"
+        }
+      ],
+      "default": "outline"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_secondary_image",
+      "default": false,
+      "label": "Mostrar imagen secundaria en hover."
+    },
+    {
+      "type": "select",
+      "id": "quick_add",
+      "default": "none",
+      "label": "t:sections.main-collection-product-grid.settings.quick_add.label",
+      "info": "t:sections.main-collection-product-grid.settings.quick_add.info",
+      "options": [
+        {
+          "value": "none",
+          "label": "Ninguno"
+        },
+        {
+          "value": "standard",
+          "label": "Estándar"
+        },
+        {
+          "value": "bulk",
+          "label": "t:sections.main-collection-product-grid.settings.quick_add.options.option_3"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Padding de la sección"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding inferior",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding inferior en dispositivos móviles",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "Colección Destacada"
+    }
+  ]
+}
+{% endschema %}
