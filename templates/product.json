@@ -138,10 +138,33 @@
         "show_secondary_image": true,
         "show_vendor": true
       }
+    },
+    "featured_collection_slider_yBdPQb": {
+      "type": "featured-collection-slider",
+      "settings": {
+        "collection": "test-collection",
+        "collection_2": "frontpage",
+        "title": "MEJOR VENDIDOS",
+        "collection_title": "NIÑO",
+        "collection_2_title": "NIÑA",
+        "products_to_show": 7,
+        "full_width": true,
+        "show_view_all": true,
+        "always_show_view_all": false,
+        "dont_show_view_all": false,
+        "view_all_at_bottom": false,
+        "view_all_text": "",
+        "view_all_style": "outline",
+        "show_secondary_image": false,
+        "quick_add": "none",
+        "padding_bottom": 0,
+        "padding_bottom_mobile": 0
+      }
     }
   },
   "order": [
     "main",
-    "related-products"
+    "related-products",
+    "featured_collection_slider_yBdPQb"
   ]
 }
