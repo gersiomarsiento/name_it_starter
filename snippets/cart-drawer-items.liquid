@@ -45,3 +45,94 @@
     </div>
   {%- endfor -%}
 </form>
+<!-- UPSELLS -->
+{%- if settings.cart_upsell_collection -%}
+  <h4 class="text-[18px] leading-[20px] font-[600] uppercase mb-[12px]">{{ settings.cart_upsell_title }}</h4>
+  <div class="flex flex-col gap-2">
+    {%- assign upsell_count = 0 -%}
+    {%- assign used_indices = '' -%}
+    {%- assign min = 0 -%}
+    {%- assign max = settings.cart_upsell_collection.products.size | minus: 1 -%}
+    {%- assign diff = max | minus: min -%}
+    <!-- RANDOMIZED UPSELL -->
+    {%- for i in (min..max) -%}
+      {%- if upsell_count >= 3 -%}
+        {%- break -%}
+      {%- endif -%}
+      {%- assign random_index = 'now' | date: '%N' | modulo: diff | plus: min- %}
+      {%- unless used_indices contains random_index -%}
+        {%- assign upsell_product = settings.cart_upsell_collection.products[random_index] -%}
+        {%- assign product_in_cart = false -%}
+        {%- for item in cart.items -%}
+          {%- if item.product.id == upsell_product.id -%}
+            {%- assign product_in_cart = true -%}
+            {%- break -%}
+          {%- endif -%}
+        {%- endfor -%}
+        {%- if product_in_cart == false -%}
+          {%- assign upsell = '-upsell-' | append: forloop.index -%}
+          {%- assign upsell_product_form_id = 'product-form-' | append: section.id | append: upsell -%}
+          {%- assign forloop_index = forloop.index -%}
+          {%- for option in upsell_product.options_with_values -%}
+            {%- if option.name == 'Talla' -%}
+              {%- assign size_options = option.values -%}
+            {%- elsif option.name == 'Color' -%}
+              {%- assign color_options = option.values -%}
+            {%- endif -%}
+          {%- endfor -%}
+          <div class="relative flex border border-[#BFBFBF] p-[12px] items-center justify-between {{ upsell }}">
+            {%- if upsell_product.featured_image -%}
+              <a class="contents" href="{{ upsell_product.url }}">
+                {%- render 'image-element',
+                  image: upsell_product.featured_image,
+                  class: 'object-cover h-[100px] w-[70px] mr-2'
+                -%}
+              </a>
+            {%- else -%}
+              {{ 'product-1' | placeholder_svg_tag: 'object-cover h-[100px] w-[70px] mr-2' }}
+            {%- endif -%}
+            <div class="flex flex-col mr-3 self-start w-full">
+              <a class="uppercase text-[14px] leading-[18px] font-[400]" href="{{ upsell_product.url }}">
+                {{ upsell_product.title | upcase | escape }}
+              </a>
+              {% render 'product-variant-picker',
+                product: upsell_product,
+                label_classes: '!text-[11px] !leading-[11px] !font-[400]',
+                block: block,
+                product_form_id: upsell_product_form_id,
+                upsellProduct: true,
+                upsell: upsell,
+                forloop_index: forloop_index,
+                update_url: false
+              %}
+            </div>
+
+            <div class="flex flex-col self-start text-end text-nowrap">
+              {%- if upsell_product.compare_at_price > upsell_product.price -%}
+                <h6 class="body-3 text-[12px] md:text-[14px] leading-[16px] md:leading-[20px] line-through">
+                  {{ upsell_product.compare_at_price | money }}
+                </h6>
+              {%- endif -%}
+              <h5 class="h5 text-[14px] md:text-[16px] leading-[18px] md:leading-[20px]">
+                {{ upsell_product.price | money }}
+              </h5>
+            </div>
+            {%- render 'buy-buttons',
+              block: block,
+              product: upsell_product,
+              product_form_id: upsell_product_form_id,
+              section_id: section.id,
+              upsell: upsell,
+              btn_classes: '!p-2 !pb-1.5 text-[12px] w-fit absolute right-2 bottom-2',
+              width_fit: true,
+              btn_text: 'AGREGAR',
+              short_text: true
+            -%}
+          </div>
+          {%- assign used_indices = used_indices | append: random_index | append: ',' -%}
+          {%- assign upsell_count = upsell_count | plus: 1 -%}
+        {%- endif -%}
+      {%- endunless -%}
+    {%- endfor -%}
+  </div>
+{%- endif -%}

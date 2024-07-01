@@ -244,6 +244,20 @@
         "id": "cart_color_scheme",
         "label": "t:sections.all.colors.label",
         "default": "scheme-1"
+      },
+      {
+        "type": "header",
+        "content": "Colección de Upsells"
+      },
+      {
+        "type": "text",
+        "id": "cart_upsell_title",
+        "label": "Título de la sección de upsells en el carrito."
+      },
+      {
+        "type": "collection",
+        "id": "cart_upsell_collection",
+        "label": "Colección de Upsells para mostrar en el carrito."
       }
     ]
   }

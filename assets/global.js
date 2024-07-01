@@ -231,7 +231,6 @@ class VariantSelects extends HTMLElement {
     this.toggleAddButton(true, '', false);
     this.removeErrorMessage();
     this.updateVariantStatuses();
-
     if (!this.currentVariant) {
       this.toggleAddButton(true, '', true);
       this.setUnavailable();
@@ -239,6 +238,7 @@ class VariantSelects extends HTMLElement {
       this.updateURL();
       this.updateVariantInput();
       this.renderProductInfo();
+      this.updateShareUrl();
     }
   }
 
@@ -293,8 +293,14 @@ class VariantSelects extends HTMLElement {
     window.history.replaceState({}, '', `${this.dataset.url}?variant=${this.currentVariant.id}`);
   }
 
+  updateShareUrl() {
+    const shareButton = document.getElementById(`Share-${this.dataset.section}`);
+    if (!shareButton || !shareButton.updateUrl) return;
+    shareButton.updateUrl(`${window.shopUrl}${this.dataset.url}?variant=${this.currentVariant.id}`);
+  }
+
   updateVariantInput() {
-    const productForms = document.querySelectorAll(`#product-form-${this.dataset.section}`);
+    const productForms = document.querySelectorAll(`#product-form-${this.dataset.section}${this.dataset.upsell}`);
     productForms.forEach((productForm) => {
       const input = productForm.querySelector('input[name="id"]');
       input.value = this.currentVariant.id;
@@ -440,25 +446,45 @@ class VariantSelects extends HTMLElement {
   }
 
   toggleAddButton(disable = true, text, modifyClass = true) {
-    const productForm = document.getElementById(`product-form-${this.dataset.section}`);
+    const productForm = document.getElementById(`product-form-${this.dataset.section}${this.dataset.upsell}`);
+    const isUpsell = this.dataset.upsell != '';
     if (!productForm) return;
     const addButton = productForm.querySelector('[name="add"]');
     const addButtonText = productForm.querySelector('[name="add"] > span');
-    if (!addButton) return;
+    const stickyAddButton = document.querySelector(`.sticky_add_button`);
+    const stickyAddButtonText = stickyAddButton?.querySelector('[name="add"] > span');
 
+    if (!addButton) return;
+    if (addButton.classList.contains('hasJeansLogic')) return;
     if (disable) {
       addButton.setAttribute('disabled', 'disabled');
-      if (text) addButtonText.textContent = text;
+      if (!isUpsell && stickyAddButton) {
+        stickyAddButton.setAttribute('disabled', 'disabled');
+      }
+      if (text) {
+        addButtonText.textContent = text;
+        if (!isUpsell && stickyAddButton && stickyAddButtonText) {
+          stickyAddButtonText.textContent = text;
+        }
+      }
     } else {
       addButton.removeAttribute('disabled');
+      if (!isUpsell && stickyAddButton && stickyAddButtonText) {
+        stickyAddButton.removeAttribute('disabled');
+      }
+      if (addButton.classList.contains('hasOneSize')) return;
       addButtonText.textContent = window.variantStrings.addToCart;
+      if (!isUpsell && stickyAddButton && stickyAddButtonText) {
+        stickyAddButton.removeAttribute('disabled');
+        stickyAddButtonText.textContent = window.variantStrings.addToCart;
+      }
     }
 
     if (!modifyClass) return;
   }
 
   setUnavailable() {
-    const button = document.getElementById(`product-form-${this.dataset.section}`);
+    const button = document.getElementById(`product-form-${this.dataset.section}${this.dataset.upsell}`);
     const addButton = button.querySelector('[name="add"]');
     const addButtonText = button.querySelector('[name="add"] > span');
     const price = document.getElementById(`price-${this.dataset.section}`);
