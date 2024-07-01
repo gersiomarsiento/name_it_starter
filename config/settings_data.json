@@ -28,6 +28,8 @@
     "show_cart_note": true,
     "cart_drawer_collection": "automated-collection",
     "cart_color_scheme": "scheme-1",
+    "cart_upsell_title": "PRODUCTOS QUE TE PUEDEN INTERESAR",
+    "cart_upsell_collection": "test-collection",
     "sections": {
       "main-password-header": {
         "type": "main-password-header",
